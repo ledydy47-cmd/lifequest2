@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ЛайфКвест</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+:root {
+  --bg:#f2f6f3; --card:#fff; --text:#1a2e25; --sub:#7a9e8e; --border:#ddeee6;
+  --nav-h:62px; --r:18px; --sh:0 2px 16px rgba(0,0,0,0.07);
+  --c0:#5bbf95; --c1:#5b9bbf; --c2:#a07cc5;
+  --c3:#e07a5f; --c4:#f2b705; --c5:#e05c8a; --c6:#3d8b6e;
+  --gold:#f5a623; --gold2:#f7c948; --red:#e05c5c;
+  --primary:#3d8b6e; --accent:#5bbf95;
+}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);}
+#shell{display:flex;flex-direction:column;height:100vh;height:100dvh;}
+#content{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:calc(var(--nav-h)+12px+env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch;}
+#content::-webkit-scrollbar{width:3px;}
+#content::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+/* HEADER */
+.hdr{background:var(--card);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 8px rgba(0,0,0,0.05);}
+.hdr-l{display:flex;align-items:center;gap:10px;}
+.av-btn{width:40px;height:40px;border-radius:50%;overflow:hidden;border:2.5px solid var(--accent);cursor:pointer;background:#e8f5ee;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.av-btn img{width:100%;height:100%;object-fit:cover;}
+.hdr-name{font-size:.95rem;font-weight:700;color:var(--text);}
+.hdr-sub{font-size:.63rem;color:var(--sub);margin-top:1px;}
+.btn-prem{background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;color:white;padding:6px 13px;border-radius:20px;font-size:.72rem;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(245,166,35,.35);display:none;}
+
+/* BOTTOM NAV */
+#nav{position:fixed;bottom:0;left:0;right:0;height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:var(--card);border-top:1px solid var(--border);display:flex;z-index:200;box-shadow:0 -3px 16px rgba(0,0,0,.06);}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;cursor:pointer;color:var(--sub);font-size:.58rem;font-weight:600;text-transform:uppercase;letter-spacing:.3px;transition:color .2s;padding:8px 4px;position:relative;}
+.nb.active{color:var(--primary);}
+.nb.active::after{content:'';position:absolute;bottom:6px;width:18px;height:3px;border-radius:2px;background:var(--primary);}
+
+/* PAGES */
+.page{display:none;}
+.page.active{display:block;}
+.sec{font-size:.72rem;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;margin:14px 16px 8px;}
+
+/* CARD */
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);margin:0 14px 12px;border:1px solid var(--border);overflow:hidden;}
+.card-body{padding:12px 14px;}
+
+/* XP HERO */
+.xp-card{margin:14px 14px 12px;border-radius:var(--r);padding:16px;position:relative;overflow:hidden;background:linear-gradient(135deg,#2d6e57,#3d8b6e,#5bbf95);}
+.xp-card::before{content:'';position:absolute;inset:0;pointer-events:none;background:url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='%23fff' stroke-opacity='0.04' stroke-width='1'/%3E%3C/svg%3E");}
+.xp-top{display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative;z-index:1;}
+.lv-ring{width:54px;height:54px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .5s;box-shadow:0 2px 8px rgba(0,0,0,.2);}
+.lv-inner{width:44px;height:44px;border-radius:50%;background:rgba(0,0,0,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.lv-n{font-size:1.1rem;font-weight:900;color:var(--gold2);line-height:1;}
+.lv-t{font-size:.4rem;color:rgba(255,255,255,.7);text-transform:uppercase;}
+.xp-info{flex:1;}
+.xp-name{font-size:1rem;font-weight:800;color:white;}
+.xp-badge{display:inline-block;background:rgba(247,201,72,.2);border:1px solid rgba(247,201,72,.5);color:var(--gold2);border-radius:8px;padding:2px 8px;font-size:.6rem;font-weight:700;margin:3px 0 6px;}
+.xp-nums{font-size:.63rem;color:rgba(255,255,255,.8);display:flex;justify-content:space-between;margin-bottom:4px;}
+.xp-bar{height:7px;background:rgba(0,0,0,.2);border-radius:4px;overflow:hidden;}
+.xp-fill{height:100%;border-radius:4px;background:linear-gradient(to right,var(--gold2),var(--gold));transition:width .7s;box-shadow:0 0 6px rgba(247,201,72,.5);}
+.xp-stats{display:flex;gap:8px;position:relative;z-index:1;}
+.xs{flex:1;background:rgba(255,255,255,.12);border-radius:10px;padding:6px;text-align:center;}
+.xs .v{font-size:.9rem;font-weight:800;color:white;}
+.xs .l{font-size:.56rem;color:rgba(255,255,255,.7);text-transform:uppercase;}
+
+/* TODAY ROW */
+.today-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 14px 12px;}
+.tm{background:var(--card);border-radius:var(--r);padding:12px;box-shadow:var(--sh);border:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.mc{position:relative;width:52px;height:52px;flex-shrink:0;}
+.mc svg{transform:rotate(-90deg);}
+.mc .ct{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:.72rem;font-weight:800;}
+.mi-t{font-size:.78rem;font-weight:700;color:var(--text);}
+.mi-s{font-size:.63rem;color:var(--sub);margin-top:1px;}
+
+/* TODAY HABITS */
+.th-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #f3f9f6;}
+.th-item:last-child{border-bottom:none;}
+.th-chk{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);appearance:none;background:white;cursor:pointer;flex-shrink:0;transition:all .15s;}
+.th-chk:checked::after{content:'✓';display:block;text-align:center;color:white;font-size:12px;line-height:18px;}
+.th-name{flex:1;font-size:.83rem;color:var(--text);font-weight:500;}
+.th-pb-wrap{display:flex;align-items:center;gap:6px;}
+.th-pb{width:50px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
+.th-pf{height:100%;border-radius:2px;transition:width .4s;}
+.th-pct{font-size:.62rem;font-weight:700;min-width:26px;text-align:right;}
+
+/* ACHIEVEMENTS */
+.ach-row{display:flex;gap:8px;overflow-x:auto;padding:2px;scrollbar-width:none;}
+.ach-row::-webkit-scrollbar{display:none;}
+.ach-item{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:68px;padding:10px 6px;border-radius:14px;background:var(--bg);border:1.5px solid var(--border);flex-shrink:0;}
+.ach-item.earned{background:linear-gradient(135deg,#fffbe6,#fff3c4);border-color:var(--gold);}
+.ach-svg{width:26px;height:26px;opacity:.3;}
+.ach-item.earned .ach-svg{opacity:1;}
+.ach-lbl{font-size:.58rem;font-weight:700;color:var(--text);text-align:center;}
+
+/* ══════════════════════════════════════
+   ПЛАНЕР — СЛАЙДЕР
+══════════════════════════════════════ */
+#page-plan{display:none;flex-direction:column;height:100%;overflow:hidden;}
+#page-plan.active{display:flex;}
+
+.plan-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--card);padding:10px 16px;border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.plan-nav button{background:none;border:none;color:var(--primary);cursor:pointer;padding:4px 8px;border-radius:8px;}
+.plan-nav .wl{font-size:.82rem;font-weight:700;color:var(--text);}
+.plan-nav .wt{font-size:.72rem;font-weight:700;color:var(--primary);background:rgba(91,191,149,.15);border-radius:8px;padding:4px 10px;border:none;cursor:pointer;}
+
+/* Слайдер контейнер */
+.plan-slider-wrap{
+  flex:1;overflow:hidden;position:relative;
+}
+.plan-slider{
+  display:flex;
+  height:100%;
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  will-change:transform;
+}
+
+/* Карточка дня — на весь экран */
+.day-slide{
+  flex-shrink:0;
+  width:100vw;
+  height:100%;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:20px;
+}
+.day-slide::-webkit-scrollbar{display:none;}
+
+/* Цветная шапка с кругом */
+.ds-head{
+  padding:20px 20px 24px;
+  display:flex;flex-direction:column;align-items:center;
+  gap:8px;
+  position:relative;
+  /* min-height ~33vh */
+  min-height:33vh;
+  justify-content:center;
+}
+.ds-day-name{
+  font-size:1.4rem;font-weight:900;color:white;
+  text-transform:uppercase;letter-spacing:1px;
+  text-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+.ds-date{font-size:.8rem;color:rgba(255,255,255,.8);font-weight:500;}
+.ds-today-tag{
+  background:rgba(255,255,255,.2);color:white;
+  border-radius:20px;padding:3px 12px;font-size:.7rem;font-weight:700;
+  border:1px solid rgba(255,255,255,.35);
+}
+
+/* Большой круг прогресса */
+.ds-circ-wrap{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  margin:4px 0;
+}
+.ds-circ{position:relative;width:min(44vw,180px);height:min(44vw,180px);}
+.ds-circ svg{transform:rotate(-90deg);width:100%;height:100%;}
+.ds-cbg{fill:none;stroke:rgba(255,255,255,.2);stroke-width:10;}
+.ds-cfill{fill:none;stroke:white;stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .6s;}
+.ds-cpct{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-size:min(8vw,2.2rem);font-weight:900;color:white;
+  text-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+.ds-cstat{font-size:.75rem;color:rgba(255,255,255,.85);font-weight:600;}
+
+/* Тело карточки — задачи */
+.ds-body{
+  background:var(--card);
+  border-radius:20px 20px 0 0;
+  margin-top:-20px;
+  padding:18px 16px 20px;
+  min-height:40vh;
+  position:relative;
+  z-index:2;
+}
+.ds-body-title{
+  font-size:.72rem;font-weight:700;color:var(--sub);
+  text-transform:uppercase;letter-spacing:.5px;
+  margin-bottom:12px;
+}
+.t-item{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid #f3f9f6;}
+.t-item:last-child{border-bottom:none;}
+.tchk{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);appearance:none;background:white;cursor:pointer;flex-shrink:0;margin-top:1px;transition:all .15s;}
+.tchk:checked::after{content:'✓';display:block;text-align:center;color:white;font-size:11px;line-height:16px;}
+.t-txt{font-size:.85rem;color:var(--text);line-height:1.3;flex:1;}
+.t-txt.done{text-decoration:line-through;color:#b0c4b8;}
+.t-tag{font-size:.62rem;border-radius:5px;padding:1px 5px;margin-top:2px;display:inline-block;}
+.btn-del-t{background:none;border:none;color:#d0ddd8;cursor:pointer;padding:2px;flex-shrink:0;}
+.btn-add-t{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:12px;margin-top:10px;
+  border:1.5px dashed var(--border);border-radius:12px;
+  background:none;font-size:.83rem;font-weight:600;cursor:pointer;
+  transition:all .2s;
+}
+.btn-add-t:active{background:var(--bg);}
+
+/* Dots навигация */
+.plan-dots{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:8px;background:var(--card);border-top:1px solid var(--border);
+  flex-shrink:0;
+}
+.pdot{
+  width:8px;height:8px;border-radius:50%;background:var(--border);
+  transition:all .25s;cursor:pointer;border:none;
+}
+.pdot.active{width:22px;border-radius:4px;}
+
+/* HABITS */
+.hab-item{padding:12px 0;border-bottom:1px solid #f3f9f6;display:flex;flex-direction:column;gap:7px;}
+.hab-item:last-child{border-bottom:none;padding-bottom:0;}
+.hab-row1{display:flex;align-items:center;gap:8px;}
+.hab-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.hab-name{flex:1;font-size:.85rem;font-weight:600;color:var(--text);}
+.hab-gtag{font-size:.6rem;border-radius:7px;padding:2px 7px;font-weight:600;}
+.btn-del{background:none;border:none;color:#c5d9ce;cursor:pointer;padding:3px;}
+.days-row{display:flex;gap:4px;}
+.hd{flex:1;height:28px;border-radius:7px;border:none;font-size:.62rem;font-weight:700;cursor:pointer;transition:all .15s;background:var(--bg);color:var(--sub);}
+.hd.sched{background:rgba(91,191,149,.15);color:var(--primary);}
+.hd.done{color:white;}
+.hd.off{opacity:.3;cursor:default;}
+.hab-prog{display:flex;align-items:center;gap:8px;}
+.hpb{flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;}
+.hpf{height:100%;border-radius:3px;transition:width .4s;}
+.hpct{font-size:.65rem;font-weight:700;min-width:30px;text-align:right;}
+
+/* GOALS */
+.goal-card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);margin-bottom:12px;overflow:hidden;border:1px solid var(--border);}
+.goal-hdr{display:flex;align-items:flex-start;gap:12px;padding:14px;border-bottom:1px solid var(--border);}
+.goal-icon{width:44px;height:44px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.goal-t{font-size:.92rem;font-weight:700;color:var(--text);}
+.goal-dl{font-size:.65rem;color:var(--sub);margin-top:2px;}
+.goal-prog{margin-top:8px;}
+.gpb{height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+.gpf{height:100%;border-radius:3px;transition:width .4s;}
+.gpl{font-size:.63rem;color:var(--sub);margin-top:3px;}
+.goal-acts{display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--border);}
+.btn-ga{flex:1;padding:8px;border-radius:10px;border:none;font-size:.75rem;font-weight:600;cursor:pointer;}
+.btn-ga.del{background:#fff0f0;color:var(--red);}
+
+/* FAB */
+.fab{position:fixed;right:16px;bottom:calc(var(--nav-h) + 14px + env(safe-area-inset-bottom));width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--primary));color:white;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(61,139,110,.4);display:flex;align-items:center;justify-content:center;transition:transform .2s;z-index:90;}
+.fab:active{transform:scale(.9);}
+
+/* MODALS */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);}
+.overlay.on{display:flex;}
+.modal{background:var(--card);border-radius:22px 22px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom));width:100%;max-height:92vh;overflow-y:auto;animation:slideUp .28s cubic-bezier(.34,1.56,.64,1);}
+@keyframes slideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.mh{width:38px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;}
+.modal h3{color:var(--primary);font-size:1rem;font-weight:800;margin-bottom:16px;}
+.flbl{font-size:.68rem;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.4px;display:block;margin-bottom:5px;}
+.finp{width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:12px;outline:none;font-size:.9rem;font-family:inherit;background:var(--bg);transition:border-color .2s;color:var(--text);}
+.finp:focus{border-color:var(--primary);background:white;}
+.fsel{width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:12px;outline:none;font-size:.9rem;font-family:inherit;background:var(--bg);appearance:none;color:var(--text);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath fill='%233d8b6e' d='M5 7L0 0h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;}
+.frow{margin-bottom:13px;}
+.dp{display:flex;gap:6px;}
+.dpb{flex:1;height:38px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);color:var(--sub);font-size:.68rem;font-weight:700;cursor:pointer;transition:all .15s;}
+.dpb.sel{background:var(--primary);border-color:var(--primary);color:white;}
+.mbtns{display:flex;gap:10px;margin-top:18px;}
+.bcn{flex:1;background:var(--bg);border:1.5px solid var(--border);color:var(--sub);padding:12px;border-radius:12px;cursor:pointer;font-weight:600;font-size:.88rem;}
+.bok{flex:2;background:linear-gradient(135deg,var(--accent),var(--primary));border:none;color:white;padding:12px;border-radius:12px;cursor:pointer;font-weight:700;font-size:.9rem;}
+.av-area{display:flex;flex-direction:column;align-items:center;gap:12px;padding:6px 0;}
+.av-prev{width:80px;height:80px;border-radius:50%;border:3px solid var(--accent);overflow:hidden;background:#e8f5ee;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+.btn-upl{background:var(--bg);border:1.5px solid var(--border);color:var(--primary);border-radius:12px;padding:10px 20px;font-size:.85rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;}
+.sub-w{text-align:center;}
+.sub-ic{width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--gold2),var(--gold));display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
+.sub-t{font-size:1.2rem;font-weight:900;color:var(--gold);margin-bottom:8px;}
+.sub-d{font-size:.87rem;color:var(--sub);margin-bottom:20px;line-height:1.5;}
+.btn-buy{background:linear-gradient(135deg,var(--gold),var(--gold2));color:white;border:none;padding:14px;border-radius:14px;font-size:.95rem;font-weight:800;cursor:pointer;width:100%;}
+.xf{position:fixed;pointer-events:none;z-index:9999;font-size:1rem;font-weight:800;color:var(--gold);text-shadow:0 2px 6px rgba(0,0,0,.15);animation:xfl 1.3s ease forwards;}
+@keyframes xfl{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-65px) scale(1.1)}}
+.empty{text-align:center;padding:28px 16px;color:var(--sub);}
+.empty p{font-size:.83rem;line-height:1.5;}
+</style>
+</head>
+<body>
+<div id="shell">
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-l">
+    <div class="av-btn" id="hdrAv" onclick="openAvatarModal()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+    </div>
+    <div>
+      <div class="hdr-name" id="hdrName">Привет!</div>
+      <div class="hdr-sub"  id="hdrSub">Ученик · 0 XP</div>
+    </div>
+  </div>
+  <button class="btn-prem" id="btnP" onclick="openSubModal()">👑 Premium</button>
+</header>
+
+<div id="content">
+
+  <!-- DASHBOARD -->
+  <div class="page active" id="page-dash">
+    <div class="xp-card">
+      <div class="xp-top">
+        <div class="lv-ring" id="lvRing">
+          <div class="lv-inner">
+            <div class="lv-n" id="lvN">1</div>
+            <div class="lv-t">ур.</div>
+          </div>
+        </div>
+        <div class="xp-info">
+          <div class="xp-name" id="xpName">Искатель</div>
+          <div class="xp-badge" id="xpBadge">Ученик</div>
+          <div class="xp-nums"><span id="xpNums">0 / 100 XP</span></div>
+          <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="xp-stats">
+        <div class="xs"><div class="v" id="stX">0</div><div class="l">XP</div></div>
+        <div class="xs"><div class="v" id="stH">0</div><div class="l">Привычек</div></div>
+        <div class="xs"><div class="v" id="stG">0</div><div class="l">Целей</div></div>
+        <div class="xs"><div class="v" id="stS">0</div><div class="l">Дней</div></div>
+      </div>
+    </div>
+
+    <div class="today-row">
+      <div class="tm">
+        <div class="mc">
+          <svg width="52" height="52" viewBox="0 0 52 52"><circle fill="none" stroke="var(--border)" stroke-width="5" cx="26" cy="26" r="20"/><circle id="tCirc" fill="none" stroke="var(--c2)" stroke-width="5" stroke-linecap="round" cx="26" cy="26" r="20" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
+          <div class="ct" id="tPct" style="color:var(--c2)">0%</div>
+        </div>
+        <div><div class="mi-t">Задачи</div><div class="mi-s" id="tStat">0 из 0</div></div>
+      </div>
+      <div class="tm">
+        <div class="mc">
+          <svg width="52" height="52" viewBox="0 0 52 52"><circle fill="none" stroke="var(--border)" stroke-width="5" cx="26" cy="26" r="20"/><circle id="hCirc" fill="none" stroke="var(--c0)" stroke-width="5" stroke-linecap="round" cx="26" cy="26" r="20" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
+          <div class="ct" id="hPct" style="color:var(--c0)">0%</div>
+        </div>
+        <div><div class="mi-t">Привычки</div><div class="mi-s" id="hStat">0 из 0</div></div>
+      </div>
+    </div>
+
+    <div class="sec">Привычки на сегодня</div>
+    <div class="card"><div class="card-body" id="todH" style="padding:8px 14px;"></div></div>
+    <div class="sec">Достижения</div>
+    <div class="card"><div class="card-body" style="padding:10px 12px;"><div class="ach-row" id="achR"></div></div></div>
+  </div>
+
+  <!-- PLANNER -->
+  <div class="page" id="page-plan">
+    <div class="plan-nav">
+      <button onclick="prevWeek()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span class="wl" id="wkL">—</span>
+      <button onclick="nextWeek()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <button class="wt" onclick="goNow()">Сегодня</button>
+    </div>
+
+    <div class="plan-slider-wrap" id="sliderWrap">
+      <div class="plan-slider" id="planSlider"></div>
+    </div>
+
+    <div class="plan-dots" id="planDots"></div>
+  </div>
+
+  <!-- HABITS -->
+  <div class="page" id="page-habits">
+    <div class="sec" style="margin-top:16px;">Мои привычки</div>
+    <div class="card"><div class="card-body" style="padding:8px 14px;" id="habList"></div></div>
+  </div>
+
+  <!-- GOALS -->
+  <div class="page" id="page-goals">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin:16px 14px 8px;">
+      <div class="sec" style="margin:0;">Мои цели</div>
+      <button onclick="openGoalModal()" style="background:var(--primary);color:white;border:none;border-radius:12px;padding:7px 14px;font-size:.78rem;font-weight:700;cursor:pointer;">+ Цель</button>
+    </div>
+    <div style="padding:0 14px;" id="goalsList"></div>
+  </div>
+
+</div><!-- /content -->
+
+<nav id="nav">
+  <button class="nb active" onclick="go('dash',this)">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    <span>Главная</span>
+  </button>
+  <button class="nb" onclick="go('plan',this)">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span>Планер</span>
+  </button>
+  <button class="nb" onclick="go('habits',this)">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    <span>Привычки</span>
+  </button>
+  <button class="nb" onclick="go('goals',this)">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+    <span>Цели</span>
+  </button>
+</nav>
+</div>
+
+<button class="fab" id="fab" onclick="fabAct()">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+</button>
+
+<!-- PAYWALL -->
+<div class="overlay" id="subOv">
+  <div class="modal">
+    <div class="mh"></div>
+    <div class="sub-w">
+      <div class="sub-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+      <div class="sub-t">Premium доступ</div>
+      <div class="sub-d">Открой полный доступ: задачи, привычки, цели и XP.</div>
+      <button class="btn-buy" onclick="buySub()">Оформить за 199 ₽ / мес</button>
+      <button class="bcn" style="width:100%;margin-top:10px;" onclick="closeOv('subOv')">Только посмотреть</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN MODAL -->
+<div class="overlay" id="ov">
+  <div class="modal">
+    <div class="mh"></div>
+    <h3 id="mTtl">—</h3>
+    <div id="mBod"></div>
+    <div class="mbtns">
+      <button class="bcn" onclick="closeOv('ov')">Отмена</button>
+      <button class="bok" onclick="confirmM()">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="fileInp" accept="image/*" style="display:none" onchange="handlePhoto(event)">
+
+<script>
+const tg=window.Telegram?.WebApp||null;
+const IS_TG=!!(tg?.initData?.length>0);
+if(tg){tg.ready();tg.expand();tg.setHeaderColor('#2d6e57');tg.setBackgroundColor('#f2f6f3');}
+
+const COLORS=['#5bbf95','#5b9bbf','#a07cc5','#e07a5f','#f2b705','#e05c8a','#3d8b6e'];
+const DN=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+const DN_FULL=['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'];
+const LEVELS=['Новичок','Ученик','Искатель','Воин','Мастер','Герой','Легенда','Бог'];
+const ACHS=[{id:'first_task',name:'Первый шаг'},{id:'streak3',name:'3 дня'},{id:'lvl5',name:'Ур. 5'},{id:'hab5',name:'5 привычек'},{id:'goal1',name:'Первая цель'},{id:'xp500',name:'500 XP'}];
+const ASVG={
+  first_task:`<svg class="ach-svg" viewBox="0 0 24 24" fill="none" stroke="#5bbf95" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+  streak3:`<svg class="ach-svg" viewBox="0 0 24 24" fill="none" stroke="#f2b705" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
+  lvl5:`<svg class="ach-svg" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+  hab5:`<svg class="ach-svg" viewBox="0 0 24 24" fill="none" stroke="#a07cc5" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`,
+  goal1:`<svg class="ach-svg" viewBox="0 0 24 24" fill="none" stroke="#5b9bbf" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`,
+  xp500:`<svg class="ach-svg" viewBox="0 0 24 24" fill="none" stroke="#e05c8a" stroke-width="2" stroke-linecap="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
+};
+
+let S=ld();
+let wOff=0;
+let curDayIdx=0; // текущий слайд
+let mCtx=null;
+let curPg='dash';
+// touch
+let touchStartX=0,touchStartY=0,isDragging=false;
+
+function ld(){
+  try{const s=localStorage.getItem('lq5');if(s)return JSON.parse(s);}catch(e){}
+  return{sub:false,name:'Искатель',avatar:null,xp:0,habits:[],weeks:{},goals:[],achs:[],streak:0};
+}
+function sv(){localStorage.setItem('lq5',JSON.stringify(S));}
+function uid(){return Math.random().toString(36).slice(2,9);}
+
+function getMon(off=0){const d=new Date(),dw=d.getDay();d.setDate(d.getDate()+(dw===0?-6:1-dw)+off*7);d.setHours(0,0,0,0);return d;}
+function wKey(off=wOff){const m=getMon(off);return`${m.getFullYear()}-${m.getMonth()}-${m.getDate()}`;}
+function getWD(off=wOff){const k=wKey(off);if(!S.weeks[k])S.weeks[k]={tasks:[],habits:{}};return S.weeks[k];}
+function todayIdx(){const d=new Date().getDay();return d===0?6:d-1;}
+function isCW(){return wOff===0;}
+
+function lvD(xp){
+  let lv=1,used=0;
+  while(true){const n=lv*100;if(used+n>xp)break;used+=n;lv++;if(lv>99)break;}
+  const into=xp-used,next=lv*100;
+  return{lv,into,next,pct:Math.round(into/next*100)};
+}
+function addXp(n,el){
+  S.xp+=n;
+  if(tg?.HapticFeedback)tg.HapticFeedback.impactOccurred('light');
+  const f=document.createElement('div');f.className='xf';f.textContent=`+${n} XP`;
+  if(el){const r=el.getBoundingClientRect();f.style.left=r.left+'px';f.style.top=(r.top+window.scrollY-10)+'px';}
+  else{f.style.left='50%';f.style.top='30%';f.style.transform='translateX(-50%)';}
+  document.body.appendChild(f);setTimeout(()=>f.remove(),1300);
+  checkAchs();
+}
+function subXp(n){S.xp=Math.max(0,S.xp-n);}
+
+function checkAchs(){
+  const earn=id=>{if(!S.achs.includes(id)){S.achs.push(id);if(tg?.HapticFeedback)tg.HapticFeedback.notificationOccurred('success');}};
+  const wd=getWD(0);
+  if(wd.tasks.filter(t=>t.done).length>=1)earn('first_task');
+  if(S.habits.length>=5)earn('hab5');
+  if(S.goals.length>=1)earn('goal1');
+  if(S.xp>=500)earn('xp500');
+  if(lvD(S.xp).lv>=5)earn('lvl5');
+}
+
+function chkSub(){if(S.sub)return true;document.getElementById('subOv').classList.add('on');return false;}
+function openSubModal(){document.getElementById('subOv').classList.add('on');}
+function buySub(){S.sub=true;sv();closeOv('subOv');document.getElementById('btnP').style.display='none';if(tg)tg.showAlert('🎉 Premium активирован!');else alert('🎉 Premium активирован!');}
+function closeOv(id){document.getElementById(id).classList.remove('on');if(tg)tg.BackButton.hide();}
+
+function handlePhoto(e){
+  const file=e.target.files[0];if(!file)return;
+  const r=new FileReader();
+  r.onload=ev=>{S.avatar=ev.target.result;sv();updAv();const p=document.getElementById('avPrev');if(p)p.innerHTML=`<img src="${S.avatar}" style="width:100%;height:100%;object-fit:cover;">`;};
+  r.readAsDataURL(file);
+}
+function updAv(){
+  const b=document.getElementById('hdrAv');
+  if(S.avatar)b.innerHTML=`<img src="${S.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+  else b.innerHTML=`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>`;
+}
+
+// ══ HERO ══
+function rHero(){
+  const ld=lvD(S.xp);
+  document.getElementById('lvN').textContent=ld.lv;
+  document.getElementById('xpName').textContent=S.name;
+  document.getElementById('xpBadge').textContent=LEVELS[Math.min(ld.lv-1,LEVELS.length-1)];
+  document.getElementById('xpNums').textContent=`${ld.into} / ${ld.next} XP`;
+  document.getElementById('xpFill').style.width=ld.pct+'%';
+  document.getElementById('lvRing').style.background=`conic-gradient(var(--gold2) ${ld.pct*3.6}deg,rgba(255,255,255,.12) 0deg)`;
+  document.getElementById('stX').textContent=S.xp;
+  document.getElementById('stH').textContent=S.habits.length;
+  document.getElementById('stG').textContent=S.goals.length;
+  document.getElementById('stS').textContent=S.streak||0;
+  document.getElementById('hdrName').textContent=S.name;
+  document.getElementById('hdrSub').textContent=`${LEVELS[Math.min(ld.lv-1,LEVELS.length-1)]} · ${S.xp} XP`;
+  updAv();
+}
+
+function rAchs(){
+  document.getElementById('achR').innerHTML=ACHS.map(a=>{
+    const e=S.achs.includes(a.id);
+    return`<div class="ach-item ${e?'earned':''}">${ASVG[a.id]}<div class="ach-lbl">${a.name}</div></div>`;
+  }).join('');
+}
+
+function rDash(){
+  rHero();rAchs();
+  const wd=getWD(0),di=todayIdx();
+  const tt=wd.tasks.filter(t=>t.dayIdx===di);
+  const td=tt.filter(t=>t.done).length,tn=tt.length;
+  const tp=tn?Math.round(td/tn*100):0;
+  const C=125.66;
+  document.getElementById('tCirc').style.strokeDashoffset=C-(C*tp/100);
+  document.getElementById('tPct').textContent=tp+'%';
+  document.getElementById('tStat').textContent=`${td} из ${tn}`;
+  const todH=S.habits.filter(h=>h.days.includes(di));
+  const hd=todH.filter(h=>(wd.habits[h.id]||[])[di]).length,hn=todH.length;
+  const hp=hn?Math.round(hd/hn*100):0;
+  document.getElementById('hCirc').style.strokeDashoffset=C-(C*hp/100);
+  document.getElementById('hPct').textContent=hp+'%';
+  document.getElementById('hStat').textContent=`${hd} из ${hn}`;
+  const el=document.getElementById('todH');
+  if(!todH.length){el.innerHTML=`<div class="empty"><p>Нет привычек на сегодня</p></div>`;return;}
+  el.innerHTML=todH.map((h,idx)=>{
+    const checks=wd.habits[h.id]||Array(7).fill(false);
+    const checked=checks[di];
+    const total=h.days.length,done=h.days.filter(d=>checks[d]).length;
+    const pct=total?Math.round(done/total*100):0;
+    const col=COLORS[idx%COLORS.length];
+    return`<div class="th-item">
+      <input type="checkbox" class="th-chk" ${checked?'checked':''} onchange="togHab('${h.id}',${di},this.checked,this)" style="${checked?`background:${col};border-color:${col};`:''}">
+      <span class="th-name">${h.name}</span>
+      <div class="th-pb-wrap">
+        <div class="th-pb"><div class="th-pf" style="width:${pct}%;background:${col};"></div></div>
+        <span class="th-pct" style="color:${col};">${pct}%</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══ PLANNER SLIDER ══
+function rPlanner(){
+  const wd=getWD(),mon=getMon(wOff);
+  const end=new Date(mon);end.setDate(end.getDate()+6);
+  document.getElementById('wkL').textContent=
+    `${mon.getDate()} ${mon.toLocaleString('ru',{month:'short'})} — ${end.getDate()} ${end.toLocaleString('ru',{month:'short'})}`;
+
+  const slider=document.getElementById('planSlider');
+  slider.innerHTML='';
+
+  for(let i=0;i<7;i++){
+    const col=COLORS[i];
+    const tasks=wd.tasks.filter(t=>t.dayIdx===i);
+    const done=tasks.filter(t=>t.done).length,total=tasks.length;
+    const pct=total?Math.round(done/total*100):0;
+    const isToday=isCW()&&i===todayIdx();
+    const d=new Date(mon);d.setDate(d.getDate()+i);
+    const dateStr=`${d.getDate()} ${d.toLocaleString('ru',{month:'long'})}`;
+
+    // Длина окружности для r=45: 2*π*45 ≈ 282.74
+    const CIRC=282.74;
+    const offset=CIRC-(CIRC*pct/100);
+
+    const slide=document.createElement('div');
+    slide.className='day-slide';
+
+    const tasksHtml=tasks.length
+      ? tasks.map(t=>{
+          const g=t.goalId?S.goals.find(g=>g.id===t.goalId):null;
+          return`<div class="t-item">
+            <input type="checkbox" class="tchk" ${t.done?'checked':''}
+              onchange="togTask('${t.id}',this.checked,this)"
+              style="${t.done?`background:${col};border-color:${col};`:`border-color:${col}44;`}">
+            <div style="flex:1;">
+              <div class="t-txt${t.done?' done':''}">${t.text}</div>
+              ${g?`<div class="t-tag" style="color:${col};background:${col}15;">${g.title}</div>`:''}
+            </div>
+            <button class="btn-del-t" onclick="delTask('${t.id}')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>`;
+        }).join('')
+      : `<div class="empty" style="padding:16px 0;"><p>Нет задач на этот день</p></div>`;
+
+    slide.innerHTML=`
+      <div class="ds-head" style="background:${col};">
+        <div class="ds-day-name">${DN_FULL[i]}</div>
+        <div class="ds-date">${dateStr}</div>
+        ${isToday?`<div class="ds-today-tag">● Сегодня</div>`:''}
+        <div class="ds-circ-wrap">
+          <div class="ds-circ">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <circle class="ds-cbg" cx="50" cy="50" r="45"/>
+              <circle class="ds-cfill" cx="50" cy="50" r="45"
+                stroke-dasharray="${CIRC}"
+                stroke-dashoffset="${offset}"/>
+            </svg>
+            <div class="ds-cpct">${pct}%</div>
+          </div>
+          <div class="ds-cstat">${done} из ${total} задач</div>
+        </div>
+      </div>
+      <div class="ds-body">
+        <div class="ds-body-title">Задачи</div>
+        ${tasksHtml}
+        <button class="btn-add-t" onclick="openTaskM(${i})" style="color:${col};border-color:${col}55;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Добавить задачу
+        </button>
+      </div>`;
+    slider.appendChild(slide);
+  }
+
+  // Dots
+  const dots=document.getElementById('planDots');
+  dots.innerHTML='';
+  for(let i=0;i<7;i++){
+    const btn=document.createElement('button');
+    btn.className='pdot'+(i===curDayIdx?' active':'');
+    btn.style.background=i===curDayIdx?COLORS[curDayIdx]:'var(--border)';
+    btn.onclick=()=>goToDay(i);
+    dots.appendChild(btn);
+  }
+
+  goToDay(curDayIdx,false);
+  initSliderTouch();
+}
+
+function goToDay(idx,animate=true){
+  curDayIdx=Math.max(0,Math.min(6,idx));
+  const slider=document.getElementById('planSlider');
+  if(!animate) slider.style.transition='none';
+  else slider.style.transition='transform .35s cubic-bezier(.4,0,.2,1)';
+  slider.style.transform=`translateX(-${curDayIdx*100}vw)`;
+  // update dots
+  document.querySelectorAll('.pdot').forEach((d,i)=>{
+    d.className='pdot'+(i===curDayIdx?' active':'');
+    d.style.background=i===curDayIdx?COLORS[curDayIdx]:'var(--border)';
+  });
+  if(tg?.HapticFeedback&&animate)tg.HapticFeedback.selectionChanged();
+}
+
+function initSliderTouch(){
+  const wrap=document.getElementById('sliderWrap');
+  // remove old listeners
+  const newWrap=wrap.cloneNode(false);
+  while(wrap.firstChild)newWrap.appendChild(wrap.firstChild);
+  wrap.parentNode.replaceChild(newWrap,wrap);
+  newWrap.id='sliderWrap';
+
+  let sx=0,sy=0,dragging=false,moved=false;
+
+  newWrap.addEventListener('touchstart',e=>{
+    sx=e.touches[0].clientX;
+    sy=e.touches[0].clientY;
+    dragging=true;moved=false;
+  },{passive:true});
+
+  newWrap.addEventListener('touchmove',e=>{
+    if(!dragging)return;
+    const dx=e.touches[0].clientX-sx;
+    const dy=e.touches[0].clientY-sy;
+    if(!moved&&Math.abs(dy)>Math.abs(dx)){dragging=false;return;}
+    moved=true;
+    e.preventDefault();
+  },{passive:false});
+
+  newWrap.addEventListener('touchend',e=>{
+    if(!dragging||!moved)return;
+    dragging=false;
+    const dx=e.changedTouches[0].clientX-sx;
+    if(Math.abs(dx)>40){
+      if(dx<0&&curDayIdx<6)goToDay(curDayIdx+1);
+      else if(dx>0&&curDayIdx>0)goToDay(curDayIdx-1);
+    }
+  },{passive:true});
+
+  // Mouse (desktop)
+  newWrap.addEventListener('mousedown',e=>{sx=e.clientX;dragging=true;moved=false;});
+  newWrap.addEventListener('mousemove',e=>{if(!dragging)return;if(Math.abs(e.clientX-sx)>5)moved=true;});
+  newWrap.addEventListener('mouseup',e=>{
+    if(!dragging)return;dragging=false;
+    const dx=e.clientX-sx;
+    if(moved&&Math.abs(dx)>40){
+      if(dx<0&&curDayIdx<6)goToDay(curDayIdx+1);
+      else if(dx>0&&curDayIdx>0)goToDay(curDayIdx-1);
+    }
+  });
+}
+
+function togTask(tid,val,el){
+  if(!chkSub()){if(el)el.checked=!val;return;}
+  const wd=getWD();const t=wd.tasks.find(t=>t.id===tid);if(!t)return;
+  t.done=val;if(val)addXp(10,el);else{subXp(10);rHero();}
+  sv();rAll();
+}
+function delTask(tid){if(!chkSub())return;const wd=getWD();wd.tasks=wd.tasks.filter(t=>t.id!==tid);sv();rAll();}
+function prevWeek(){wOff--;rPlanner();}
+function nextWeek(){wOff++;rPlanner();}
+function goNow(){wOff=0;curDayIdx=todayIdx();rPlanner();}
+
+// ══ HABITS ══
+function rHabits(){
+  const el=document.getElementById('habList');
+  if(!S.habits.length){el.innerHTML=`<div class="empty"><p>Нет привычек<br>Нажми + чтобы добавить</p></div>`;return;}
+  const wd=getWD(0);
+  el.innerHTML=S.habits.map((h,idx)=>{
+    const col=COLORS[idx%COLORS.length];
+    const checks=wd.habits[h.id]||Array(7).fill(false);
+    const total=h.days.length,done=h.days.filter(d=>checks[d]).length;
+    const pct=total?Math.round(done/total*100):0;
+    const gName=h.goalId?(S.goals.find(g=>g.id===h.goalId)?.title||''):'';
+    const dH=DN.map((d,i)=>{
+      const sc=h.days.includes(i),isDone=checks[i];
+      return`<button class="hd ${isDone?'done':(sc?'sched':'off')}"
+        style="${isDone?`background:${col};`:''}"
+        onclick="${sc?`togHab('${h.id}',${i},${!isDone},this)`:''}">${d}</button>`;
+    }).join('');
+    return`<div class="hab-item">
+      <div class="hab-row1">
+        <div class="hab-icon" style="background:${col}20;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${col}" stroke-width="2.5" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <span class="hab-name">${h.name}</span>
+        ${gName?`<span class="hab-gtag" style="background:${col}18;color:${col};">${gName}</span>`:''}
+        <button class="btn-del" onclick="delHab('${h.id}')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+      <div class="days-row">${dH}</div>
+      <div class="hab-prog">
+        <div class="hpb"><div class="hpf" style="width:${pct}%;background:${col};"></div></div>
+        <span class="hpct" style="color:${col};">${pct}%</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+function togHab(hid,di,val,el){
+  if(!chkSub()){if(el&&el.checked!==undefined)el.checked=!val;return;}
+  const wd=getWD(0);if(!wd.habits[hid])wd.habits[hid]=Array(7).fill(false);
+  wd.habits[hid][di]=val;
+  if(val)addXp(15,el);else{subXp(15);rHero();}
+  sv();rAll();
+}
+function delHab(hid){if(!chkSub())return;S.habits=S.habits.filter(h=>h.id!==hid);sv();rAll();}
+
+// ══ GOALS ══
+function rGoals(){
+  const el=document.getElementById('goalsList');
+  if(!S.goals.length){el.innerHTML=`<div class="empty"><p>Нет целей<br>Нажми «+ Цель»</p></div>`;return;}
+  el.innerHTML=S.goals.map((g,idx)=>{
+    const col=COLORS[idx%COLORS.length];
+    const wd=getWD(0);
+    const linked=wd.tasks.filter(t=>t.goalId===g.id);
+    const ldone=linked.filter(t=>t.done).length,ltotal=linked.length;
+    const pct=ltotal?Math.round(ldone/ltotal*100):0;
+    return`<div class="goal-card">
+      <div class="goal-hdr">
+        <div class="goal-icon" style="background:${col}20;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="${col}" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        </div>
+        <div style="flex:1;">
+          <div class="goal-t">${g.title}</div>
+          ${g.deadline?`<div class="goal-dl">📅 До: ${g.deadline}</div>`:''}
+          <div class="goal-prog">
+            <div class="gpb"><div class="gpf" style="width:${pct}%;background:${col};"></div></div>
+            <div class="gpl">${ltotal?`${ldone} из ${ltotal} задач · ${pct}%`:'Привяжи задачи к этой цели'}</div>
+          </div>
+        </div>
+      </div>
+      <div class="goal-acts"><button class="btn-ga del" onclick="delGoal('${g.id}')">Удалить</button></div>
+    </div>`;
+  }).join('');
+}
+function delGoal(gid){if(!chkSub())return;S.goals=S.goals.filter(g=>g.id!==gid);sv();rAll();}
+
+function rAll(){
+  rDash();
+  if(curPg==='plan')rPlanner();
+  if(curPg==='habits')rHabits();
+  if(curPg==='goals')rGoals();
+}
+
+// ══ NAV ══
+function go(id,btn){
+  curPg=id;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(btn)btn.classList.add('active');
+  document.getElementById('fab').style.display=id==='goals'?'none':'flex';
+  if(id==='plan'){curDayIdx=isCW()?todayIdx():0;rPlanner();}
+  if(id==='habits')rHabits();
+  if(id==='goals')rGoals();
+}
+function fabAct(){
+  if(curPg==='dash')openTaskM(todayIdx());
+  else if(curPg==='plan')openTaskM(curDayIdx);
+  else if(curPg==='habits')openHabM();
+}
+
+// ══ MODALS ══
+function openM(title,body){
+  document.getElementById('mTtl').textContent=title;
+  document.getElementById('mBod').innerHTML=body;
+  document.getElementById('ov').classList.add('on');
+  if(tg)tg.BackButton.show();
+  setTimeout(()=>document.querySelector('#mBod input')?.focus(),150);
+}
+function goalOpts(sel=''){
+  if(!S.goals.length)return'<option value="">— нет целей —</option>';
+  return'<option value="">— не привязывать —</option>'+S.goals.map(g=>`<option value="${g.id}" ${g.id===sel?'selected':''}>${g.title}</option>`).join('');
+}
+function openTaskM(di){
+  if(!chkSub())return;mCtx={type:'task',di};
+  openM('Новая задача',`
+    <div class="frow"><label class="flbl">Название</label><input class="finp" id="mIn" placeholder="Что нужно сделать?"></div>
+    <div class="frow"><label class="flbl">Привязать к цели</label><select class="fsel" id="mG">${goalOpts()}</select></div>`);
+}
+function openHabM(){
+  if(!chkSub())return;mCtx={type:'habit'};
+  openM('Новая привычка',`
+    <div class="frow"><label class="flbl">Название</label><input class="finp" id="mIn" placeholder="Например: Пить воду"></div>
+    <div class="frow"><label class="flbl">Дни недели</label>
+      <div class="dp">${DN.map((d,i)=>`<button type="button" class="dpb sel" data-d="${i}" onclick="this.classList.toggle('sel')">${d}</button>`).join('')}</div>
+    </div>
+    <div class="frow"><label class="flbl">Привязать к цели</label><select class="fsel" id="mG">${goalOpts()}</select></div>`);
+}
+function openGoalModal(){
+  if(!chkSub())return;mCtx={type:'goal'};
+  openM('Новая цель',`
+    <div class="frow"><label class="flbl">Название цели</label><input class="finp" id="mIn" placeholder="Например: Выучить английский"></div>
+    <div class="frow"><label class="flbl">Дедлайн (необязательно)</label><input class="finp" id="mDl" type="date"></div>`);
+}
+function openAvatarModal(){
+  mCtx={type:'avatar'};
+  openM('Профиль',`
+    <div class="frow"><label class="flbl">Имя героя</label><input class="finp" id="mIn" value="${S.name}"></div>
+    <div class="frow"><label class="flbl">Фото профиля</label>
+      <div class="av-area">
+        <div class="av-prev" id="avPrev" onclick="document.getElementById('fileInp').click()">
+          ${S.avatar?`<img src="${S.avatar}" style="width:100%;height:100%;object-fit:cover;">`:`<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>`}
+        </div>
+        <button type="button" class="btn-upl" onclick="document.getElementById('fileInp').click()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Загрузить фото
+        </button>
+      </div>
+    </div>`);
+}
+function confirmM(){
+  const val=document.getElementById('mIn')?.value.trim();
+  const ctx=mCtx;
+  if(ctx.type==='task'){
+    if(!val)return;
+    const gid=document.getElementById('mG')?.value||'';
+    getWD().tasks.push({id:uid(),text:val,done:false,dayIdx:ctx.di,goalId:gid});
+  }else if(ctx.type==='habit'){
+    if(!val)return;
+    const days=[...document.querySelectorAll('.dpb.sel')].map(b=>parseInt(b.dataset.d));
+    if(!days.length){if(tg)tg.showAlert('Выбери хотя бы один день');else alert('Выбери хотя бы один день');return;}
+    const gid=document.getElementById('mG')?.value||'';
+    S.habits.push({id:uid(),name:val,days,goalId:gid});
+  }else if(ctx.type==='goal'){
+    if(!val)return;
+    const dl=document.getElementById('mDl')?.value||'';
+    S.goals.push({id:uid(),title:val,deadline:dl});
+    checkAchs();
+  }else if(ctx.type==='avatar'){
+    if(val)S.name=val;
+  }
+  sv();rAll();closeOv('ov');
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&document.getElementById('ov').classList.contains('on'))confirmM();
+  if(e.key==='Escape'){closeOv('ov');closeOv('subOv');}
+});
+if(tg){tg.BackButton.onClick(()=>{
+  if(document.getElementById('ov').classList.contains('on')){closeOv('ov');return;}
+  if(document.getElementById('subOv').classList.contains('on')){closeOv('subOv');return;}
+  tg.BackButton.hide();
+});}
+
+function init(){
+  if(IS_TG&&(!S.name||S.name==='Искатель')){const u=tg?.initDataUnsafe?.user;if(u?.first_name)S.name=u.first_name;}
+  if(!S.sub)document.getElementById('btnP').style.display='inline-block';
+  curDayIdx=todayIdx();
+  rAll();
+}
+init();
+</script>
+</body>
+</html>
