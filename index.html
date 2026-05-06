@@ -19,9 +19,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 #shell{display:flex;flex-direction:column;height:100vh;height:100dvh;}
 #content{flex:1;overflow-y:auto;overflow-x:hidden;
   padding-bottom:calc(var(--nav-h)+18px+env(safe-area-inset-bottom));
-  -webkit-overflow-scrolling:touch;}
+  -webkit-overflow-scrolling:touch;scroll-behavior:smooth;}
 
-/* HEADER */
+/* ── HEADER ── */
 .hdr{background:var(--card);border-bottom:1px solid var(--border);
   padding:10px 16px;display:flex;align-items:center;justify-content:space-between;
   box-shadow:0 1px 8px rgba(0,0,0,.05);}
@@ -31,14 +31,15 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .av-btn img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
 .hdr-name{font-size:.95rem;font-weight:700;}
 .hdr-lvl{font-size:.63rem;color:var(--sub);margin-top:1px;}
-.hdr-xp-wrap{flex:1;max-width:110px;margin:0 8px;}
+.hdr-xp-wrap{flex:1;max-width:100px;margin:0 8px;}
+.hdr-xp-lbl{font-size:.58rem;color:var(--sub);text-align:right;}
 .hdr-xp-bar{height:5px;background:var(--border);border-radius:3px;margin-top:3px;}
 .hdr-xp-fill{height:5px;background:var(--gold2);border-radius:3px;transition:width .4s;}
-.btn-prem{font-size:.68rem;padding:5px 9px;border-radius:20px;
+.btn-prem{font-size:.65rem;padding:5px 9px;border-radius:20px;
   background:linear-gradient(135deg,var(--gold),var(--gold2));color:#6b4500;
-  border:none;font-weight:700;cursor:pointer;}
+  border:none;font-weight:700;cursor:pointer;white-space:nowrap;}
 
-/* NAV */
+/* ── NAV ── */
 #nav{position:fixed;bottom:0;left:0;right:0;
   height:calc(var(--nav-h) + env(safe-area-inset-bottom));
   padding-bottom:env(safe-area-inset-bottom);
@@ -46,27 +47,28 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
   display:flex;z-index:200;box-shadow:0 -3px 16px rgba(0,0,0,.06);}
 .nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:3px;background:none;border:none;cursor:pointer;color:var(--sub);
-  font-size:.48rem;font-weight:600;text-transform:uppercase;letter-spacing:.3px;padding:6px 1px;position:relative;}
+  font-size:.48rem;font-weight:600;text-transform:uppercase;letter-spacing:.3px;
+  padding:6px 1px;position:relative;transition:color .2s;}
 .nb svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
 .nb.active{color:var(--primary);}
 .nb.active::after{content:'';position:absolute;bottom:5px;width:18px;height:3px;border-radius:2px;background:var(--primary);}
 
-/* FAB */
+/* ── FAB ── */
 .fab{position:fixed;right:18px;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 10px);
   width:52px;height:52px;border-radius:50%;background:var(--primary);color:white;
   border:none;font-size:26px;display:flex;align-items:center;justify-content:center;
   box-shadow:0 4px 16px rgba(61,139,110,.4);z-index:150;cursor:pointer;}
 
-/* PAGES */
+/* ── PAGES ── */
 .page{display:none;}.page.active{display:block;}
 .sec{font-size:.7rem;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;margin:14px 16px 8px;}
 
-/* CARDS */
+/* ── CARDS ── */
 .card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);
   margin:0 14px 12px;border:1px solid var(--border);overflow:hidden;}
 .card-body{padding:12px 14px;}
 
-/* XP HERO */
+/* ── XP HERO ── */
 .xp-card{margin:14px 14px 12px;border-radius:var(--r);padding:16px;
   background:linear-gradient(135deg,#2d6e57,#3d8b6e,#5bbf95);color:white;}
 .xp-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
@@ -77,26 +79,25 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .xp-fill{height:7px;background:var(--gold2);border-radius:4px;transition:width .5s;}
 .dash-stats{display:flex;gap:10px;margin-top:8px;}
 .dash-stat{flex:1;background:rgba(255,255,255,.15);border-radius:12px;padding:8px 6px;text-align:center;}
-.dash-stat-val{font-size:1.2rem;font-weight:900;}
-.dash-stat-lbl{font-size:.6rem;opacity:.8;margin-top:1px;}
+.dash-stat-val{font-size:1.15rem;font-weight:900;}
+.dash-stat-lbl{font-size:.58rem;opacity:.82;margin-top:1px;}
 
-/* XP FLASH */
+/* ── XP FLASH ── */
 .xp-flash{position:fixed;pointer-events:none;font-size:.85rem;font-weight:800;
-  color:var(--gold);z-index:9999;animation:xpPop 1.1s ease forwards;}
+  color:var(--gold);z-index:9999;animation:xpPop 1.1s ease forwards;white-space:nowrap;}
 @keyframes xpPop{0%{opacity:1;transform:translateY(0) scale(1)}
-  60%{opacity:1;transform:translateY(-28px) scale(1.2)}
-  100%{opacity:0;transform:translateY(-50px) scale(.9)}}
+  60%{opacity:1;transform:translateY(-28px) scale(1.2)}100%{opacity:0;transform:translateY(-50px) scale(.9)}}
 
-/* TODAY HABITS */
+/* ── TODAY HABITS ── */
 .h-today-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);}
 .h-today-row:last-child{border-bottom:none;}
 .h-ch{width:22px;height:22px;border-radius:6px;accent-color:var(--primary);cursor:pointer;}
 .h-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 .h-lbl{flex:1;font-size:.88rem;font-weight:600;}
 .h-xp-tag{font-size:.6rem;background:#e8f5ee;color:var(--primary);padding:2px 7px;border-radius:20px;font-weight:700;}
-.h-goal-tag{font-size:.6rem;background:#eee3f5;color:var(--c2);padding:2px 7px;border-radius:20px;font-weight:600;}
+.h-goal-tag{font-size:.6rem;background:#eee3f5;color:var(--c2);padding:2px 6px;border-radius:20px;font-weight:600;margin-top:2px;display:inline-block;}
 
-/* HABITS PAGE */
+/* ── HABITS PAGE ── */
 .hab-card{border-bottom:1px solid var(--border);padding:12px 14px;}
 .hab-card:last-child{border-bottom:none;}
 .hab-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px;}
@@ -105,29 +106,28 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .hab-days{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px;}
 .hd-chip{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;
   justify-content:center;font-size:.68rem;font-weight:700;cursor:pointer;
-  transition:all .15s;border:1.5px solid var(--border);color:var(--sub);}
+  transition:all .15s;border:1.5px solid var(--border);color:var(--sub);user-select:none;}
 .hd-chip.done{color:white;border-color:transparent;}
 .hd-chip.off{opacity:.3;cursor:default;}
 .hab-prog-bg{height:5px;background:var(--border);border-radius:3px;}
 .hab-prog-fill{height:5px;border-radius:3px;transition:width .4s;}
 .del-btn{background:none;border:none;color:var(--red);font-size:1rem;cursor:pointer;padding:4px;flex-shrink:0;}
 
-/* PLANNER */
+/* ── PLANNER ── */
 #page-plan{display:none;flex-direction:column;}
 #page-plan.active{display:flex;height:calc(100dvh - 60px - env(safe-area-inset-bottom));}
 .wk-nav{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;}
 .wk-nav button{background:none;border:1px solid var(--border);border-radius:10px;
-  padding:5px 12px;color:var(--primary);font-weight:700;cursor:pointer;font-size:.85rem;}
+  padding:5px 12px;color:var(--primary);font-weight:700;cursor:pointer;font-size:.82rem;}
 .wk-lbl{font-size:.82rem;font-weight:700;}
-.plan-dots{display:flex;justify-content:center;gap:5px;padding:6px;
-  background:var(--card);border-bottom:1px solid var(--border);}
+.plan-dots{display:flex;justify-content:center;gap:5px;padding:6px;background:var(--card);border-bottom:1px solid var(--border);}
 .pdot{height:8px;border-radius:4px;border:none;cursor:pointer;transition:all .2s;width:8px;}
 .pdot.active{width:22px;}
 .plan-slider-wrap{flex:1;overflow:hidden;}
 .plan-slider{display:flex;height:100%;transition:transform .32s cubic-bezier(.4,0,.2,1);}
 .day-slide{flex-shrink:0;width:100vw;height:100%;overflow-y:auto;padding-bottom:20px;}
 .ds-head{min-height:32vh;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;padding:18px;position:relative;}
+  justify-content:center;padding:18px;}
 .ds-day-name{font-size:1.2rem;font-weight:800;color:white;}
 .ds-date{font-size:.78rem;color:rgba(255,255,255,.75);margin-top:2px;}
 .ds-today-tag{margin-top:5px;background:rgba(255,255,255,.25);color:white;
@@ -151,7 +151,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .btn-add-t{display:flex;align-items:center;gap:6px;margin-top:10px;padding:9px 12px;
   border-radius:12px;border:1.5px dashed;background:none;cursor:pointer;font-size:.83rem;font-weight:700;width:100%;}
 
-/* GOALS */
+/* ── GOALS ── */
 .goal-card{border-bottom:1px solid var(--border);padding:14px;}
 .goal-card:last-child{border-bottom:none;}
 .goal-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px;}
@@ -160,64 +160,115 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .goal-prog-bg{height:8px;background:var(--border);border-radius:4px;margin:8px 0 4px;}
 .goal-prog-fill{height:8px;border-radius:4px;transition:width .5s;}
 .goal-pct-row{display:flex;justify-content:space-between;align-items:center;}
-.goal-pct{font-size:.72rem;color:var(--sub);}
-.goal-badge{font-size:.65rem;padding:2px 8px;border-radius:20px;font-weight:700;}
-.goal-linked-hab{margin-top:8px;background:#f0faf5;border-radius:10px;padding:8px 10px;
-  display:flex;align-items:center;gap:8px;}
+.goal-pct{font-size:.7rem;color:var(--sub);}
+.goal-badge{font-size:.63rem;padding:2px 8px;border-radius:20px;font-weight:700;display:inline-block;width:fit-content;}
+.goal-linked-hab{margin-top:8px;background:#f0faf5;border-radius:10px;padding:8px 10px;display:flex;align-items:center;gap:8px;}
 .glh-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.glh-info{flex:1;}
 .glh-name{font-size:.8rem;font-weight:700;}
 .glh-sub{font-size:.65rem;color:var(--sub);}
-.goal-week-grid{margin-top:8px;}
-.gwg-row{display:flex;gap:4px;margin-bottom:4px;}
-.gwg-chip{flex:1;height:24px;border-radius:6px;font-size:.6rem;font-weight:700;
-  display:flex;align-items:center;justify-content:center;color:white;opacity:.35;}
+.gwg-row{display:flex;gap:4px;margin-top:6px;}
+.gwg-chip{flex:1;height:24px;border-radius:6px;font-size:.58rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;color:white;opacity:.28;}
 .gwg-chip.done{opacity:1;}
 
-/* BOOKS */
-.book-list{display:flex;flex-direction:column;}
-.book-card{display:flex;gap:12px;padding:13px;border-bottom:1px solid var(--border);}
-.book-card:last-child{border-bottom:none;}
-.b-cover-wrap{flex-shrink:0;width:62px;height:90px;border-radius:8px;overflow:hidden;
-  background:#e8f0ec;display:flex;align-items:center;justify-content:center;cursor:pointer;
-  box-shadow:0 2px 8px rgba(0,0,0,.12);position:relative;}
-.b-cover-wrap img{width:100%;height:100%;object-fit:cover;}
-.b-cover-ph{font-size:26px;}
-.b-cover-edit{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.45);
-  text-align:center;font-size:11px;color:white;padding:2px 0;}
-.b-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;}
-.b-title{font-size:.92rem;font-weight:700;color:var(--text);cursor:pointer;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.b-author{font-size:.72rem;color:var(--sub);}
-.b-stars{display:flex;gap:1px;margin:1px 0;}
-.b-star{font-size:17px;color:#ddd;cursor:pointer;transition:color .15s;}
-.b-star.on{color:var(--gold);}
-.b-status-badge{font-size:.6rem;font-weight:700;padding:2px 8px;border-radius:20px;width:fit-content;}
-.b-status-reading{background:#e3f5ec;color:#2d6e57;}
-.b-status-done{background:#eae3f5;color:#5a3d8b;}
-.b-status-want{background:#fdf3e3;color:#7a5200;}
-.b-prog-wrap{margin-top:4px;}
-.b-prog-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;}
-.b-prog-label span{font-size:.68rem;color:var(--sub);}
-.b-prog-label strong{font-size:.7rem;color:var(--primary);}
-.b-prog-bg{height:6px;background:var(--border);border-radius:3px;}
-.b-prog-fill{height:6px;border-radius:3px;transition:width .5s;background:linear-gradient(90deg,var(--primary),var(--accent));}
-.b-pages-row{display:flex;align-items:center;gap:6px;margin-top:4px;}
-.b-page-inp{width:50px;border:1.5px solid var(--border);border-radius:8px;
-  padding:3px 5px;text-align:center;font-size:.8rem;color:var(--text);background:var(--bg);outline:none;}
-.b-page-inp:focus{border-color:var(--primary);}
-.b-total-lbl{font-size:.78rem;color:var(--sub);}
+/* ════════════════════════════════════
+   BOOKS — НОВЫЙ ДИЗАЙН
+════════════════════════════════════ */
+/* Фильтр-таббар */
+.bk-tabs{display:flex;gap:0;padding:12px 14px 8px;background:transparent;}
+.bk-tab{flex:1;padding:8px 4px;border-radius:24px;border:1.5px solid var(--border);
+  font-size:.75rem;font-weight:700;cursor:pointer;background:none;color:var(--sub);
+  text-align:center;transition:all .2s;margin:0 3px;}
+.bk-tab.active{background:var(--primary);color:white;border-color:var(--primary);}
 
-/* NOTES OVERLAY */
+/* Статистика читателя */
+.bk-stats{display:flex;gap:0;margin:0 14px 12px;background:var(--card);
+  border-radius:var(--r);box-shadow:var(--sh);border:1px solid var(--border);overflow:hidden;}
+.bk-stat{flex:1;padding:14px 8px;text-align:center;position:relative;}
+.bk-stat+.bk-stat::before{content:'';position:absolute;left:0;top:20%;height:60%;
+  width:1px;background:var(--border);}
+.bk-stat-icon{font-size:1.3rem;margin-bottom:4px;}
+.bk-stat-val{font-size:1.3rem;font-weight:900;color:var(--primary);}
+.bk-stat-lbl{font-size:.6rem;color:var(--sub);margin-top:2px;line-height:1.3;}
+
+/* Стрик-баннер */
+.bk-streak{margin:0 14px 12px;background:linear-gradient(135deg,#e07a5f,#f2b705);
+  border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:10px;color:white;}
+.bk-streak-icon{font-size:1.8rem;}
+.bk-streak-val{font-size:1.4rem;font-weight:900;}
+.bk-streak-lbl{font-size:.72rem;opacity:.9;}
+
+/* Сетка книг */
+.bk-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:0 14px 14px;}
+.bk-grid-item{position:relative;border-radius:14px;overflow:hidden;cursor:pointer;
+  box-shadow:0 4px 18px rgba(0,0,0,.18);aspect-ratio:2/3;background:#2a3a30;}
+.bk-grid-cover{width:100%;height:100%;object-fit:cover;display:block;}
+.bk-grid-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;background:linear-gradient(135deg,#2d6e57,#1a3d30);color:white;padding:12px;text-align:center;}
+.bk-grid-ph-icon{font-size:2.5rem;margin-bottom:8px;}
+.bk-grid-ph-title{font-size:.78rem;font-weight:700;line-height:1.3;}
+.bk-grid-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,rgba(0,0,0,.0) 45%);}
+/* Круговой прогресс поверх обложки */
+.bk-circ-wrap{position:absolute;top:8px;right:8px;width:48px;height:48px;}
+.bk-circ-wrap svg{width:48px;height:48px;transform:rotate(-90deg);}
+.bk-circ-bg{fill:rgba(0,0,0,.45);} /* фоновый круг */
+.bk-circ-track{fill:none;stroke:rgba(255,255,255,.25);stroke-width:4;}
+.bk-circ-fill{fill:none;stroke:white;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset .5s;}
+.bk-circ-fill.done-clr{stroke:var(--gold2);}
+.bk-circ-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;font-weight:900;color:white;text-shadow:0 1px 3px rgba(0,0,0,.6);}
+/* Нижняя подпись на карточке */
+.bk-grid-info{position:absolute;bottom:0;left:0;right:0;padding:10px 10px 8px;}
+.bk-grid-title{font-size:.78rem;font-weight:800;color:white;line-height:1.25;
+  text-shadow:0 1px 4px rgba(0,0,0,.8);display:-webkit-box;-webkit-line-clamp:2;
+  -webkit-box-orient:vertical;overflow:hidden;}
+.bk-grid-author{font-size:.62rem;color:rgba(255,255,255,.7);margin-top:2px;
+  text-shadow:0 1px 3px rgba(0,0,0,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* Бейдж статуса */
+.bk-status-dot{position:absolute;top:8px;left:8px;width:8px;height:8px;border-radius:50%;
+  box-shadow:0 0 0 2px rgba(255,255,255,.5);}
+
+/* Пустой список */
+.bk-empty{padding:40px 20px;text-align:center;color:var(--sub);}
+.bk-empty-icon{font-size:3rem;margin-bottom:12px;}
+.bk-empty-txt{font-size:.9rem;font-weight:600;}
+.bk-empty-sub{font-size:.78rem;margin-top:6px;opacity:.7;}
+
+/* ── NOTES OVERLAY ── */
 .notes-over{position:fixed;inset:0;background:var(--bg);z-index:2000;display:none;flex-direction:column;}
 .notes-over.on{display:flex;}
-.no-hdr{background:var(--card);border-bottom:1px solid var(--border);
-  padding:12px 16px;display:flex;align-items:center;gap:10px;}
-.no-back{background:none;border:none;font-size:22px;color:var(--primary);cursor:pointer;padding:4px;}
+.no-hdr{background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;}
+.no-back{background:none;border:none;font-size:22px;color:var(--primary);cursor:pointer;padding:4px;display:flex;}
 .no-title{flex:1;font-size:1rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .no-del{background:none;border:none;color:var(--red);font-size:.78rem;font-weight:700;cursor:pointer;}
+.no-bk-hero{background:var(--card);border-bottom:1px solid var(--border);padding:14px 16px;}
+.no-bk-hero-inner{display:flex;gap:12px;align-items:flex-start;}
+.no-bk-cover{width:56px;height:80px;border-radius:8px;object-fit:cover;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.2);}
+.no-bk-cover-ph{width:56px;height:80px;border-radius:8px;background:linear-gradient(135deg,#2d6e57,#5bbf95);
+  display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.no-bk-title{font-size:.95rem;font-weight:800;color:var(--text);}
+.no-bk-author{font-size:.75rem;color:var(--sub);margin-top:2px;}
+/* Прогресс в нотах */
+.no-prog-wrap{margin-top:10px;}
+.no-prog-row{display:flex;justify-content:space-between;font-size:.72rem;color:var(--sub);margin-bottom:4px;}
+.no-prog-bg{height:7px;background:var(--border);border-radius:4px;}
+.no-prog-fill{height:7px;border-radius:4px;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .5s;}
+/* Страницы */
+.no-pages-row{display:flex;align-items:center;gap:8px;margin-top:8px;}
+.no-page-inp{width:60px;border:1.5px solid var(--border);border-radius:10px;
+  padding:5px 8px;text-align:center;font-size:.85rem;outline:none;background:var(--bg);}
+.no-page-inp:focus{border-color:var(--primary);}
+/* Звёзды */
+.no-stars{display:flex;gap:4px;margin-top:8px;}
+.no-star{font-size:22px;color:#ddd;cursor:pointer;transition:color .15s;}
+.no-star.on{color:var(--gold);}
+/* Статус кнопки */
+.no-status-row{display:flex;gap:6px;margin-top:8px;}
+.no-st-btn{flex:1;padding:6px 4px;border-radius:10px;border:1.5px solid var(--border);
+  font-size:.68rem;font-weight:700;cursor:pointer;background:none;color:var(--sub);text-align:center;transition:all .15s;}
+.no-st-btn.active{color:white;border-color:transparent;}
+/* Цитаты */
 .no-body{flex:1;overflow-y:auto;padding:14px;}
-.no-bk-info{background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px;}
 .quote-item{background:var(--card);border-radius:12px;padding:11px 14px;margin-bottom:10px;
   border-left:4px solid var(--primary);font-size:.85rem;line-height:1.5;position:relative;}
 .quote-del{position:absolute;top:8px;right:8px;background:none;border:none;color:#ccc;font-size:1rem;cursor:pointer;}
@@ -227,18 +278,19 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .no-inp:focus{border-color:var(--primary);}
 .no-send{padding:0 14px;background:var(--primary);color:white;border:none;border-radius:12px;font-size:1.1rem;cursor:pointer;}
 
-/* MODALS */
+/* ── MODALS ── */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:flex-end;}
 .overlay.on{display:flex;}
-.modal{background:white;width:100%;padding:20px 20px;border-radius:20px 20px 0 0;
+.modal{background:white;width:100%;padding:20px;border-radius:20px 20px 0 0;
   max-height:88vh;overflow-y:auto;padding-bottom:calc(20px + env(safe-area-inset-bottom));}
 .m-title{font-size:1rem;font-weight:800;margin-bottom:12px;}
 .finp{width:100%;padding:11px 13px;margin:5px 0;border:1.5px solid var(--border);
   border-radius:12px;font-size:.88rem;color:var(--text);background:var(--bg);outline:none;display:block;}
 .finp:focus{border-color:var(--primary);}
-select.finp{-webkit-appearance:none;appearance:none;}
+select.finp{-webkit-appearance:none;}
 .btn-main{width:100%;padding:13px;margin-top:10px;border-radius:14px;border:none;
-  background:var(--primary);color:white;font-size:.95rem;font-weight:700;cursor:pointer;}
+  background:var(--primary);color:white;font-size:.95rem;font-weight:700;cursor:pointer;transition:opacity .2s;}
+.btn-main:disabled{opacity:.4;cursor:default;}
 .btn-cancel{width:100%;padding:11px;margin-top:6px;border-radius:14px;
   border:1.5px solid var(--border);background:none;color:var(--sub);font-size:.88rem;cursor:pointer;}
 .day-sel{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0;}
@@ -255,7 +307,7 @@ select.finp{-webkit-appearance:none;appearance:none;}
 .av-preview{width:84px;height:84px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 12px;border:3px solid var(--accent);}
 .av-ph{width:84px;height:84px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto 12px;}
 
-/* ACHIEVEMENT GRID */
+/* ── ACHIEVEMENTS ── */
 .ach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:10px;}
 .ach-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 4px;
   border-radius:12px;border:1.5px solid var(--border);text-align:center;}
@@ -263,12 +315,6 @@ select.finp{-webkit-appearance:none;appearance:none;}
 .ach-icon{font-size:1.4rem;}
 .ach-name{font-size:.58rem;font-weight:700;color:var(--sub);}
 .ach-item.unlocked .ach-name{color:var(--primary);}
-
-/* GOAL PROGRESS DETAIL */
-.goal-prog-detail{background:#f8fdf9;border-radius:12px;padding:10px 12px;margin-top:8px;border:1px solid var(--border);}
-.gpd-row{display:flex;justify-content:space-between;align-items:center;font-size:.75rem;margin-bottom:4px;}
-.gpd-row span{color:var(--sub);}
-.gpd-row strong{color:var(--text);}
 </style>
 </head>
 <body>
@@ -286,7 +332,7 @@ select.finp{-webkit-appearance:none;appearance:none;}
       </div>
     </div>
     <div class="hdr-xp-wrap">
-      <div style="font-size:.6rem;color:var(--sub);text-align:right;" id="hdrXpN">0/100</div>
+      <div class="hdr-xp-lbl" id="hdrXpN">0/100</div>
       <div class="hdr-xp-bar"><div class="hdr-xp-fill" id="hdrXpFill" style="width:0%"></div></div>
     </div>
     <button class="btn-prem" id="btnPrem" onclick="openSubModal()">⭐ Premium</button>
@@ -342,15 +388,39 @@ select.finp{-webkit-appearance:none;appearance:none;}
       <div class="card" id="goalsList"></div>
     </div>
 
-    <!-- BOOKS -->
+    <!-- BOOKS — НОВЫЙ ДИЗАЙН -->
     <div class="page" id="page-books">
-      <div class="sec">Моя библиотека</div>
-      <div class="card"><div class="book-list" id="booksListInner"></div></div>
+      <!-- Табы фильтра -->
+      <div class="bk-tabs">
+        <button class="bk-tab active" data-filter="reading" onclick="setBkFilter('reading',this)">Читаю</button>
+        <button class="bk-tab" data-filter="done" onclick="setBkFilter('done',this)">Прочитано</button>
+        <button class="bk-tab" data-filter="want" onclick="setBkFilter('want',this)">Хочу читать</button>
+      </div>
+      <!-- Статистика -->
+      <div class="bk-stats">
+        <div class="bk-stat">
+          <div class="bk-stat-icon">📚</div>
+          <div class="bk-stat-val" id="bkStatRead">0</div>
+          <div class="bk-stat-lbl">Книг прочитано в этом году</div>
+        </div>
+        <div class="bk-stat">
+          <div class="bk-stat-icon">📄</div>
+          <div class="bk-stat-val" id="bkStatPages">0</div>
+          <div class="bk-stat-lbl">Страниц прочитано</div>
+        </div>
+        <div class="bk-stat">
+          <div class="bk-stat-icon">🔥</div>
+          <div class="bk-stat-val" id="bkStatStreak">0</div>
+          <div class="bk-stat-lbl">Дней серия чтения</div>
+        </div>
+      </div>
+      <!-- Сетка книг -->
+      <div class="bk-grid" id="bkGrid"></div>
     </div>
 
-  </div>
+  </div><!-- /content -->
 
-  <!-- BOTTOM NAV -->
+  <!-- NAV -->
   <nav id="nav">
     <button class="nb active" onclick="go('dash',this)">
       <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -375,6 +445,7 @@ select.finp{-webkit-appearance:none;appearance:none;}
   </nav>
 </div>
 
+<!-- FAB -->
 <button class="fab" onclick="fabAct()">+</button>
 
 <!-- MAIN MODAL -->
@@ -391,22 +462,49 @@ select.finp{-webkit-appearance:none;appearance:none;}
 <div class="overlay" id="subOv">
   <div class="modal">
     <div class="m-title">⭐ ЛайфКвест Premium</div>
-    <p style="color:var(--sub);font-size:.85rem;margin-bottom:14px;">Разблокируй неограниченные привычки, цели, книги и задачи!</p>
+    <p style="color:var(--sub);font-size:.85rem;margin-bottom:14px;">Разблокируй неограниченные привычки, цели и книги!</p>
     <button class="btn-main" onclick="buySub()">Активировать Premium</button>
     <button class="btn-cancel" onclick="document.getElementById('subOv').classList.remove('on')">Позже</button>
   </div>
 </div>
 
-<!-- BOOK NOTES OVERLAY -->
+<!-- BOOK NOTES / DETAIL OVERLAY -->
 <div class="notes-over" id="notesOver">
   <div class="no-hdr">
     <button class="no-back" onclick="closeNotes()">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
     </button>
-    <div class="no-title" id="noTitle">Заметки</div>
+    <div class="no-title" id="noTitle">Книга</div>
     <button class="no-del" onclick="delCurBook()">Удалить</button>
   </div>
-  <div class="no-bk-info" id="noBkInfo"></div>
+
+  <!-- Hero block с фото, прогрессом, страницами, звёздами, статусом -->
+  <div class="no-bk-hero">
+    <div class="no-bk-hero-inner">
+      <div id="noBkCover"></div>
+      <div style="flex:1;min-width:0;">
+        <div class="no-bk-title" id="noBkTitle"></div>
+        <div class="no-bk-author" id="noBkAuthor"></div>
+        <div class="no-stars" id="noStars"></div>
+      </div>
+    </div>
+    <!-- Прогресс страниц -->
+    <div class="no-prog-wrap">
+      <div class="no-prog-row">
+        <span id="noPagesLbl">0 / 0 стр.</span>
+        <strong id="noPct" style="color:var(--primary);">0%</strong>
+      </div>
+      <div class="no-prog-bg"><div class="no-prog-fill" id="noProgFill" style="width:0%"></div></div>
+    </div>
+    <div class="no-pages-row">
+      <input type="number" class="no-page-inp" id="noPageInp" placeholder="0" min="0">
+      <span style="font-size:.82rem;color:var(--sub);">/ <span id="noPageTotal">0</span> стр.</span>
+      <button onclick="savePageFromNotes()" style="padding:6px 14px;background:var(--primary);color:white;border:none;border-radius:10px;font-size:.82rem;font-weight:700;cursor:pointer;margin-left:auto;">Сохранить</button>
+    </div>
+    <!-- Статус -->
+    <div class="no-status-row" id="noStatusRow"></div>
+  </div>
+
   <div class="no-body" id="nList"></div>
   <div class="no-inp-wrap">
     <input type="text" class="no-inp" id="nInp" placeholder="Добавить цитату или заметку…">
@@ -419,57 +517,57 @@ select.finp{-webkit-appearance:none;appearance:none;}
 <input type="file" id="bookCoverFile" accept="image/*" style="display:none" onchange="handleBookCoverUpload(event)">
 
 <script>
-/* ════════════════════════════════════════
+/* ══════════════════════════════════════════════
    TELEGRAM
-════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 const tg = window.Telegram?.WebApp || null;
 const IS_TG = !!(tg?.initData?.length > 0);
 if (tg) { tg.ready(); tg.expand(); tg.setHeaderColor('#2d6e57'); tg.setBackgroundColor('#f2f6f3'); }
 
-/* ════════════════════════════════════════
+/* ══════════════════════════════════════════════
    CONSTANTS
-════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 const COLORS  = ['#5bbf95','#5b9bbf','#a07cc5','#e07a5f','#f2b705','#e05c8a','#3d8b6e'];
 const DN      = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
 const DN_FULL = ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'];
 const LEVELS  = ['Новичок','Ученик','Искатель','Воин','Мастер','Герой','Легенда','Бог'];
 
 const ACHS = [
-  {id:'first_xp',   icon:'✅', name:'Первый шаг',    req:s=>(s.xp||0)>=10},
-  {id:'xp_100',     icon:'⚡', name:'100 XP',         req:s=>(s.xp||0)>=100},
-  {id:'xp_500',     icon:'💎', name:'500 XP',         req:s=>(s.xp||0)>=500},
-  {id:'xp_1000',    icon:'👑', name:'1000 XP',        req:s=>(s.xp||0)>=1000},
-  {id:'hab_3',      icon:'🔥', name:'3 привычки',     req:s=>(s.habits||[]).length>=3},
-  {id:'hab_7',      icon:'🌟', name:'7 привычек',     req:s=>(s.habits||[]).length>=7},
-  {id:'goal_1',     icon:'🎯', name:'Первая цель',    req:s=>(s.goals||[]).length>=1},
-  {id:'book_1',     icon:'📖', name:'Первая книга',   req:s=>(s.books||[]).length>=1},
-  {id:'book_done',  icon:'🏆', name:'Книга прочтена', req:s=>(s.books||[]).some(b=>b.current>=b.total&&b.total>0)},
-  {id:'goal_done',  icon:'🥇', name:'Цель выполнена', req:s=>(s.goals||[]).some(g=>calcGoalPct(g)>=100)},
+  {id:'first_xp',  icon:'✅', name:'Первый шаг',    req:s=>(s.xp||0)>=10},
+  {id:'xp_100',    icon:'⚡', name:'100 XP',         req:s=>(s.xp||0)>=100},
+  {id:'xp_500',    icon:'💎', name:'500 XP',         req:s=>(s.xp||0)>=500},
+  {id:'xp_1000',   icon:'👑', name:'1000 XP',        req:s=>(s.xp||0)>=1000},
+  {id:'hab_3',     icon:'🔥', name:'3 привычки',     req:s=>(s.habits||[]).length>=3},
+  {id:'hab_7',     icon:'🌟', name:'7 привычек',     req:s=>(s.habits||[]).length>=7},
+  {id:'goal_1',    icon:'🎯', name:'Первая цель',    req:s=>(s.goals||[]).length>=1},
+  {id:'book_1',    icon:'📖', name:'Первая книга',   req:s=>(s.books||[]).length>=1},
+  {id:'book_done', icon:'🏆', name:'Книга прочтена', req:s=>(s.books||[]).some(b=>b.current>=b.total&&b.total>0)},
+  {id:'goal_done', icon:'🥇', name:'Цель выполнена', req:s=>(s.goals||[]).some(g=>calcGoalPct(g)>=100)},
 ];
 
-const STATUS_LABELS = {reading:'Читаю', done:'Прочитано', want:'Хочу прочитать'};
-const STATUS_COLORS = {reading:'b-status-reading', done:'b-status-done', want:'b-status-want'};
+const STATUS_LABELS = {reading:'Читаю', done:'Прочитано', want:'Хочу читать'};
+const STATUS_DOT_COLORS = {reading:'#5bbf95', done:'#a07cc5', want:'#f2b705'};
 
-/* ════════════════════════════════════════
+/* ══════════════════════════════════════════════
    STATE
-════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 function defaultState() {
   return {
     name: (IS_TG && tg?.initDataUnsafe?.user?.first_name) || 'Искатель',
     isLoggedIn: IS_TG, isSubscribed: false,
     xp: 0, avatar: null, unlockedAchs: [],
-    habits: [], weeks: {}, goals: [], books: []
+    habits: [], weeks: {}, goals: [], books: [],
+    readingDays: [] // массив дат 'YYYY-MM-DD' когда пользователь вносил страницы
   };
 }
 
 let S = defaultState();
-try { const d = localStorage.getItem('lq_v3'); if (d) S = { ...defaultState(), ...JSON.parse(d) }; } catch(e) {}
+try { const d = localStorage.getItem('lq_v4'); if (d) S = { ...defaultState(), ...JSON.parse(d) }; } catch(e) {}
+function sv() { localStorage.setItem('lq_v4', JSON.stringify(S)); }
 
-function sv() { localStorage.setItem('lq_v3', JSON.stringify(S)); }
-
-/* ════════════════════════════════════════
+/* ══════════════════════════════════════════════
    HELPERS
-════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 function uid() { return Math.random().toString(36).slice(2,9); }
 
 function lvData(xp) {
@@ -478,7 +576,7 @@ function lvData(xp) {
   return {lv, into:xp-used, need:lv*100, pct:Math.round((xp-used)/(lv*100)*100), name:LEVELS[Math.min(lv-1,LEVELS.length-1)]};
 }
 
-function getMon(off=0) {
+function getMon(off=0){
   const d=new Date(); d.setHours(0,0,0,0);
   const day=d.getDay(); d.setDate(d.getDate()+(day===0?-6:1-day)+off*7); return d;
 }
@@ -492,8 +590,23 @@ function getWD(off=wOff){
 }
 function todayIdx(){ const d=new Date().getDay(); return d===0?6:d-1; }
 function isCW(){ return wOff===0; }
-function dateStr(d){ return d.toISOString().split('T')[0]; }
-function today(){ return dateStr(new Date()); }
+function todayStr(){ return new Date().toISOString().split('T')[0]; }
+function curYear(){ return new Date().getFullYear(); }
+
+/* Стрик чтения */
+function calcReadingStreak(){
+  const days = [...new Set(S.readingDays||[])].sort();
+  if(!days.length) return 0;
+  let streak=0; const today=todayStr();
+  let cur=new Date(today);
+  for(let i=0;i<365;i++){
+    const ds=cur.toISOString().split('T')[0];
+    if(days.includes(ds)) streak++;
+    else if(i>0) break; // допускаем пропуск только если это сегодня и ещё не отмечен
+    cur.setDate(cur.getDate()-1);
+  }
+  return streak;
+}
 
 function addXp(n,el){
   S.xp+=n;
@@ -502,18 +615,17 @@ function addXp(n,el){
     const r=el.getBoundingClientRect();
     const f=document.createElement('div'); f.className='xp-flash';
     f.textContent=`+${n} XP`;
-    f.style.cssText=`left:${r.left+r.width/2-20}px;top:${r.top+window.scrollY-10}px;`;
+    f.style.cssText=`left:${r.left+r.width/2-18}px;top:${r.top+window.scrollY-10}px;`;
     document.body.appendChild(f); setTimeout(()=>f.remove(),1100);
   }
   checkAchs();
 }
-function subXp(n){ S.xp=Math.max(0,S.xp-n); checkAchs(); }
+function subXp(n){ S.xp=Math.max(0,S.xp-n); }
 
 function checkAchs(){
   const ua=S.unlockedAchs||[];
-  let ch=false;
-  ACHS.forEach(a=>{ if(!ua.includes(a.id)&&a.req(S)){ ua.push(a.id); ch=true; } });
-  if(ch) S.unlockedAchs=ua;
+  ACHS.forEach(a=>{ if(!ua.includes(a.id)&&a.req(S)) ua.push(a.id); });
+  S.unlockedAchs=ua;
 }
 
 function checkPrem(feature){
@@ -526,95 +638,83 @@ function checkPrem(feature){
   return true;
 }
 
-/* ════════════════════════════════════════
-   GOAL PROGRESS CALCULATION
-   Логика: цель связана с привычкой.
-   Прогресс = сумма выполнений привычки
-   за период / (targetPerWeek × durationWeeks)
-   Максимум: targetPerWeek отметок в неделю засчитывается.
-════════════════════════════════════════ */
-function calcGoalPct(g) {
-  if (!g.habitId) return 0;
-  if (!g.targetPerWeek || !g.startDate || !g.endDate) return 0;
-
-  const start = new Date(g.startDate);
-  const end   = new Date(g.endDate);
-  const today_ = new Date(); today_.setHours(0,0,0,0);
-
-  // Считаем кол-во полных+текущих недель в периоде цели
-  const msPerWeek = 7*24*60*60*1000;
-  const totalWeeks = Math.max(1, Math.ceil((end-start)/msPerWeek));
-  const totalTarget = g.targetPerWeek * totalWeeks;
-
-  // Собираем все отметки привычки по всем неделям
-  let factTotal = 0;
-  Object.keys(S.weeks).forEach(wk => {
-    const wdHabits = (S.weeks[wk].habits || {})[g.habitId] || {};
-    // Восстанавливаем дату начала этой недели из ключа w_YYYY_MM_DD
-    const parts = wk.split('_'); // ['w','YYYY','M','D']
-    if (parts.length < 4) return;
-    const monDate = new Date(parseInt(parts[1]), parseInt(parts[2]), parseInt(parts[3]));
-    if (isNaN(monDate.getTime())) return;
-
-    // Считаем выполнения этой недели, которые попадают в период цели
-    let weekDone = 0;
-    for (let di = 0; di < 7; di++) {
-      if (!wdHabits[di]) continue;
-      const day = new Date(monDate); day.setDate(monDate.getDate() + di);
-      if (day >= start && day <= end && day <= today_) weekDone++;
-    }
-    // Ограничиваем cap: не больше targetPerWeek за неделю
-    factTotal += Math.min(weekDone, g.targetPerWeek);
-  });
-
-  return totalTarget > 0 ? Math.min(100, Math.round(factTotal / totalTarget * 100)) : 0;
-}
-
-function getGoalFact(g) {
-  if (!g.habitId) return {fact:0, total:0};
-  const msPerWeek = 7*24*60*60*1000;
-  const start = new Date(g.startDate); const end = new Date(g.endDate);
-  const totalWeeks = Math.max(1, Math.ceil((end-start)/msPerWeek));
-  const totalTarget = g.targetPerWeek * totalWeeks;
-  const today_ = new Date(); today_.setHours(0,0,0,0);
-
-  let factTotal = 0;
-  Object.keys(S.weeks).forEach(wk => {
-    const wdHabits = (S.weeks[wk].habits||{})[g.habitId]||{};
-    const parts = wk.split('_');
+/* Goal progress */
+function calcGoalPct(g){
+  if(!g.habitId||!g.targetPerWeek||!g.startDate||!g.endDate) return 0;
+  const start=new Date(g.startDate), end=new Date(g.endDate);
+  const totalWeeks=Math.max(1,Math.ceil((end-start)/(7*24*60*60*1000)));
+  const totalTarget=g.targetPerWeek*totalWeeks;
+  const today_=new Date(); today_.setHours(0,0,0,0);
+  let factTotal=0;
+  Object.keys(S.weeks).forEach(wk=>{
+    const wdh=(S.weeks[wk].habits||{})[g.habitId]||{};
+    const parts=wk.split('_');
     if(parts.length<4) return;
-    const monDate = new Date(parseInt(parts[1]),parseInt(parts[2]),parseInt(parts[3]));
+    const monDate=new Date(parseInt(parts[1]),parseInt(parts[2]),parseInt(parts[3]));
     if(isNaN(monDate.getTime())) return;
     let weekDone=0;
     for(let di=0;di<7;di++){
-      if(!wdHabits[di]) continue;
+      if(!wdh[di]) continue;
       const day=new Date(monDate); day.setDate(monDate.getDate()+di);
       if(day>=start&&day<=end&&day<=today_) weekDone++;
     }
     factTotal+=Math.min(weekDone,g.targetPerWeek);
   });
-  return {fact:factTotal, total:totalTarget, weeks:totalWeeks};
+  return totalTarget>0?Math.min(100,Math.round(factTotal/totalTarget*100)):0;
+}
+function getGoalFact(g){
+  if(!g.habitId) return {fact:0,total:0,weeks:0};
+  const start=new Date(g.startDate), end=new Date(g.endDate);
+  const totalWeeks=Math.max(1,Math.ceil((end-start)/(7*24*60*60*1000)));
+  const totalTarget=g.targetPerWeek*totalWeeks;
+  const today_=new Date(); today_.setHours(0,0,0,0);
+  let factTotal=0;
+  Object.keys(S.weeks).forEach(wk=>{
+    const wdh=(S.weeks[wk].habits||{})[g.habitId]||{};
+    const parts=wk.split('_');
+    if(parts.length<4) return;
+    const monDate=new Date(parseInt(parts[1]),parseInt(parts[2]),parseInt(parts[3]));
+    if(isNaN(monDate.getTime())) return;
+    let weekDone=0;
+    for(let di=0;di<7;di++){
+      if(!wdh[di]) continue;
+      const day=new Date(monDate); day.setDate(monDate.getDate()+di);
+      if(day>=start&&day<=end&&day<=today_) weekDone++;
+    }
+    factTotal+=Math.min(weekDone,g.targetPerWeek);
+  });
+  return {fact:factTotal,total:totalTarget,weeks:totalWeeks};
 }
 
-/* ════════════════════════════════════════
+/* ══════════════════════════════════════════════
    NAVIGATION
-════════════════════════════════════════ */
-let curPg = 'dash', wOff = 0, curDayIdx = todayIdx(), curBookId = null, mCtx = null;
-let _tmpBookCover = null, pendingBookId = null;
+══════════════════════════════════════════════ */
+let curPg='dash', wOff=0, curDayIdx=todayIdx(), curBookId=null, mCtx=null;
+let _tmpBookCover=null, pendingBookId=null, bkFilter='reading';
 
-function go(id, btn) {
-  curPg = id;
+function go(id,btn){
+  curPg=id;
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
-  const pg = document.getElementById('page-'+id); if(pg) pg.classList.add('active');
+  const pg=document.getElementById('page-'+id); if(pg) pg.classList.add('active');
   if(btn) btn.classList.add('active');
+  // lazy render
   rAll();
 }
 
-/* ════════════════════════════════════════
-   RENDER ALL
-════════════════════════════════════════ */
-function rAll() {
+function setBkFilter(f,btn){
+  bkFilter=f;
+  document.querySelectorAll('.bk-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  rBooks();
+}
+
+/* ══════════════════════════════════════════════
+   RENDER — ключевая оптимизация:
+   каждая функция рендерит только свой DOM-узел
+   через innerHTML один раз (не несколько мелких)
+══════════════════════════════════════════════ */
+function rAll(){
   rHeader();
   if(curPg==='dash')   rDash();
   if(curPg==='plan')   rPlanner();
@@ -624,83 +724,86 @@ function rAll() {
 }
 
 /* ── HEADER ── */
-function rHeader() {
-  const ld = lvData(S.xp||0);
-  document.getElementById('hdrName').textContent = S.name||'Искатель';
-  document.getElementById('hdrLvl').textContent  = `Ур. ${ld.lv} · ${ld.name}`;
-  document.getElementById('hdrXpN').textContent  = `${ld.into}/${ld.need} XP`;
-  document.getElementById('hdrXpFill').style.width = ld.pct+'%';
-  const av = document.getElementById('hdrAv');
-  av.innerHTML = S.avatar ? `<img src="${S.avatar}">` : `<span style="font-size:22px">👤</span>`;
+function rHeader(){
+  const ld=lvData(S.xp||0);
+  document.getElementById('hdrName').textContent=S.name||'Искатель';
+  document.getElementById('hdrLvl').textContent=`Ур. ${ld.lv} · ${ld.name}`;
+  document.getElementById('hdrXpN').textContent=`${ld.into}/${ld.need} XP`;
+  document.getElementById('hdrXpFill').style.width=ld.pct+'%';
+  const av=document.getElementById('hdrAv');
+  av.innerHTML=S.avatar?`<img src="${S.avatar}">`:`<span style="font-size:22px">👤</span>`;
 }
 
 /* ── DASHBOARD ── */
-function rDash() {
-  const ld = lvData(S.xp||0);
-  document.getElementById('lvN').textContent    = ld.lv;
-  document.getElementById('xpLvName').textContent = ld.name;
-  document.getElementById('xpNums').textContent = `${ld.into} / ${ld.need} XP`;
-  document.getElementById('xpFill').style.width = ld.pct+'%';
+function rDash(){
+  const ld=lvData(S.xp||0);
+  document.getElementById('lvN').textContent=ld.lv;
+  document.getElementById('xpLvName').textContent=ld.name;
+  document.getElementById('xpNums').textContent=`${ld.into} / ${ld.need} XP`;
+  document.getElementById('xpFill').style.width=ld.pct+'%';
 
-  // Task % today
   const wd=getWD(0); const ti=todayIdx();
   const tt=(wd.tasks||[]).filter(t=>t.dayIdx===ti);
   const td=tt.filter(t=>t.done).length;
-  document.getElementById('dashTaskPct').textContent = tt.length ? Math.round(td/tt.length*100)+'%' : '—';
+  document.getElementById('dashTaskPct').textContent=tt.length?Math.round(td/tt.length*100)+'%':'—';
 
-  // Habit % this week
   let hT=0,hD=0;
   (S.habits||[]).forEach(h=>{
     const days=h.days||[0,1,2,3,4,5,6];
     const wdh=(getWD(0).habits||{})[h.id]||{};
-    days.forEach(d=>{ hT++; if(wdh[d]) hD++; });
+    days.forEach(d=>{hT++;if(wdh[d])hD++;});
   });
-  document.getElementById('dashHabPct').textContent = hT ? Math.round(hD/hT*100)+'%' : '—';
+  document.getElementById('dashHabPct').textContent=hT?Math.round(hD/hT*100)+'%':'—';
 
-  // Goals in progress
-  const activeGoals = (S.goals||[]).filter(g=>calcGoalPct(g)<100).length;
-  document.getElementById('dashGoalPct').textContent = (S.goals||[]).length ? activeGoals+'шт' : '—';
+  const activeGoals=(S.goals||[]).filter(g=>calcGoalPct(g)<100).length;
+  document.getElementById('dashGoalPct').textContent=(S.goals||[]).length?activeGoals+'шт':'—';
 
-  // Today habits
-  const todHEl = document.getElementById('todH');
-  const todHabs = (S.habits||[]).filter(h=>(h.days||[0,1,2,3,4,5,6]).includes(todayIdx()));
+  /* Today habits */
+  const todHEl=document.getElementById('todH');
+  const todHabs=(S.habits||[]).filter(h=>(h.days||[0,1,2,3,4,5,6]).includes(todayIdx()));
   if(!todHabs.length){
     todHEl.innerHTML='<div style="color:var(--sub);font-size:.85rem;padding:6px 0;">Нет привычек на сегодня</div>';
   } else {
-    const wdh = (getWD(0).habits||{});
-    todHEl.innerHTML = todHabs.map((h,i)=>{
+    const wdh=(getWD(0).habits||{});
+    let html='';
+    todHabs.forEach((h,i)=>{
       const done=!!(wdh[h.id]&&wdh[h.id][todayIdx()]);
-      const linkedGoal = h.goalId ? (S.goals||[]).find(g=>g.id===h.goalId) : null;
-      return `<div class="h-today-row">
+      const linkedGoal=h.goalId?(S.goals||[]).find(g=>g.id===h.goalId):null;
+      html+=`<div class="h-today-row">
         <input type="checkbox" class="h-ch" ${done?'checked':''} onchange="togHabToday('${h.id}',this)">
         <div class="h-dot" style="background:${COLORS[i%COLORS.length]}"></div>
         <div style="flex:1">
           <div class="h-lbl">${h.name}</div>
-          ${linkedGoal?`<div class="h-goal-tag">🎯 ${linkedGoal.name}</div>`:''}
+          ${linkedGoal?`<span class="h-goal-tag">🎯 ${linkedGoal.name}</span>`:''}
         </div>
         <span class="h-xp-tag">+15 XP</span>
       </div>`;
-    }).join('');
+    });
+    todHEl.innerHTML=html;
   }
 
-  // Achievements
   checkAchs();
   const ua=S.unlockedAchs||[];
-  document.getElementById('achGrid').innerHTML = ACHS.map(a=>`
-    <div class="ach-item ${ua.includes(a.id)?'unlocked':''}">
+  let achHtml='';
+  ACHS.forEach(a=>{
+    achHtml+=`<div class="ach-item ${ua.includes(a.id)?'unlocked':''}">
       <div class="ach-icon">${ua.includes(a.id)?a.icon:'🔒'}</div>
       <div class="ach-name">${a.name}</div>
-    </div>`).join('');
+    </div>`;
+  });
+  document.getElementById('achGrid').innerHTML=achHtml;
 }
 
 /* ── PLANNER ── */
-function rPlanner() {
+function rPlanner(){
   const wd=getWD(); const mon=getMon(wOff);
   const end=new Date(mon); end.setDate(end.getDate()+6);
-  document.getElementById('wkL').textContent =
+  document.getElementById('wkL').textContent=
     `${mon.getDate()} ${mon.toLocaleString('ru',{month:'short'})} — ${end.getDate()} ${end.toLocaleString('ru',{month:'short'})}`;
-  const slider=document.getElementById('planSlider'); slider.innerHTML='';
 
+  const slider=document.getElementById('planSlider');
+  let slidesHtml='';
+  const CIRC=282.74;
   for(let i=0;i<7;i++){
     const col=COLORS[i];
     const tasks=(wd.tasks||[]).filter(t=>t.dayIdx===i);
@@ -708,21 +811,20 @@ function rPlanner() {
     const pct=total?Math.round(done/total*100):0;
     const d=new Date(mon); d.setDate(d.getDate()+i);
     const dStr=`${d.getDate()} ${d.toLocaleString('ru',{month:'long'})}`;
-    const CIRC=282.74; const off2=CIRC-(CIRC*pct/100);
-    const slide=document.createElement('div'); slide.className='day-slide';
-
-    const tasksHtml = tasks.length ? tasks.map(t=>{
-      const tGoal = t.goalId ? (S.goals||[]).find(g=>g.id===t.goalId) : null;
-      return `<div class="task-row ${t.done?'t-done':''}">
+    const off2=CIRC-(CIRC*pct/100);
+    let tasksHtml=tasks.length?'':'<div style="text-align:center;color:var(--sub);padding:16px;font-size:.85rem;">Нет задач на этот день</div>';
+    tasks.forEach(t=>{
+      const tGoal=t.goalId?(S.goals||[]).find(g=>g.id===t.goalId):null;
+      const gi=tGoal?(S.goals||[]).indexOf(tGoal):0;
+      tasksHtml+=`<div class="task-row ${t.done?'t-done':''}">
         <input type="checkbox" class="t-ch" ${t.done?'checked':''} onchange="togTask('${t.id}',this.checked,this)">
-        ${tGoal?`<div class="t-goal-dot" style="background:${COLORS[(S.goals.indexOf(tGoal))%COLORS.length]}"></div>`:''}
+        ${tGoal?`<div class="t-goal-dot" style="background:${COLORS[gi%COLORS.length]}"></div>`:''}
         <input class="t-inp" value="${(t.text||'').replace(/"/g,'&quot;')}" ${t.done?'disabled':''}
           onblur="editTask('${t.id}',this.value)" placeholder="Задача">
         <button class="del-btn" onclick="delTask('${t.id}')">×</button>
       </div>`;
-    }).join('') : `<div style="text-align:center;color:var(--sub);padding:16px;font-size:.85rem;">Нет задач на этот день</div>`;
-
-    slide.innerHTML=`
+    });
+    slidesHtml+=`<div class="day-slide">
       <div class="ds-head" style="background:${col};">
         <div class="ds-day-name">${DN_FULL[i]}</div>
         <div class="ds-date">${dStr}</div>
@@ -742,23 +844,24 @@ function rPlanner() {
         <div class="ds-body-title">Задачи</div>
         ${tasksHtml}
         <button class="btn-add-t" onclick="openTaskM(${i})" style="color:${col};border-color:${col}88;">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           Добавить задачу
         </button>
-      </div>`;
-    slider.appendChild(slide);
+      </div>
+    </div>`;
   }
+  slider.innerHTML=slidesHtml;
   rPlanDots(); goToDay(curDayIdx,false); initSliderTouch();
 }
 
-function rPlanDots() {
+function rPlanDots(){
   const el=document.getElementById('planDots'); if(!el) return;
-  el.innerHTML='';
+  let html='';
   for(let i=0;i<7;i++){
-    const btn=document.createElement('button'); btn.className='pdot'+(i===curDayIdx?' active':'');
-    btn.style.background=i===curDayIdx?COLORS[curDayIdx]:'var(--border)';
-    btn.onclick=()=>goToDay(i); el.appendChild(btn);
+    const active=i===curDayIdx;
+    html+=`<button class="pdot ${active?'active':''}" style="background:${active?COLORS[curDayIdx]:'var(--border)'};" onclick="goToDay(${i})"></button>`;
   }
+  el.innerHTML=html;
 }
 function goToDay(idx,animate=true){
   curDayIdx=idx;
@@ -769,7 +872,7 @@ function goToDay(idx,animate=true){
 }
 function initSliderTouch(){
   const wrap=document.querySelector('.plan-slider-wrap'); if(!wrap||wrap._init) return;
-  wrap._init=true; let ts=0, tx=0;
+  wrap._init=true; let ts=0,tx=0;
   wrap.addEventListener('touchstart',e=>{ts=e.touches[0].clientX;tx=0;},{passive:true});
   wrap.addEventListener('touchmove',e=>{tx=e.touches[0].clientX-ts;},{passive:true});
   wrap.addEventListener('touchend',()=>{ if(Math.abs(tx)>40){ if(tx<0&&curDayIdx<6) goToDay(curDayIdx+1); else if(tx>0&&curDayIdx>0) goToDay(curDayIdx-1); } });
@@ -778,29 +881,29 @@ function prevWeek(){ wOff--; rPlanner(); }
 function nextWeek(){ wOff++; rPlanner(); }
 
 /* ── HABITS ── */
-function rHabits() {
+function rHabits(){
   const el=document.getElementById('habList'); if(!el) return;
   if(!(S.habits||[]).length){
     el.innerHTML='<div class="card-body" style="color:var(--sub);text-align:center;padding:20px;">Нет привычек. Нажми +</div>'; return;
   }
   const wd=getWD(0);
-  el.innerHTML=S.habits.map((h,hi)=>{
+  let html='';
+  S.habits.forEach((h,hi)=>{
     const days=h.days||[0,1,2,3,4,5,6];
     const wdh=(wd.habits||{})[h.id]||{};
     const doneCnt=days.filter(d=>!!wdh[d]).length;
     const pct=days.length?Math.round(doneCnt/days.length*100):0;
     const col=COLORS[hi%COLORS.length];
     const linkedGoal=h.goalId?(S.goals||[]).find(g=>g.id===h.goalId):null;
-    const chips=DN.map((dn,di)=>{
+    let chips='';
+    DN.forEach((dn,di)=>{
       const active=days.includes(di); const done=!!wdh[di];
-      let cls='hd-chip', sty=`border-color:${col}44;color:${col};`;
-      if(!active){ cls+=' off'; sty='opacity:.3;cursor:default;'; }
-      else if(done){ cls+=' done'; sty=`background:${col};`; }
-      return `<div class="${cls}" style="${sty}" onclick="${active?`togHab('${h.id}',${di},${!done},this)`:''}">
-        ${dn}${done&&active?' ✓':''}
-      </div>`;
-    }).join('');
-    return `<div class="hab-card">
+      let cls='hd-chip',sty=`border-color:${col}44;color:${col};`;
+      if(!active){cls+=' off';sty='opacity:.3;cursor:default;';}
+      else if(done){cls+=' done';sty=`background:${col};`;}
+      chips+=`<div class="${cls}" style="${sty}" ${active?`onclick="togHab('${h.id}',${di},${!done},this)"`:''}>${dn}${done&&active?' ✓':''}</div>`;
+    });
+    html+=`<div class="hab-card">
       <div class="hab-top">
         <div>
           <div class="hab-name">${h.name}</div>
@@ -813,41 +916,38 @@ function rHabits() {
       <div class="hab-prog-bg"><div class="hab-prog-fill" style="width:${pct}%;background:${col};"></div></div>
       <div style="font-size:.68rem;color:var(--sub);margin-top:3px;">${pct}% этой недели</div>
     </div>`;
-  }).join('');
+  });
+  el.innerHTML=html;
 }
 
 /* ── GOALS ── */
-function rGoals() {
+function rGoals(){
   const el=document.getElementById('goalsList'); if(!el) return;
   if(!(S.goals||[]).length){
     el.innerHTML='<div class="card-body" style="color:var(--sub);text-align:center;padding:20px;">Нет целей. Нажми +</div>'; return;
   }
-  el.innerHTML=S.goals.map((g,gi)=>{
+  let html='';
+  S.goals.forEach((g,gi)=>{
     const col=COLORS[gi%COLORS.length];
     const pct=calcGoalPct(g);
     const {fact,total,weeks}=getGoalFact(g);
     const linkedHab=g.habitId?(S.habits||[]).find(h=>h.id===g.habitId):null;
-
-    // Deadline status
     let dlBadge='';
     if(g.endDate){
-      const daysLeft=Math.ceil((new Date(g.endDate)-new Date())/(1000*60*60*24));
+      const daysLeft=Math.ceil((new Date(g.endDate)-new Date())/(864e5));
       if(pct>=100) dlBadge=`<span class="goal-badge" style="background:#e3f5ec;color:#2d6e57;">✓ Выполнено</span>`;
       else if(daysLeft<0) dlBadge=`<span class="goal-badge" style="background:#fde3e3;color:var(--red);">Просрочено</span>`;
       else if(daysLeft<=7) dlBadge=`<span class="goal-badge" style="background:#fdf3e3;color:#7a5200;">⚠ ${daysLeft}д осталось</span>`;
     }
-
-    // Linked habit block
     let habBlock='';
     if(linkedHab){
-      const habPct=g.habitId?calcGoalPct(g):0;
-      // Показываем мини-сетку текущей недели
       const wd=getWD(0); const wdh=(wd.habits||{})[linkedHab.id]||{};
       const days=linkedHab.days||[0,1,2,3,4,5,6];
-      const miniChips=DN.map((dn,di)=>{
+      let miniChips='';
+      DN.forEach((dn,di)=>{
         const active=days.includes(di); const done=!!wdh[di];
-        return `<div class="gwg-chip ${done&&active?'done':''}" style="background:${col};">${dn}</div>`;
-      }).join('');
+        miniChips+=`<div class="gwg-chip ${done&&active?'done':''}" style="background:${col};">${dn}</div>`;
+      });
       habBlock=`<div class="goal-linked-hab">
         <div class="glh-dot" style="background:${col};"></div>
         <div class="glh-info">
@@ -855,18 +955,15 @@ function rGoals() {
           <div class="glh-sub">${g.targetPerWeek}×/нед · ${fact} из ${total} выполнений</div>
         </div>
       </div>
-      <div class="gwg-row" style="margin-top:6px;">${miniChips}</div>`;
+      <div class="gwg-row">${miniChips}</div>`;
     }
-
-    // If no habit linked — no progress
-    const progSection = linkedHab ? `
+    const progSection=linkedHab?`
       <div class="goal-prog-bg"><div class="goal-prog-fill" style="width:${pct}%;background:${col};"></div></div>
       <div class="goal-pct-row">
-        <span class="goal-pct">${fact} из ${total} выполнений (${weeks} нед × ${g.targetPerWeek}/нед)</span>
+        <span class="goal-pct">${fact} из ${total} (${weeks} нед × ${g.targetPerWeek}/нед)</span>
         <strong style="font-size:.78rem;color:${col};">${pct}%</strong>
-      </div>` : `<div style="font-size:.75rem;color:var(--sub);margin-top:6px;">Привяжи привычку для отслеживания прогресса</div>`;
-
-    return `<div class="goal-card">
+      </div>`:`<div style="font-size:.75rem;color:var(--sub);margin-top:6px;">Привяжи привычку для отслеживания прогресса</div>`;
+    html+=`<div class="goal-card">
       <div class="goal-top">
         <div style="flex:1">
           <div class="goal-name">${g.name}</div>
@@ -877,63 +974,82 @@ function rGoals() {
         </div>
         <button class="del-btn" onclick="delGoal('${g.id}')">🗑</button>
       </div>
-      ${progSection}
-      ${habBlock}
+      ${progSection}${habBlock}
     </div>`;
-  }).join('');
+  });
+  el.innerHTML=html;
 }
 
-/* ── BOOKS ── */
-function rBooks() {
-  const el=document.getElementById('booksListInner'); if(!el) return;
-  if(!(S.books||[]).length){
-    el.innerHTML='<div style="padding:28px;text-align:center;color:var(--sub);">📚 Нет книг. Нажми + чтобы добавить</div>'; return;
+/* ── BOOKS — НОВЫЙ РЕНДЕР ── */
+function rBooks(){
+  /* Статистика */
+  const allBooks=S.books||[];
+  const doneThisYear=allBooks.filter(b=>b.status==='done'&&b.doneYear===curYear()).length;
+  const totalPages=allBooks.reduce((s,b)=>s+(b.current||0),0);
+  const streak=calcReadingStreak();
+  document.getElementById('bkStatRead').textContent=doneThisYear;
+  document.getElementById('bkStatPages').textContent=totalPages.toLocaleString('ru');
+  document.getElementById('bkStatStreak').textContent=streak;
+
+  /* Сетка */
+  const filtered=allBooks.filter(b=>(b.status||'want')===bkFilter);
+  const grid=document.getElementById('bkGrid');
+  if(!filtered.length){
+    grid.innerHTML=`<div class="bk-empty" style="grid-column:1/-1;">
+      <div class="bk-empty-icon">${bkFilter==='reading'?'📖':bkFilter==='done'?'🏆':'📋'}</div>
+      <div class="bk-empty-txt">${bkFilter==='reading'?'Нет книг в процессе чтения':bkFilter==='done'?'Нет прочитанных книг':'Список пуст'}</div>
+      <div class="bk-empty-sub">Нажми + чтобы добавить книгу</div>
+    </div>`; return;
   }
-  el.innerHTML=S.books.map(b=>{
+
+  const CIRC=138.23; // 2πr, r=22
+  let html='';
+  filtered.forEach(b=>{
     const pct=b.total>0?Math.min(100,Math.round(b.current/b.total*100)):0;
-    const stCls=STATUS_COLORS[b.status||'want'];
-    const stLbl=STATUS_LABELS[b.status||'want'];
-    let stars='';
-    for(let i=1;i<=5;i++) stars+=`<span class="b-star ${i<=(b.rating||0)?'on':''}" onclick="setRating('${b.id}',${i})">★</span>`;
-    const cover=b.cover
-      ?`<img src="${b.cover}" style="width:100%;height:100%;object-fit:cover;">`
-      :`<span class="b-cover-ph">📖</span>`;
-    return `<div class="book-card">
-      <div class="b-cover-wrap" onclick="openBookCoverUpload('${b.id}')">
-        ${cover}
-        <div class="b-cover-edit">Фото</div>
+    const off=CIRC-(CIRC*pct/100);
+    const dotCol=STATUS_DOT_COLORS[b.status||'want'];
+    const isDone=pct>=100;
+    const coverInner=b.cover
+      ?`<img src="${b.cover}" class="bk-grid-cover" loading="lazy">`
+      :`<div class="bk-grid-ph">
+          <div class="bk-grid-ph-icon">📖</div>
+          <div class="bk-grid-ph-title">${b.title}</div>
+        </div>`;
+    html+=`<div class="bk-grid-item" onclick="openNotes('${b.id}')">
+      ${coverInner}
+      <div class="bk-grid-overlay"></div>
+      <!-- Статус точка -->
+      <div class="bk-status-dot" style="background:${dotCol};"></div>
+      <!-- Круговой прогресс -->
+      <div class="bk-circ-wrap">
+        <svg viewBox="0 0 48 48">
+          <circle class="bk-circ-bg" cx="24" cy="24" r="22"/>
+          <circle class="bk-circ-track" cx="24" cy="24" r="22"/>
+          <circle class="bk-circ-fill ${isDone?'done-clr':''}" cx="24" cy="24" r="22"
+            stroke-dasharray="${CIRC}" stroke-dashoffset="${off}"/>
+        </svg>
+        <div class="bk-circ-pct">${pct}%</div>
       </div>
-      <div class="b-info">
-        <div class="b-title" onclick="openNotes('${b.id}')">${b.title}</div>
-        ${b.author?`<div class="b-author">${b.author}</div>`:''}
-        <div class="b-stars">${stars}</div>
-        <span class="b-status-badge ${stCls}">${stLbl}</span>
-        <div class="b-prog-wrap">
-          <div class="b-prog-label"><span>Прогресс</span><strong>${pct}%</strong></div>
-          <div class="b-prog-bg"><div class="b-prog-fill" style="width:${pct}%;"></div></div>
-        </div>
-        <div class="b-pages-row">
-          <input type="number" class="b-page-inp" value="${b.current||0}" min="0" max="${b.total||9999}"
-            onchange="setPage('${b.id}',this.value,this)">
-          <span class="b-total-lbl">/ ${b.total||'?'} стр.</span>
-          ${pct>=100?'<span style="color:var(--accent);font-weight:700;font-size:.78rem;">✓ Готово!</span>':''}
-        </div>
+      <!-- Нижняя подпись -->
+      <div class="bk-grid-info">
+        <div class="bk-grid-title">${b.title}</div>
+        ${b.author?`<div class="bk-grid-author">${b.author}</div>`:''}
       </div>
     </div>`;
-  }).join('');
+  });
+  grid.innerHTML=html;
 }
 
-/* ════════════════════════════════════════
+/* ══════════════════════════════════════════════
    TASK ACTIONS
-════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 function togTask(tid,val,el){
   const wd=getWD(); const t=(wd.tasks||[]).find(x=>x.id===tid); if(!t) return;
   t.done=val; if(val) addXp(10,el); else subXp(10);
-  sv(); rPlanner(); rDash();
+  sv(); rPlanner(); if(curPg==='dash') rDash();
 }
 function editTask(tid,val){
-  const wd=getWD(); const t=(wd.tasks||[]).find(x=>x.id===tid); if(!t) return;
-  t.text=val; sv();
+  const wd=getWD(); const t=(wd.tasks||[]).find(x=>x.id===tid); if(t){t.text=val;sv();}
 }
 function delTask(tid){
   const wd=getWD(); const t=(wd.tasks||[]).find(x=>x.id===tid);
@@ -941,92 +1057,132 @@ function delTask(tid){
   wd.tasks=(wd.tasks||[]).filter(x=>x.id!==tid); sv(); rPlanner();
 }
 
-/* ════════════════════════════════════════
+/* ══════════════════════════════════════════════
    HABIT ACTIONS
-════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 function togHab(hid,di,val,el){
   const wd=getWD(0);
   if(!wd.habits[hid]) wd.habits[hid]={};
   wd.habits[hid][di]=val;
   if(val) addXp(15,el); else subXp(15);
-  sv(); rHabits(); rDash(); rGoals();
+  sv(); rHabits(); if(curPg==='dash') rDash(); if(curPg==='goals') rGoals();
 }
-function togHabToday(hid,el){
-  togHab(hid,todayIdx(),el.checked,el);
-}
-function delHab(hid){
-  S.habits=(S.habits||[]).filter(h=>h.id!==hid); sv(); rHabits(); rDash();
-}
+function togHabToday(hid,el){ togHab(hid,todayIdx(),el.checked,el); }
+function delHab(hid){ S.habits=(S.habits||[]).filter(h=>h.id!==hid); sv(); rHabits(); }
 
-/* ════════════════════════════════════════
+/* ══════════════════════════════════════════════
    GOAL ACTIONS
-════════════════════════════════════════ */
-function delGoal(gid){
-  S.goals=(S.goals||[]).filter(g=>g.id!==gid); sv(); rGoals();
-}
+══════════════════════════════════════════════ */
+function delGoal(gid){ S.goals=(S.goals||[]).filter(g=>g.id!==gid); sv(); rGoals(); }
 
-/* ════════════════════════════════════════
+/* ══════════════════════════════════════════════
    BOOK ACTIONS
-════════════════════════════════════════ */
-function setRating(id,r){
-  const b=(S.books||[]).find(x=>x.id===id); if(!b) return;
-  b.rating=r; sv(); rBooks();
-}
-function setPage(id,v,el){
-  const b=(S.books||[]).find(x=>x.id===id); if(!b) return;
-  const nv=Math.max(0,Math.min(parseInt(v)||0,b.total||99999));
-  const diff=nv-b.current;
-  if(diff>0) addXp(Math.max(1,Math.floor(diff/10)),el);
-  else if(diff<0) subXp(Math.max(0,Math.floor(Math.abs(diff)/10)));
-  b.current=nv;
-  if(nv>=b.total&&b.total>0) b.status='done';
-  else if(nv>0) b.status='reading';
-  sv(); rBooks(); checkAchs();
-}
+══════════════════════════════════════════════ */
 function openBookCoverUpload(bid){ pendingBookId=bid; document.getElementById('bookCoverFile').click(); }
 function handleBookCoverUpload(e){
   const file=e.target.files[0]; if(!file||!pendingBookId) return;
   const reader=new FileReader();
-  reader.onload=ev=>{ const b=(S.books||[]).find(x=>x.id===pendingBookId); if(b){ b.cover=ev.target.result; sv(); rBooks(); } pendingBookId=null; };
+  reader.onload=ev=>{
+    const b=(S.books||[]).find(x=>x.id===pendingBookId);
+    if(b){ b.cover=ev.target.result; sv(); rBooks(); updateNotesHero(); }
+    pendingBookId=null;
+  };
   reader.readAsDataURL(file); e.target.value='';
 }
-function openNotes(id){
-  curBookId=id; const b=(S.books||[]).find(x=>x.id===id); if(!b) return;
-  document.getElementById('noTitle').textContent=b.title;
-  const pct=b.total>0?Math.min(100,Math.round(b.current/b.total*100)):0;
-  document.getElementById('noBkInfo').innerHTML=`
-    <div style="display:flex;align-items:center;gap:10px;">
-      ${b.cover?`<img src="${b.cover}" style="width:38px;height:54px;object-fit:cover;border-radius:6px;">`:
-        `<div style="width:38px;height:54px;background:var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;">📖</div>`}
-      <div style="flex:1">
-        <div style="font-weight:700;font-size:.9rem;">${b.title}</div>
-        ${b.author?`<div style="font-size:.72rem;color:var(--sub);">${b.author}</div>`:''}
-        <div style="margin-top:5px;">
-          <div style="display:flex;justify-content:space-between;font-size:.68rem;color:var(--sub);margin-bottom:2px;">
-            <span>${STATUS_LABELS[b.status||'want']}</span><strong style="color:var(--primary);">${pct}%</strong>
-          </div>
-          <div style="height:5px;background:var(--border);border-radius:3px;">
-            <div style="height:5px;width:${pct}%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:3px;"></div>
-          </div>
-          <div style="font-size:.65rem;color:var(--sub);margin-top:2px;">${b.current} / ${b.total} стр.</div>
-        </div>
-      </div>
-    </div>`;
-  document.getElementById('notesOver').classList.add('on');
-  rNotes(); if(tg) tg.BackButton.show();
+
+function setRating(id,r){
+  const b=(S.books||[]).find(x=>x.id===id); if(!b) return;
+  b.rating=r; sv(); updateNotesHero(); rBooks();
 }
+
+function setStatus(id,st){
+  const b=(S.books||[]).find(x=>x.id===id); if(!b) return;
+  b.status=st;
+  if(st==='done'){ b.doneYear=curYear(); if(b.total>0) b.current=b.total; }
+  sv(); updateNotesHero(); rBooks();
+}
+
+function savePageFromNotes(){
+  const b=(S.books||[]).find(x=>x.id===curBookId); if(!b) return;
+  const inp=document.getElementById('noPageInp');
+  const nv=Math.max(0,Math.min(parseInt(inp.value)||0,b.total||99999));
+  const diff=nv-b.current;
+  if(diff>0){
+    addXp(Math.max(1,Math.floor(diff/10)),inp);
+    // Фиксируем дату чтения
+    const td=todayStr();
+    if(!S.readingDays) S.readingDays=[];
+    if(!S.readingDays.includes(td)) S.readingDays.push(td);
+  } else if(diff<0) subXp(Math.max(0,Math.floor(Math.abs(diff)/10)));
+  b.current=nv;
+  if(nv>=b.total&&b.total>0){ b.status='done'; b.doneYear=curYear(); }
+  else if(nv>0&&b.status==='want') b.status='reading';
+  sv(); updateNotesHero(); rBooks();
+  if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
+}
+
+function openNotes(id){
+  curBookId=id;
+  const b=(S.books||[]).find(x=>x.id===id); if(!b) return;
+  document.getElementById('noTitle').textContent=b.title;
+  updateNotesHero();
+  document.getElementById('notesOver').classList.add('on');
+  rNotes();
+  if(tg) tg.BackButton.show();
+}
+
+function updateNotesHero(){
+  const b=(S.books||[]).find(x=>x.id===curBookId); if(!b) return;
+  const pct=b.total>0?Math.min(100,Math.round(b.current/b.total*100)):0;
+
+  // Обложка
+  document.getElementById('noBkCover').innerHTML=b.cover
+    ?`<img src="${b.cover}" class="no-bk-cover" onclick="openBookCoverUpload('${b.id}')">`
+    :`<div class="no-bk-cover-ph" onclick="openBookCoverUpload('${b.id}')">📖</div>`;
+  document.getElementById('noBkTitle').textContent=b.title;
+  document.getElementById('noBkAuthor').textContent=b.author||'';
+
+  // Звёзды
+  let stars='';
+  for(let i=1;i<=5;i++) stars+=`<span class="no-star ${i<=(b.rating||0)?'on':''}" onclick="setRating('${b.id}',${i})">★</span>`;
+  document.getElementById('noStars').innerHTML=stars;
+
+  // Прогресс
+  document.getElementById('noPagesLbl').textContent=`${b.current||0} / ${b.total||0} стр.`;
+  document.getElementById('noPct').textContent=pct+'%';
+  document.getElementById('noProgFill').style.width=pct+'%';
+  document.getElementById('noPageInp').value=b.current||0;
+  document.getElementById('noPageTotal').textContent=b.total||0;
+
+  // Статус
+  const stMap={want:'Хочу читать',reading:'Читаю',done:'Прочитано'};
+  const stColMap={want:'var(--c4)',reading:'var(--primary)',done:'var(--c2)'};
+  const stTextMap={want:'#333',reading:'white',done:'white'};
+  let stHtml='';
+  ['want','reading','done'].forEach(st=>{
+    const active=(b.status||'want')===st;
+    stHtml+=`<button class="no-st-btn ${active?'active':''}" style="${active?`background:${stColMap[st]};border-color:${stColMap[st]};color:${stTextMap[st]};`:''}"
+      onclick="setStatus('${b.id}','${st}')">${stMap[st]}</button>`;
+  });
+  document.getElementById('noStatusRow').innerHTML=stHtml;
+}
+
 function rNotes(){
   const b=(S.books||[]).find(x=>x.id===curBookId); if(!b) return;
   const el=document.getElementById('nList');
   if(!(b.notes||[]).length){
     el.innerHTML='<div style="text-align:center;color:var(--sub);padding:24px;font-size:.85rem;">Нет заметок. Добавь первую!</div>'; return;
   }
-  el.innerHTML=(b.notes||[]).map((n,i)=>`
-    <div class="quote-item">
+  let html='';
+  (b.notes||[]).forEach((n,i)=>{
+    html+=`<div class="quote-item">
       <button class="quote-del" onclick="delQuote(${i})">×</button>
       ${n}
-    </div>`).join('');
+    </div>`;
+  });
+  el.innerHTML=html;
 }
+
 function addQuote(){
   const inp=document.getElementById('nInp'); if(!inp.value.trim()) return;
   const b=(S.books||[]).find(x=>x.id===curBookId); if(!b) return;
@@ -1041,12 +1197,12 @@ function delQuote(i){
 function closeNotes(){ document.getElementById('notesOver').classList.remove('on'); curBookId=null; if(tg) tg.BackButton.hide(); }
 function delCurBook(){
   const doIt=()=>{ S.books=(S.books||[]).filter(x=>x.id!==curBookId); sv(); closeNotes(); rBooks(); };
-  if(tg) tg.showConfirm('Удалить эту книгу?',ok=>{ if(ok) doIt(); }); else if(confirm('Удалить книгу?')) doIt();
+  if(tg) tg.showConfirm('Удалить эту книгу?',ok=>{if(ok)doIt();}); else if(confirm('Удалить книгу?')) doIt();
 }
 
-/* ════════════════════════════════════════
+/* ══════════════════════════════════════════════
    FAB
-════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 function fabAct(){
   if(curPg==='plan')   return openTaskM(curDayIdx);
   if(curPg==='habits') return openHabM();
@@ -1060,36 +1216,41 @@ function fabAct(){
   `);
 }
 
-/* ════════════════════════════════════════
+/* ══════════════════════════════════════════════
    MODALS
-════════════════════════════════════════ */
-function showModal(title, bodyHtml){
+══════════════════════════════════════════════ */
+function showModal(title,bodyHtml){
   document.getElementById('mTtl').textContent=title;
   document.getElementById('mBod').innerHTML=bodyHtml;
+  const btn=document.getElementById('mSaveBtn');
+  btn.disabled=false; btn.style.opacity='1';
   document.getElementById('ov').classList.add('on');
   if(tg) tg.BackButton.show();
 }
-function closeOv(){
-  document.getElementById('ov').classList.remove('on');
-  mCtx=null; if(tg) tg.BackButton.hide();
+function closeOv(){ document.getElementById('ov').classList.remove('on'); mCtx=null; if(tg) tg.BackButton.hide(); }
+
+function validateModal(){
+  const title=(document.getElementById('mIn')?.value||'').trim();
+  let ok=!!title;
+  if(mCtx?.type==='book'){ ok=ok&&parseInt(document.getElementById('mTot')?.value||'0')>0; }
+  if(mCtx?.type==='goal'){ ok=ok&&!!(document.getElementById('mEndDate')?.value||''); }
+  const btn=document.getElementById('mSaveBtn');
+  if(btn){ btn.disabled=!ok; btn.style.opacity=ok?'1':'0.4'; }
 }
 
-/* TASK MODAL */
+/* Task */
 function openTaskM(di){
   mCtx={type:'task',di};
   const goalOpts=(S.goals||[]).map(g=>`<option value="${g.id}">${g.name}</option>`).join('');
   showModal(`Задача · ${DN_FULL[di]}`,`
     <input class="finp" id="mIn" placeholder="Название задачи *" oninput="validateModal()">
-    ${goalOpts?`
-    <div style="font-size:.75rem;color:var(--sub);margin:6px 0 2px;">Привязать к цели:</div>
-    <select class="finp" id="mGoal">
-      <option value="">Без цели</option>${goalOpts}
-    </select>`:''}
+    ${goalOpts?`<div style="font-size:.75rem;color:var(--sub);margin:6px 0 2px;">Привязать к цели:</div>
+    <select class="finp" id="mGoal"><option value="">Без цели</option>${goalOpts}</select>`:''}
   `);
   setTimeout(()=>document.getElementById('mIn')?.focus(),200);
 }
 
-/* HABIT MODAL */
+/* Habit */
 function openHabM(){
   if(!checkPrem('habits')) return;
   mCtx={type:'habit'};
@@ -1100,53 +1261,44 @@ function openHabM(){
     <div class="day-sel" id="daySelWrap">
       ${DN.map((d,i)=>`<button class="day-chip sel" style="background:${COLORS[i]};color:white;border-color:${COLORS[i]};" data-di="${i}" onclick="togDayChip(this,${i})">${d}</button>`).join('')}
     </div>
-    ${goalOpts?`
-    <div style="font-size:.75rem;color:var(--sub);margin:6px 0 2px;">Привязать к цели:</div>
-    <select class="finp" id="mGoal">
-      <option value="">Без цели</option>${goalOpts}
-    </select>`:''}
+    ${goalOpts?`<div style="font-size:.75rem;color:var(--sub);margin:6px 0 2px;">Привязать к цели:</div>
+    <select class="finp" id="mGoal"><option value="">Без цели</option>${goalOpts}</select>`:''}
   `);
 }
-
 function togDayChip(btn,i){
   btn.classList.toggle('sel');
-  if(btn.classList.contains('sel')){ btn.style.background=COLORS[i]; btn.style.color='white'; btn.style.borderColor=COLORS[i]; }
-  else { btn.style.background=''; btn.style.color=''; btn.style.borderColor=''; }
+  if(btn.classList.contains('sel')){ btn.style.background=COLORS[i];btn.style.color='white';btn.style.borderColor=COLORS[i]; }
+  else { btn.style.background='';btn.style.color='';btn.style.borderColor=''; }
 }
 
-/* GOAL MODAL — без шагов, с датой и привязкой привычки */
+/* Goal */
 function openGoalM(){
   if(!checkPrem('goals')) return;
   mCtx={type:'goal'};
   const habOpts=(S.habits||[]).map(h=>`<option value="${h.id}">${h.name}</option>`).join('');
-  const todayVal=new Date().toISOString().split('T')[0];
+  const todayVal=todayStr();
   showModal('Новая цель',`
     <input class="finp" id="mIn" placeholder="Название цели *" oninput="validateModal()">
-
     <div style="font-size:.75rem;color:var(--sub);margin:6px 0 2px;">Дата начала:</div>
     <input class="finp" type="date" id="mStartDate" value="${todayVal}">
-
     <div style="font-size:.75rem;color:var(--sub);margin:6px 0 2px;">Дата завершения *:</div>
     <input class="finp" type="date" id="mEndDate" oninput="validateModal()">
-
-    ${habOpts?`
-    <div style="font-size:.75rem;color:var(--sub);margin:8px 0 2px;">Привязать к привычке:</div>
+    ${habOpts?`<div style="font-size:.75rem;color:var(--sub);margin:8px 0 2px;">Привязать к привычке:</div>
     <select class="finp" id="mHabit" onchange="toggleTargetField(this.value)">
-      <option value="">Без привычки (ручное отслеживание)</option>${habOpts}
+      <option value="">Без привычки</option>${habOpts}
     </select>
     <div id="targetWrap" style="display:none;">
       <div style="font-size:.75rem;color:var(--sub);margin:6px 0 2px;">Цель в неделю (раз):</div>
       <input class="finp" type="number" id="mTarget" placeholder="Например: 3" min="1" max="7" value="3">
-    </div>`:'<div style="font-size:.78rem;color:var(--sub);padding:10px 0;">💡 Сначала добавь привычки, чтобы привязать их к цели</div>'}
+    </div>`:
+    '<div style="font-size:.78rem;color:var(--sub);padding:10px 0;">💡 Сначала добавь привычки, чтобы привязать их к цели</div>'}
   `);
 }
-
 function toggleTargetField(val){
-  const tw=document.getElementById('targetWrap'); if(!tw) return;
-  tw.style.display=val?'block':'none';
+  const tw=document.getElementById('targetWrap'); if(tw) tw.style.display=val?'block':'none';
 }
 
-/* BOOK MODAL */
+/* Book */
 function openBookM(){
   if(!checkPrem('books')) return;
   mCtx={type:'book'}; _tmpBookCover=null;
@@ -1156,100 +1308,82 @@ function openBookM(){
     <input class="finp" type="number" id="mTot" placeholder="Кол-во страниц *" min="1" oninput="validateModal()">
     <div style="font-size:.75rem;color:var(--sub);margin:6px 0 2px;">Статус:</div>
     <div class="status-sel">
-      <button class="st-btn sel" data-st="want" style="background:var(--c4);color:#333;" onclick="selStatus(this,'want')">Хочу</button>
+      <button class="st-btn sel" data-st="want" style="background:var(--c4);color:#333;" onclick="selStatus(this,'want')">Хочу читать</button>
       <button class="st-btn" data-st="reading" onclick="selStatus(this,'reading')">Читаю</button>
-      <button class="st-btn" data-st="done" onclick="selStatus(this,'done')">Прочитал</button>
+      <button class="st-btn" data-st="done" onclick="selStatus(this,'done')">Прочитано</button>
     </div>
     <label class="file-lbl" for="bookCoverModalFile">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-      <span id="coverLbl">Загрузить обложку (необязательно)</span>
+      📷 <span id="coverLbl">Загрузить обложку (необязательно)</span>
     </label>
     <input type="file" id="bookCoverModalFile" accept="image/*" style="display:none" onchange="previewBookCover(event)">
     <div id="coverPreview"></div>
   `);
-}
-
-/* Validate — активирует/деактивирует кнопку Save */
-function validateModal(){
-  const title=(document.getElementById('mIn')?.value||'').trim();
-  let ok=!!title;
-  if(mCtx?.type==='book'){
-    const tot=parseInt(document.getElementById('mTot')?.value||'0');
-    ok=ok&&tot>0;
-  }
-  if(mCtx?.type==='goal'){
-    const ed=document.getElementById('mEndDate')?.value||'';
-    ok=ok&&!!ed;
-  }
+  // Кнопка save изначально disabled (нет заголовка и страниц)
   const btn=document.getElementById('mSaveBtn');
-  if(btn){ btn.disabled=!ok; btn.style.opacity=ok?'1':'0.45'; }
+  btn.disabled=true; btn.style.opacity='0.4';
 }
-
 function selStatus(btn,st){
   document.querySelectorAll('.st-btn').forEach(b=>{b.classList.remove('sel');b.style.background='';b.style.color='';});
   btn.classList.add('sel');
   const map={want:'var(--c4)',reading:'var(--primary)',done:'var(--c2)'};
   btn.style.background=map[st]||'var(--primary)'; btn.style.color=st==='want'?'#333':'white';
 }
-
 function previewBookCover(e){
   const file=e.target.files[0]; if(!file) return;
   const reader=new FileReader();
   reader.onload=ev=>{
     _tmpBookCover=ev.target.result;
     document.getElementById('coverLbl').textContent='Обложка выбрана ✓';
-    document.getElementById('coverPreview').innerHTML=`<img src="${_tmpBookCover}" style="width:56px;height:80px;object-fit:cover;border-radius:8px;margin-top:6px;">`;
+    document.getElementById('coverPreview').innerHTML=`<img src="${_tmpBookCover}" style="width:54px;height:78px;object-fit:cover;border-radius:8px;margin-top:6px;">`;
   };
   reader.readAsDataURL(file);
 }
 
-/* ── CONFIRM MODAL ── */
+/* ── CONFIRM ── */
 function confirmM(){
   const title=(document.getElementById('mIn')?.value||'').trim();
-
   if(mCtx?.type==='task'){
     if(!title) return;
     const wd=getWD(); if(!wd.tasks) wd.tasks=[];
     const gid=document.getElementById('mGoal')?.value||null;
     wd.tasks.push({id:uid(),dayIdx:mCtx.di,text:title,done:false,goalId:gid||null});
     sv(); closeOv(); rPlanner();
-  }
-  else if(mCtx?.type==='habit'){
+  } else if(mCtx?.type==='habit'){
     if(!title) return;
     const chips=[...document.querySelectorAll('.day-chip.sel')];
     const days=chips.map(c=>parseInt(c.dataset.di));
     const gid=document.getElementById('mGoal')?.value||null;
     S.habits.push({id:uid(),name:title,days:days.length?days:[0,1,2,3,4,5,6],goalId:gid||null});
     sv(); closeOv(); rHabits(); rDash();
-  }
-  else if(mCtx?.type==='goal'){
+  } else if(mCtx?.type==='goal'){
     if(!title) return;
-    const startDate=document.getElementById('mStartDate')?.value||today();
-    const endDate=document.getElementById('mEndDate')?.value||'';
-    if(!endDate) return;
+    const startDate=document.getElementById('mStartDate')?.value||todayStr();
+    const endDate=document.getElementById('mEndDate')?.value||''; if(!endDate) return;
     const habitId=document.getElementById('mHabit')?.value||null;
     const targetPerWeek=habitId?parseInt(document.getElementById('mTarget')?.value||'3'):0;
     S.goals.push({id:uid(),name:title,startDate,endDate,habitId:habitId||null,targetPerWeek});
     sv(); closeOv(); rGoals();
-  }
-  else if(mCtx?.type==='book'){
-    if(!title) return;
+  } else if(mCtx?.type==='book'){
     const tot=parseInt(document.getElementById('mTot')?.value||'0');
-    if(!tot) return;
+    if(!title||!tot) return;
     const author=(document.getElementById('mAuthor')?.value||'').trim();
     const stBtn=document.querySelector('.st-btn.sel');
     const status=stBtn?.dataset?.st||'want';
-    S.books.push({id:uid(),title,author,total:tot,current:0,rating:0,status,cover:_tmpBookCover||null,notes:[]});
+    S.books.push({id:uid(),title,author,total:tot,current:0,rating:0,status,
+      cover:_tmpBookCover||null,notes:[],doneYear:null});
     _tmpBookCover=null;
     sv(); closeOv(); rBooks();
-  }
-  else if(mCtx?.type==='avatar'){
+    // Автопереключение на нужный таб
+    const tabMap={want:0,reading:1,done:2};
+    const tabBtns=document.querySelectorAll('.bk-tab');
+    if(tabBtns[tabMap[status]]) setBkFilter(status,tabBtns[tabMap[status]]);
+  } else if(mCtx?.type==='avatar'){
     const nm=(document.getElementById('mIn')?.value||'').trim();
     if(nm) S.name=nm; sv(); closeOv(); rHeader(); rDash();
   }
 }
 
-/* PAYWALL */
+/* Paywall */
 function openSubModal(){ document.getElementById('subOv').classList.add('on'); }
 function buySub(){
   S.isSubscribed=true; sv();
@@ -1258,28 +1392,25 @@ function buySub(){
   if(tg) tg.showAlert('🎉 Premium активирован!'); else alert('🎉 Premium активирован!');
 }
 
-/* AVATAR */
+/* Avatar */
 function openAvatarModal(){
   mCtx={type:'avatar'};
   showModal('Профиль',`
     ${S.avatar?`<img src="${S.avatar}" class="av-preview">`:`<div class="av-ph">👤</div>`}
     <input class="finp" id="mIn" placeholder="Ваше имя" value="${S.name||''}">
-    <label class="file-lbl" for="avatarFile">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      Загрузить фото
-    </label>
+    <label class="file-lbl" for="avatarFile">📷 Загрузить фото</label>
   `);
 }
 function handleAvatarUpload(e){
   const file=e.target.files[0]; if(!file) return;
   const reader=new FileReader();
-  reader.onload=ev=>{ S.avatar=ev.target.result; sv(); rHeader(); const av=document.getElementById('hdrAv'); av.innerHTML=`<img src="${S.avatar}">`; };
+  reader.onload=ev=>{ S.avatar=ev.target.result; sv(); rHeader(); document.getElementById('hdrAv').innerHTML=`<img src="${S.avatar}">`; };
   reader.readAsDataURL(file); e.target.value='';
 }
 
-/* ════════════════════════════════════════
+/* ══════════════════════════════════════════════
    TELEGRAM BACK BUTTON
-════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 if(tg){
   tg.BackButton.onClick(()=>{
     if(document.getElementById('notesOver').classList.contains('on')){ closeNotes(); return; }
@@ -1289,9 +1420,9 @@ if(tg){
   });
 }
 
-/* ════════════════════════════════════════
+/* ══════════════════════════════════════════════
    KEYBOARD
-════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 document.addEventListener('keydown',e=>{
   if(e.key==='Enter'){
     if(document.getElementById('notesOver').classList.contains('on')){ addQuote(); return; }
@@ -1300,17 +1431,15 @@ document.addEventListener('keydown',e=>{
   if(e.key==='Escape') closeOv();
 });
 
-/* ════════════════════════════════════════
+/* ══════════════════════════════════════════════
    INIT
-════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 function init(){
   checkAchs();
   if(IS_TG&&!S.name){ S.name=tg?.initDataUnsafe?.user?.first_name||'Искатель'; sv(); }
   if(S.isSubscribed) document.getElementById('btnPrem').style.display='none';
-  // Кнопка Save изначально не задизейблена для не-book/goal модалок
   rAll();
 }
-
 init();
 </script>
 </body>
