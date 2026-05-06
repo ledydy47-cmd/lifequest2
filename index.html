@@ -7,439 +7,369 @@
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
 :root {
-  --bg: #0f0f13;
-  --surface: #1a1a24;
-  --surface2: #22222f;
-  --border: #2e2e42;
-  --text: #f0f0f8;
-  --text2: #8888aa;
+  --bg: #f5f6fa;
+  --surface: #ffffff;
+  --surface2: #f0f1f8;
+  --border: #e8eaf0;
+  --text: #1a1a2e;
+  --text2: #8890b0;
   --accent: #7c6af7;
   --accent2: #a78bfa;
-  --green: #4ade80;
-  --red: #f87171;
-  --yellow: #fbbf24;
-  --orange: #fb923c;
-  --blue: #60a5fa;
-  --pink: #f472b6;
-  --violet: #c084fc;
-  --radius: 16px;
-  --radius-sm: 10px;
-  --nav-h: 64px;
-  --header-h: 120px;
+  --accent-soft: rgba(124,106,247,0.12);
+  --green: #22c55e;
+  --green-soft: rgba(34,197,94,0.12);
+  --red: #ef4444;
+  --red-soft: rgba(239,68,68,0.12);
+  --yellow: #f59e0b;
+  --yellow-soft: rgba(245,158,11,0.12);
+  --orange: #f97316;
+  --blue: #3b82f6;
+  --blue-soft: rgba(59,130,246,0.12);
+  --pink: #ec4899;
+  --pink-soft: rgba(236,72,153,0.12);
+  --violet: #8b5cf6;
+  --violet-soft: rgba(139,92,246,0.12);
+  --teal: #14b8a6;
+  --teal-soft: rgba(20,184,166,0.12);
+  --radius: 18px;
+  --radius-sm: 12px;
+  --nav-h: 72px;
+  --shadow: 0 2px 16px rgba(124,106,247,0.10);
+  --shadow-sm: 0 1px 8px rgba(0,0,0,0.07);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+* { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+html,body { height:100%; overflow:hidden; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif; }
 
-#shell { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+/* SHELL */
+#shell { display:flex; flex-direction:column; height:100%; overflow:hidden; }
+#hdr { flex-shrink:0; padding:14px 18px 12px; background:var(--surface); border-bottom:1px solid var(--border); box-shadow:var(--shadow-sm); z-index:10; }
+#content { flex:1; overflow-y:auto; overflow-x:hidden; -webkit-overflow-scrolling:touch; }
+.page { display:none; min-height:100%; padding:16px 16px calc(var(--nav-h)+24px); }
+.page.active { display:block; }
 
 /* HEADER */
-#hdr {
-  flex-shrink: 0;
-  padding: 12px 16px 10px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  z-index: 10;
-}
-.hdr-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.hdr-top { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
 .hdr-ava {
-  width: 46px; height: 46px; border-radius: 50%;
-  border: 2px solid var(--accent); overflow: hidden;
-  flex-shrink: 0; cursor: pointer; background: var(--surface2);
-  display: flex; align-items: center; justify-content: center; font-size: 20px;
+  width:48px; height:48px; border-radius:50%;
+  border:2.5px solid var(--accent); overflow:hidden;
+  flex-shrink:0; cursor:pointer; background:var(--surface2);
+  display:flex; align-items:center; justify-content:center; font-size:22px;
+  box-shadow:0 0 0 4px var(--accent-soft);
 }
-.hdr-ava img { width: 100%; height: 100%; object-fit: cover; }
-.hdr-info { flex: 1; min-width: 0; }
-.hdr-name { font-weight: 700; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.hdr-lvl { font-size: 12px; color: var(--accent2); }
-.hdr-btns { display: flex; gap: 6px; flex-shrink: 0; }
-.hdr-btn {
-  padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer;
-  font-size: 12px; font-weight: 600;
-}
-.btn-prem { background: linear-gradient(135deg, var(--yellow), var(--orange)); color: #1a1a1a; }
-.btn-out { background: var(--surface2); color: var(--text2); }
-.xp-bar-wrap { position: relative; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
-.xp-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 4px; transition: width .4s; }
-.xp-label { font-size: 11px; color: var(--text2); margin-top: 4px; text-align: right; }
-
-/* CONTENT */
-#content {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  position: relative;
-}
-
-/* PAGES */
-.page { display: none; min-height: 100%; padding: 16px 16px calc(var(--nav-h) + 24px); }
-.page.active { display: block; }
+.hdr-ava img { width:100%; height:100%; object-fit:cover; }
+.hdr-info { flex:1; min-width:0; }
+.hdr-name { font-weight:800; font-size:17px; color:var(--text); }
+.hdr-lvl { font-size:12px; color:var(--text2); margin-top:1px; }
+.hdr-btns { display:flex; gap:8px; flex-shrink:0; }
+.hdr-btn { padding:8px 14px; border-radius:22px; border:none; cursor:pointer; font-size:13px; font-weight:700; }
+.btn-prem { background:linear-gradient(135deg,#f59e0b,#f97316); color:#fff; box-shadow:0 4px 12px rgba(249,115,22,0.35); }
+.btn-out { background:var(--surface2); color:var(--text2); }
+.xp-row { display:flex; align-items:center; gap:10px; }
+.xp-bar-wrap { flex:1; height:8px; background:var(--surface2); border-radius:4px; overflow:hidden; }
+.xp-bar-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:4px; transition:width .4s; }
+.xp-label { font-size:12px; color:var(--accent); font-weight:700; white-space:nowrap; }
 
 /* NAV */
 #nav {
-  flex-shrink: 0;
-  display: flex;
-  height: var(--nav-h);
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  z-index: 10;
+  flex-shrink:0; display:flex; height:var(--nav-h);
+  background:var(--surface); border-top:1px solid var(--border);
+  box-shadow:0 -2px 16px rgba(0,0,0,0.06); z-index:10;
+  padding-bottom:env(safe-area-inset-bottom,0);
 }
 .nav-btn {
-  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 3px; border: none; background: none; color: var(--text2); cursor: pointer;
-  font-size: 10px; transition: color .2s; padding: 6px 2px;
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:3px; border:none; background:none; color:var(--text2); cursor:pointer;
+  font-size:10px; font-weight:600; transition:color .2s; padding:6px 2px;
 }
-.nav-btn.active { color: var(--accent); }
-.nav-btn svg { width: 22px; height: 22px; }
+.nav-btn.active { color:var(--accent); }
+.nav-icon { width:26px; height:26px; display:flex; align-items:center; justify-content:center; position:relative; }
+.nav-btn.active .nav-icon::after {
+  content:''; position:absolute; inset:-4px; border-radius:50%;
+  background:var(--accent-soft);
+}
 
 /* CARDS */
-.card {
-  background: var(--surface); border-radius: var(--radius);
-  padding: 14px; margin-bottom: 12px; border: 1px solid var(--border);
-}
-.card-title { font-size: 13px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 10px; }
+.card { background:var(--surface); border-radius:var(--radius); padding:16px; margin-bottom:12px; box-shadow:var(--shadow-sm); border:1px solid var(--border); }
+.card-title { font-size:12px; font-weight:700; color:var(--text2); text-transform:uppercase; letter-spacing:.6px; margin-bottom:12px; }
+.section-hdr { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+.section-title { font-size:20px; font-weight:800; color:var(--text); }
+.empty-state { text-align:center; padding:50px 20px; color:var(--text2); font-size:14px; }
+.empty-icon { font-size:56px; margin-bottom:14px; }
+.empty-title { font-size:17px; font-weight:700; color:var(--text); margin-bottom:6px; }
 
-/* DASH */
-.dash-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+/* STAT TILES */
+.stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+.stats-grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:14px; }
 .stat-tile {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 14px; text-align: center;
+  background:var(--surface); border-radius:var(--radius-sm); padding:14px 12px;
+  box-shadow:var(--shadow-sm); border:1px solid var(--border);
+  display:flex; flex-direction:column; align-items:center; gap:4px;
 }
-.stat-tile .val { font-size: 26px; font-weight: 800; }
-.stat-tile .lbl { font-size: 11px; color: var(--text2); margin-top: 2px; }
-.streak-row { display: flex; gap: 6px; margin-top: 8px; justify-content: center; }
-.streak-dot {
-  width: 28px; height: 28px; border-radius: 50%;
-  background: var(--surface2); border: 2px solid var(--border);
-  display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text2);
-}
-.streak-dot.done { background: var(--accent); border-color: var(--accent); color: #fff; }
+.stat-tile .ico { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:4px; }
+.stat-tile .val { font-size:22px; font-weight:800; }
+.stat-tile .lbl { font-size:11px; color:var(--text2); text-align:center; line-height:1.3; }
+
+/* PROGRESS BAR */
+.prog-wrap { height:8px; background:var(--surface2); border-radius:4px; overflow:hidden; margin-bottom:6px; position:relative; }
+.prog-fill { height:100%; border-radius:4px; transition:width .4s; }
+.prog-expected { position:absolute; top:0; height:100%; width:2px; background:rgba(0,0,0,.2); }
 
 /* TASKS */
-.task-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 0; border-bottom: 1px solid var(--border);
-  position: relative;
-}
-.task-row:last-child { border-bottom: none; }
+.task-row { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); }
+.task-row:last-child { border-bottom:none; }
 .task-cb {
-  width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; flex-shrink: 0; transition: all .2s;
+  width:24px; height:24px; border-radius:8px; border:2px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; flex-shrink:0; transition:all .2s; background:var(--surface2);
 }
-.task-cb.done { background: var(--accent); border-color: var(--accent); }
-.task-text { flex: 1; font-size: 14px; min-width: 0; }
-.task-text.done { text-decoration: line-through; color: var(--text2); }
-.task-goal-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.task-del { background: none; border: none; color: var(--text2); cursor: pointer; padding: 4px; flex-shrink: 0; }
+.task-cb.done { background:var(--accent); border-color:var(--accent); }
+.task-cb.done::after { content:'✓'; color:#fff; font-size:13px; font-weight:700; }
+.task-text { flex:1; font-size:14px; font-weight:500; }
+.task-text.done { text-decoration:line-through; color:var(--text2); }
+.task-del { background:none; border:none; color:var(--text2); cursor:pointer; padding:6px; font-size:16px; }
+.task-goal-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
 
 /* HABITS */
 .hab-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 14px; margin-bottom: 10px;
+  background:var(--surface); border-radius:var(--radius); padding:16px;
+  margin-bottom:10px; box-shadow:var(--shadow-sm); border:1px solid var(--border);
 }
-.hab-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.hab-icon { font-size: 24px; flex-shrink: 0; }
-.hab-info { flex: 1; min-width: 0; }
-.hab-name { font-weight: 600; font-size: 15px; }
-.hab-goal-link { font-size: 11px; color: var(--accent2); margin-top: 2px; }
-.hab-del { background: none; border: none; color: var(--text2); cursor: pointer; padding: 4px; }
-.hab-week { display: flex; gap: 5px; }
-.hab-day {
-  flex: 1; aspect-ratio: 1; border-radius: 8px;
-  background: var(--surface2); border: 1.5px solid var(--border);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  cursor: pointer; font-size: 9px; color: var(--text2); gap: 2px;
-  transition: all .2s;
+.hab-top { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.hab-icon-wrap {
+  width:46px; height:46px; border-radius:14px; display:flex; align-items:center;
+  justify-content:center; font-size:24px; flex-shrink:0;
 }
-.hab-day.done { background: var(--accent); border-color: var(--accent); color: #fff; }
-.hab-day.today { border-color: var(--accent2); }
-.hab-day span { font-size: 11px; font-weight: 700; }
+.hab-info { flex:1; min-width:0; }
+.hab-name { font-weight:700; font-size:16px; }
+.hab-sub { font-size:12px; color:var(--text2); margin-top:2px; }
+.hab-del { background:none; border:none; color:var(--text2); cursor:pointer; padding:6px; font-size:18px; }
+.hab-days-row { display:flex; gap:5px; margin-bottom:10px; }
+.hab-day-btn {
+  flex:1; aspect-ratio:1; border-radius:10px; background:var(--surface2);
+  border:1.5px solid var(--border); display:flex; flex-direction:column;
+  align-items:center; justify-content:center; cursor:pointer; font-size:8px;
+  color:var(--text2); gap:2px; transition:all .2s; font-weight:600;
+}
+.hab-day-btn .day-num { font-size:11px; font-weight:700; }
+.hab-day-btn.done { background:var(--accent); border-color:var(--accent); color:#fff; }
+.hab-day-btn.today { border-color:var(--accent); color:var(--accent); }
+.hab-day-btn.done.today { color:#fff; }
+.hab-day-btn.inactive { opacity:0.35; cursor:default; }
+.hab-prog-row { display:flex; align-items:center; gap:8px; }
+.hab-prog-label { font-size:12px; color:var(--text2); }
+.hab-prog-pct { font-size:12px; font-weight:700; color:var(--accent); margin-left:auto; }
 
 /* GOALS */
-.goal-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 14px; margin-bottom: 10px;
-}
-.goal-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-.goal-title { font-weight: 700; font-size: 15px; flex: 1; }
-.goal-badge {
-  font-size: 10px; padding: 3px 8px; border-radius: 10px; flex-shrink: 0; margin-left: 8px;
-}
-.badge-ok { background: rgba(74,222,128,.15); color: var(--green); }
-.badge-over { background: rgba(248,113,113,.15); color: var(--red); }
-.badge-soon { background: rgba(251,191,36,.15); color: var(--yellow); }
-.badge-active { background: rgba(124,106,247,.15); color: var(--accent); }
-.goal-meta { font-size: 12px; color: var(--text2); margin-bottom: 10px; }
-.prog-wrap { height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; margin-bottom: 6px; position: relative; }
-.prog-fill { height: 100%; border-radius: 4px; transition: width .4s; }
-.prog-expected { position: absolute; top: 0; height: 100%; width: 2px; background: rgba(255,255,255,.4); }
-.prog-label { font-size: 12px; color: var(--text2); display: flex; justify-content: space-between; }
-.goal-hab-grid { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 8px; }
+.goal-card { background:var(--surface); border-radius:var(--radius); padding:16px; margin-bottom:10px; box-shadow:var(--shadow-sm); border:1px solid var(--border); }
+.goal-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
+.goal-title { font-weight:700; font-size:16px; flex:1; }
+.goal-badge { font-size:10px; padding:4px 10px; border-radius:12px; flex-shrink:0; margin-left:8px; font-weight:700; }
+.badge-ok { background:var(--green-soft); color:var(--green); }
+.badge-over { background:var(--red-soft); color:var(--red); }
+.badge-soon { background:var(--yellow-soft); color:var(--yellow); }
+.badge-active { background:var(--accent-soft); color:var(--accent); }
+.goal-meta { font-size:12px; color:var(--text2); margin-bottom:12px; }
+.prog-label { font-size:12px; color:var(--text2); display:flex; justify-content:space-between; margin-top:4px; }
+.goal-hab-grid { display:flex; gap:4px; flex-wrap:wrap; margin-top:10px; }
 .goal-hab-dot {
-  width: 22px; height: 22px; border-radius: 6px; font-size: 9px;
-  display: flex; align-items: center; justify-content: center;
-  background: var(--surface2); border: 1px solid var(--border); color: var(--text2);
+  width:24px; height:24px; border-radius:7px; font-size:9px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--surface2); border:1px solid var(--border); color:var(--text2); font-weight:700;
 }
-.goal-hab-dot.done { background: var(--accent); border-color: var(--accent); color: #fff; }
-.goal-del { background: none; border: none; color: var(--text2); cursor: pointer; padding: 4px; }
+.goal-hab-dot.done { background:var(--accent); border-color:var(--accent); color:#fff; }
 
 /* BOOKS */
-.books-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
-.books-tabs { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 2px; }
+.books-tabs { display:flex; gap:8px; margin-bottom:16px; }
 .books-tab {
-  padding: 7px 16px; border-radius: 20px; border: none; font-size: 13px; font-weight: 600;
-  background: var(--surface2); color: var(--text2); cursor: pointer; white-space: nowrap;
+  flex:1; padding:10px 8px; border-radius:22px; border:1.5px solid var(--border);
+  font-size:13px; font-weight:700; background:var(--surface); color:var(--text2);
+  cursor:pointer; text-align:center; display:flex; align-items:center; justify-content:center; gap:6px;
+  transition:all .2s;
 }
-.books-tab.active { background: var(--accent); color: #fff; }
-.books-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.books-tab.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+.books-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .book-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); overflow: hidden; cursor: pointer; position: relative;
-  transition: transform .15s;
+  background:var(--surface); border-radius:var(--radius); overflow:hidden;
+  cursor:pointer; box-shadow:var(--shadow-sm); border:1px solid var(--border);
+  transition:transform .15s;
 }
-.book-card:active { transform: scale(.97); }
-.book-cover {
-  width: 100%; aspect-ratio: 2/3; object-fit: cover; background: var(--surface2);
-  display: flex; align-items: center; justify-content: center; font-size: 40px;
-  position: relative;
-}
-.book-cover img { width: 100%; height: 100%; object-fit: cover; }
-.book-cover-placeholder { width: 100%; aspect-ratio: 2/3; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 40px; }
-.book-circ {
-  position: absolute; bottom: 6px; right: 6px;
-  width: 42px; height: 42px;
-}
-.book-circ svg { width: 42px; height: 42px; transform: rotate(-90deg); }
-.book-circ-text {
-  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  font-size: 9px; font-weight: 700; color: #fff;
-}
-.book-info { padding: 8px 10px 10px; }
-.book-info-title { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.book-info-author { font-size: 11px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.book-status-dot {
-  position: absolute; top: 8px; left: 8px;
-  width: 10px; height: 10px; border-radius: 50%;
-}
-.book-stars { display: flex; gap: 2px; margin-top: 4px; }
-.book-star { font-size: 12px; }
+.book-card:active { transform:scale(.97); }
+.book-cover-wrap { width:100%; aspect-ratio:2/3; overflow:hidden; position:relative; background:var(--surface2); display:flex; align-items:center; justify-content:center; }
+.book-cover-wrap img { width:100%; height:100%; object-fit:cover; }
+.book-status-dot { position:absolute; top:8px; left:8px; width:10px; height:10px; border-radius:50%; }
+.book-circ { position:absolute; bottom:6px; right:6px; width:44px; height:44px; }
+.book-circ svg { width:44px; height:44px; transform:rotate(-90deg); }
+.book-circ-text { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:800; color:#fff; }
+.book-info { padding:10px 10px 12px; }
+.book-info-title { font-size:13px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.book-info-author { font-size:11px; color:var(--text2); margin-top:2px; }
+.book-stars { display:flex; gap:2px; margin-top:5px; font-size:12px; }
 
 /* VITAMINS */
-.vit-hero {
-  background: linear-gradient(135deg, #5b21b6, #7c3aed, #a855f7);
-  border-radius: var(--radius); padding: 20px; margin-bottom: 14px;
-  display: flex; align-items: center; gap: 16px;
-}
-.vit-hero-circ { position: relative; width: 80px; height: 80px; flex-shrink: 0; }
-.vit-hero-circ svg { width: 80px; height: 80px; transform: rotate(-90deg); }
-.vit-hero-circ-text {
-  position: absolute; inset: 0; display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-}
-.vit-hero-circ-text .big { font-size: 20px; font-weight: 800; color: #fff; }
-.vit-hero-circ-text .small { font-size: 10px; color: rgba(255,255,255,.7); }
-.vit-hero-info { flex: 1; min-width: 0; }
-.vit-hero-date { font-size: 13px; color: rgba(255,255,255,.7); margin-bottom: 4px; }
-.vit-hero-title { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 4px; }
-.vit-hero-sub { font-size: 12px; color: rgba(255,255,255,.6); }
-.vit-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 14px; }
-.vit-card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 14px; margin-bottom: 10px;
-}
-.vit-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.vit-emoji { font-size: 28px; flex-shrink: 0; }
-.vit-info { flex: 1; min-width: 0; }
-.vit-name { font-weight: 700; font-size: 15px; }
-.vit-dose { font-size: 12px; color: var(--text2); margin-top: 2px; }
-.vit-del { background: none; border: none; color: var(--text2); cursor: pointer; padding: 4px; }
-.vit-times { display: flex; gap: 6px; flex-wrap: wrap; }
-.vit-time-badge {
-  padding: 5px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;
-  border: 1.5px solid var(--border); background: var(--surface2); color: var(--text2); cursor: pointer;
-  transition: all .2s;
-}
-.vit-time-badge.done { background: var(--violet); border-color: var(--violet); color: #fff; }
-.vit-week-row { display: flex; gap: 5px; margin-top: 10px; }
-.vit-week-day {
-  flex: 1; height: 28px; border-radius: 6px; background: var(--surface2);
-  border: 1.5px solid var(--border); display: flex; align-items: center;
-  justify-content: center; font-size: 9px; color: var(--text2);
-  flex-direction: column; gap: 1px;
-}
-.vit-week-day.full { background: var(--violet); border-color: var(--violet); color: #fff; }
-.vit-week-day.partial { background: rgba(192,132,252,.3); border-color: var(--violet); color: var(--violet); }
-.vit-week-day span { font-size: 8px; }
-.vit-history { margin-top: 14px; }
-.vit-hist-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-.vit-hist-label { font-size: 11px; color: var(--text2); width: 28px; text-align: right; flex-shrink: 0; }
-.vit-hist-bar-wrap { flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
-.vit-hist-bar-fill { height: 100%; background: var(--violet); border-radius: 4px; }
-.vit-hist-pct { font-size: 10px; color: var(--text2); width: 30px; flex-shrink: 0; }
+.vit-hero { background:linear-gradient(135deg,#5b21b6,#7c3aed,#a855f7); border-radius:var(--radius); padding:20px; margin-bottom:14px; display:flex; align-items:center; gap:16px; }
+.vit-hero-circ { position:relative; width:80px; height:80px; flex-shrink:0; }
+.vit-hero-circ svg { width:80px; height:80px; transform:rotate(-90deg); }
+.vit-hero-circ-text { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.vit-hero-circ-text .big { font-size:20px; font-weight:800; color:#fff; }
+.vit-hero-circ-text .small { font-size:10px; color:rgba(255,255,255,.7); }
+.vit-hero-info { flex:1; min-width:0; }
+.vit-hero-date { font-size:13px; color:rgba(255,255,255,.7); margin-bottom:4px; }
+.vit-hero-title { font-size:18px; font-weight:800; color:#fff; margin-bottom:4px; }
+.vit-hero-sub { font-size:12px; color:rgba(255,255,255,.6); }
+.vit-card { background:var(--surface); border-radius:var(--radius); padding:16px; margin-bottom:10px; box-shadow:var(--shadow-sm); border:1px solid var(--border); }
+.vit-top { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.vit-emoji-wrap { width:46px; height:46px; border-radius:14px; background:var(--violet-soft); display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; }
+.vit-info { flex:1; min-width:0; }
+.vit-name { font-weight:700; font-size:16px; }
+.vit-dose { font-size:12px; color:var(--text2); margin-top:2px; }
+.vit-del { background:none; border:none; color:var(--text2); cursor:pointer; padding:6px; font-size:18px; }
+.vit-times { display:flex; gap:6px; flex-wrap:wrap; }
+.vit-time-badge { padding:6px 14px; border-radius:14px; font-size:13px; font-weight:600; border:1.5px solid var(--border); background:var(--surface2); color:var(--text2); cursor:pointer; transition:all .2s; }
+.vit-time-badge.done { background:var(--violet); border-color:var(--violet); color:#fff; }
+.vit-week-row { display:flex; gap:5px; margin-top:10px; }
+.vit-week-day { flex:1; height:30px; border-radius:8px; background:var(--surface2); border:1.5px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:9px; color:var(--text2); flex-direction:column; gap:1px; font-weight:600; }
+.vit-week-day.full { background:var(--violet); border-color:var(--violet); color:#fff; }
+.vit-week-day.partial { background:rgba(139,92,246,.15); border-color:var(--violet); color:var(--violet); }
+.vit-hist-row { display:flex; align-items:center; gap:8px; margin-bottom:7px; }
+.vit-hist-label { font-size:11px; color:var(--text2); width:24px; text-align:right; flex-shrink:0; font-weight:600; }
+.vit-hist-bar-wrap { flex:1; height:8px; background:var(--surface2); border-radius:4px; overflow:hidden; }
+.vit-hist-bar-fill { height:100%; background:var(--violet); border-radius:4px; }
+.vit-hist-pct { font-size:10px; color:var(--text2); width:30px; text-align:right; flex-shrink:0; font-weight:600; }
+
+/* STREAK DOTS */
+.streak-row { display:flex; gap:6px; justify-content:center; }
+.streak-dot { width:32px; height:32px; border-radius:50%; background:var(--surface2); border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:10px; color:var(--text2); font-weight:700; }
+.streak-dot.done { background:var(--accent); border-color:var(--accent); color:#fff; }
 
 /* FAB */
 #fab {
-  position: fixed; bottom: calc(var(--nav-h) + 16px); right: 20px;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  border: none; color: #fff; font-size: 26px; cursor: pointer;
-  box-shadow: 0 4px 20px rgba(124,106,247,.5);
-  display: flex; align-items: center; justify-content: center; z-index: 20;
-  transition: transform .15s;
+  position:fixed; bottom:calc(var(--nav-h)+18px); right:20px;
+  width:56px; height:56px; border-radius:50%;
+  background:linear-gradient(135deg,var(--orange),var(--yellow));
+  border:none; color:#fff; font-size:28px; cursor:pointer;
+  box-shadow:0 6px 24px rgba(249,115,22,0.5);
+  display:flex; align-items:center; justify-content:center; z-index:20;
+  transition:transform .15s;
 }
-#fab:active { transform: scale(.92); }
+#fab:active { transform:scale(.92); }
 
 /* MODALS */
-.modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,.7);
-  z-index: 100; display: flex; align-items: flex-end;
-  opacity: 0; pointer-events: none; transition: opacity .25s;
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:100; display:flex; align-items:flex-end; opacity:0; pointer-events:none; transition:opacity .25s; }
+.modal-overlay.open { opacity:1; pointer-events:all; }
+.modal-box { width:100%; background:var(--surface); border-radius:24px 24px 0 0; padding:20px 20px 36px; max-height:90vh; overflow-y:auto; transform:translateY(100%); transition:transform .3s; }
+.modal-overlay.open .modal-box { transform:translateY(0); }
+.modal-handle { width:36px; height:4px; background:var(--border); border-radius:2px; margin:0 auto 16px; }
+.modal-title { font-size:20px; font-weight:800; margin-bottom:18px; color:var(--text); }
+.modal-field { margin-bottom:16px; }
+.modal-field label { display:block; font-size:13px; color:var(--text2); margin-bottom:7px; font-weight:600; }
+.modal-field input, .modal-field select, .modal-field textarea {
+  width:100%; padding:12px 14px; border-radius:var(--radius-sm);
+  background:var(--surface2); border:1.5px solid var(--border);
+  color:var(--text); font-size:14px; outline:none; font-family:inherit;
 }
-.modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal-box {
-  width: 100%; background: var(--surface); border-radius: 24px 24px 0 0;
-  padding: 20px 20px 36px; max-height: 90vh; overflow-y: auto;
-  transform: translateY(100%); transition: transform .3s;
-}
-.modal-overlay.open .modal-box { transform: translateY(0); }
-.modal-title { font-size: 18px; font-weight: 800; margin-bottom: 18px; }
-.modal-field { margin-bottom: 14px; }
-.modal-field label { display: block; font-size: 13px; color: var(--text2); margin-bottom: 6px; }
-.modal-field input,
-.modal-field select,
-.modal-field textarea {
-  width: 100%; padding: 12px 14px; border-radius: var(--radius-sm);
-  background: var(--surface2); border: 1.5px solid var(--border);
-  color: var(--text); font-size: 14px; outline: none;
-  font-family: inherit;
-}
-.modal-field input:focus,
-.modal-field select:focus,
-.modal-field textarea:focus { border-color: var(--accent); }
-.modal-field select option { background: var(--surface2); }
+.modal-field input:focus, .modal-field select:focus, .modal-field textarea:focus { border-color:var(--accent); }
+.modal-field select { appearance:none; -webkit-appearance:none; }
+.dates-row { display:flex; gap:10px; }
+.dates-row .modal-field { flex:1; min-width:0; }
 
-/* DATES ROW — две даты рядом */
-.dates-row { display: flex; gap: 10px; }
-.dates-row .modal-field { flex: 1; min-width: 0; }
-.dates-row .modal-field input { width: 100%; }
+/* DAY SELECTOR */
+.day-selector { display:flex; gap:5px; }
+.day-sel-btn {
+  flex:1; aspect-ratio:1; border-radius:10px; border:1.5px solid var(--border);
+  background:var(--surface2); color:var(--text2); font-size:11px; font-weight:700;
+  cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s;
+}
+.day-sel-btn.sel { background:var(--accent); border-color:var(--accent); color:#fff; }
+.all-days-btn {
+  width:100%; padding:10px; border-radius:12px; border:1.5px solid var(--border);
+  background:var(--surface2); color:var(--text2); font-size:13px; font-weight:700;
+  cursor:pointer; margin-bottom:10px; transition:all .2s; text-align:center;
+}
+.all-days-btn.sel { background:var(--accent-soft); border-color:var(--accent); color:var(--accent); }
 
-.emoji-picker { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
-.emoji-btn {
-  width: 38px; height: 38px; font-size: 20px; border-radius: 10px;
-  border: 2px solid var(--border); background: var(--surface2); cursor: pointer;
-  display: flex; align-items: center; justify-content: center; transition: border-color .2s;
-}
-.emoji-btn.sel { border-color: var(--accent); background: rgba(124,106,247,.15); }
-.times-picker { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
-.time-toggle {
-  padding: 7px 14px; border-radius: 14px; border: 1.5px solid var(--border);
-  background: var(--surface2); color: var(--text2); cursor: pointer; font-size: 13px;
-}
-.time-toggle.sel { background: var(--violet); border-color: var(--violet); color: #fff; }
-.save-btn {
-  width: 100%; padding: 14px; border-radius: var(--radius); border: none;
-  background: var(--accent); color: #fff; font-size: 16px; font-weight: 700;
-  cursor: pointer; margin-top: 6px; transition: opacity .2s;
-}
-.save-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+/* EMOJI PICKER */
+.emoji-picker { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+.emoji-btn { width:40px; height:40px; font-size:22px; border-radius:12px; border:2px solid var(--border); background:var(--surface2); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+.emoji-btn.sel { border-color:var(--accent); background:var(--accent-soft); }
+.times-picker { display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; }
+.time-toggle { padding:8px 16px; border-radius:16px; border:1.5px solid var(--border); background:var(--surface2); color:var(--text2); cursor:pointer; font-size:13px; font-weight:600; }
+.time-toggle.sel { background:var(--violet); border-color:var(--violet); color:#fff; }
+
+/* SAVE BTN */
+.save-btn { width:100%; padding:15px; border-radius:var(--radius); border:none; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; font-size:16px; font-weight:800; cursor:pointer; margin-top:8px; transition:opacity .2s; box-shadow:0 4px 16px rgba(124,106,247,0.3); }
+.save-btn:disabled { opacity:0.4; cursor:not-allowed; box-shadow:none; }
 
 /* BOOK OVERLAY */
-#book-overlay {
-  position: fixed; inset: 0; background: var(--bg); z-index: 200;
-  overflow-y: auto; transform: translateX(100%); transition: transform .3s;
-}
-#book-overlay.open { transform: translateX(0); }
-.bok-ov-header {
-  display: flex; align-items: center; gap: 12px;
-  padding: 16px; border-bottom: 1px solid var(--border);
-}
-.bok-ov-back {
-  background: none; border: none; color: var(--text); cursor: pointer;
-  font-size: 22px; padding: 4px; flex-shrink: 0;
-}
-.bok-ov-title { font-size: 17px; font-weight: 700; flex: 1; }
-.bok-ov-del { background: none; border: none; color: var(--red); cursor: pointer; font-size: 20px; }
-.bok-ov-body { padding: 16px; }
-.bok-cover-wrap {
-  width: 130px; margin: 0 auto 20px; aspect-ratio: 2/3;
-  border-radius: var(--radius); overflow: hidden; background: var(--surface2);
-  display: flex; align-items: center; justify-content: center; font-size: 50px;
-  cursor: pointer; border: 2px dashed var(--border); position: relative;
-}
-.bok-cover-wrap img { width: 100%; height: 100%; object-fit: cover; }
-.bok-cover-edit {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  background: rgba(0,0,0,.6); font-size: 11px; text-align: center; padding: 5px; color: #fff;
-}
-.bok-status-tabs { display: flex; gap: 6px; margin-bottom: 16px; }
-.bok-status-tab {
-  flex: 1; padding: 8px; border-radius: 10px; border: 1.5px solid var(--border);
-  background: var(--surface2); color: var(--text2); cursor: pointer; font-size: 12px;
-  font-weight: 600; text-align: center;
-}
-.bok-status-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-.bok-prog-row { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-.bok-prog-input {
-  width: 80px; padding: 10px; border-radius: 10px; background: var(--surface2);
-  border: 1.5px solid var(--border); color: var(--text); font-size: 16px; text-align: center; outline: none;
-}
-.bok-prog-input:focus { border-color: var(--accent); }
-.bok-prog-bar-wrap { flex: 1; height: 10px; background: var(--surface2); border-radius: 5px; overflow: hidden; }
-.bok-prog-bar { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 5px; transition: width .3s; }
-.bok-prog-pct { font-size: 13px; font-weight: 700; color: var(--accent2); min-width: 36px; text-align: right; }
-.bok-stars { display: flex; gap: 8px; margin-bottom: 16px; font-size: 28px; cursor: pointer; }
-.bok-notes {
-  width: 100%; padding: 12px; border-radius: var(--radius-sm); background: var(--surface2);
-  border: 1.5px solid var(--border); color: var(--text); font-size: 14px;
-  font-family: inherit; resize: none; outline: none; margin-bottom: 16px; height: 100px;
-}
-.bok-notes:focus { border-color: var(--accent); }
-.bok-save-btn {
-  width: 100%; padding: 14px; border-radius: var(--radius); border: none;
-  background: var(--accent); color: #fff; font-size: 16px; font-weight: 700; cursor: pointer;
-}
+#book-overlay { position:fixed; inset:0; background:var(--bg); z-index:200; overflow-y:auto; transform:translateX(100%); transition:transform .3s; }
+#book-overlay.open { transform:translateX(0); }
+.bok-ov-header { display:flex; align-items:center; gap:12px; padding:16px 18px; border-bottom:1px solid var(--border); background:var(--surface); }
+.bok-ov-back { background:none; border:none; color:var(--text); cursor:pointer; font-size:22px; padding:4px; flex-shrink:0; }
+.bok-ov-title { font-size:17px; font-weight:800; flex:1; }
+.bok-ov-del { background:none; border:none; color:var(--red); cursor:pointer; font-size:22px; }
+.bok-ov-body { padding:20px; }
+.bok-cover-wrap { width:130px; margin:0 auto 20px; aspect-ratio:2/3; border-radius:var(--radius); overflow:hidden; background:var(--surface2); display:flex; align-items:center; justify-content:center; font-size:50px; cursor:pointer; border:2px dashed var(--border); position:relative; }
+.bok-cover-wrap img { width:100%; height:100%; object-fit:cover; }
+.bok-cover-edit { position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,.55); font-size:11px; text-align:center; padding:6px; color:#fff; font-weight:600; }
+.bok-status-tabs { display:flex; gap:6px; margin-bottom:18px; }
+.bok-status-tab { flex:1; padding:9px; border-radius:12px; border:1.5px solid var(--border); background:var(--surface2); color:var(--text2); cursor:pointer; font-size:12px; font-weight:700; text-align:center; }
+.bok-status-tab.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+.bok-prog-row { display:flex; align-items:center; gap:10px; margin-bottom:18px; }
+.bok-prog-input { width:80px; padding:10px; border-radius:12px; background:var(--surface2); border:1.5px solid var(--border); color:var(--text); font-size:16px; text-align:center; outline:none; font-weight:700; }
+.bok-prog-input:focus { border-color:var(--accent); }
+.bok-prog-bar-wrap { flex:1; height:10px; background:var(--surface2); border-radius:5px; overflow:hidden; }
+.bok-prog-bar { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:5px; transition:width .3s; }
+.bok-prog-pct { font-size:14px; font-weight:800; color:var(--accent); min-width:38px; text-align:right; }
+.bok-stars { display:flex; gap:8px; margin-bottom:18px; font-size:30px; cursor:pointer; }
+.bok-notes { width:100%; padding:12px; border-radius:var(--radius-sm); background:var(--surface2); border:1.5px solid var(--border); color:var(--text); font-size:14px; font-family:inherit; resize:none; outline:none; margin-bottom:18px; height:100px; }
+.bok-notes:focus { border-color:var(--accent); }
+.bok-save-btn { width:100%; padding:15px; border-radius:var(--radius); border:none; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; font-size:16px; font-weight:800; cursor:pointer; box-shadow:0 4px 16px rgba(124,106,247,0.3); }
 
 /* LANDING */
-#landing {
-  position: fixed; inset: 0; background: var(--bg); z-index: 300;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 20px; padding: 32px;
-}
-.land-logo { font-size: 64px; }
-.land-title { font-size: 28px; font-weight: 900; text-align: center; }
-.land-sub { font-size: 15px; color: var(--text2); text-align: center; }
-.land-input {
-  width: 100%; padding: 14px 18px; border-radius: var(--radius); border: 1.5px solid var(--border);
-  background: var(--surface); color: var(--text); font-size: 16px; outline: none;
-}
-.land-btn {
-  width: 100%; padding: 16px; border-radius: var(--radius); border: none;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff; font-size: 18px; font-weight: 800; cursor: pointer;
-}
+#landing { position:fixed; inset:0; background:linear-gradient(160deg,#f0eeff,#fff); z-index:300; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; padding:40px 32px; }
+.land-logo { font-size:72px; }
+.land-title { font-size:30px; font-weight:900; text-align:center; color:var(--text); }
+.land-sub { font-size:15px; color:var(--text2); text-align:center; }
+.land-input { width:100%; padding:15px 18px; border-radius:var(--radius); border:1.5px solid var(--border); background:var(--surface); color:var(--text); font-size:16px; outline:none; font-weight:600; }
+.land-input:focus { border-color:var(--accent); }
+.land-btn { width:100%; padding:16px; border-radius:var(--radius); border:none; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; font-size:18px; font-weight:800; cursor:pointer; box-shadow:0 6px 24px rgba(124,106,247,0.4); }
 
 /* AVATAR MODAL */
-.ava-preview {
-  width: 100px; height: 100px; border-radius: 50%; background: var(--surface2);
-  margin: 0 auto 16px; overflow: hidden; display: flex; align-items: center; justify-content: center;
-  font-size: 40px; border: 3px solid var(--accent);
-}
-.ava-preview img { width: 100%; height: 100%; object-fit: cover; }
-.ava-upload-btn {
-  width: 100%; padding: 12px; border-radius: var(--radius); border: 1.5px dashed var(--border);
-  background: var(--surface2); color: var(--text2); font-size: 14px; cursor: pointer; text-align: center;
-  margin-bottom: 10px;
-}
+.ava-preview { width:100px; height:100px; border-radius:50%; background:var(--surface2); margin:0 auto 16px; overflow:hidden; display:flex; align-items:center; justify-content:center; font-size:40px; border:3px solid var(--accent); }
+.ava-preview img { width:100%; height:100%; object-fit:cover; }
+.ava-upload-btn { width:100%; padding:13px; border-radius:var(--radius); border:1.5px dashed var(--border); background:var(--surface2); color:var(--text2); font-size:14px; cursor:pointer; text-align:center; margin-bottom:12px; font-weight:600; }
 
-/* MISC */
-.section-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.section-title { font-size: 17px; font-weight: 800; }
-.empty-state { text-align: center; padding: 40px 20px; color: var(--text2); font-size: 14px; }
-.chip {
-  display: inline-block; padding: 3px 10px; border-radius: 10px;
-  font-size: 11px; font-weight: 600; margin-right: 4px; margin-top: 4px;
+/* CHIP */
+.chip { display:inline-block; padding:4px 10px; border-radius:10px; font-size:11px; font-weight:700; }
+
+/* SECTION LABEL */
+.sec-label { font-size:13px; font-weight:700; color:var(--text2); margin-bottom:8px; text-transform:uppercase; letter-spacing:.5px; }
+
+/* GOAL DEL BTN */
+.goal-del-btn { width:100%; margin-top:10px; padding:8px; border-radius:10px; background:var(--red-soft); color:var(--red); border:none; cursor:pointer; font-size:13px; font-weight:700; }
+
+/* READING STREAK */
+.reading-streak-card { background:linear-gradient(135deg,var(--accent),var(--accent2)); border-radius:var(--radius); padding:18px; margin-bottom:12px; display:flex; align-items:center; gap:16px; }
+.reading-streak-num { font-size:40px; font-weight:900; color:#fff; }
+.reading-streak-info { flex:1; }
+.reading-streak-label { font-size:13px; color:rgba(255,255,255,.75); }
+.reading-streak-title { font-size:17px; font-weight:800; color:#fff; }
+
+/* DASH SPECIAL */
+.dash-welcome { font-size:22px; font-weight:900; color:var(--text); margin-bottom:4px; }
+.dash-date { font-size:13px; color:var(--text2); margin-bottom:16px; }
+.dash-quick-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; }
+.dash-quick-tile {
+  border-radius:var(--radius); padding:16px 14px;
+  display:flex; flex-direction:column; gap:8px; position:relative; overflow:hidden;
 }
+.dash-quick-tile .dqt-val { font-size:28px; font-weight:900; }
+.dash-quick-tile .dqt-lbl { font-size:12px; font-weight:600; opacity:.8; }
+.dash-quick-tile .dqt-icon { position:absolute; right:12px; top:12px; font-size:26px; opacity:.35; }
+.dash-goals-mini { margin-bottom:6px; }
+.dash-goals-mini-row { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.dash-goals-mini-row:last-child { margin-bottom:0; }
+.dash-goal-name { font-size:13px; font-weight:600; flex:1; }
+.dash-goal-pct { font-size:12px; font-weight:700; color:var(--accent); min-width:32px; text-align:right; }
 </style>
 </head>
 <body>
@@ -459,33 +389,73 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
     <div class="page" id="p-plan"></div>
     <div class="page" id="p-hab"></div>
     <div class="page" id="p-goals"></div>
-    <div class="page" id="p-books"></div>
     <div class="page" id="p-vit"></div>
+    <div class="page" id="p-books"></div>
   </div>
   <nav id="nav">
     <button class="nav-btn active" data-page="dash" onclick="go('dash')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      Дашборд
+      <div class="nav-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="3" width="8" height="8" rx="2" fill="currentColor" opacity=".3"/>
+          <rect x="13" y="3" width="8" height="8" rx="2" fill="currentColor"/>
+          <rect x="3" y="13" width="8" height="8" rx="2" fill="currentColor"/>
+          <rect x="13" y="13" width="8" height="8" rx="2" fill="currentColor" opacity=".3"/>
+        </svg>
+      </div>
+      Главная
     </button>
     <button class="nav-btn" data-page="plan" onclick="go('plan')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <div class="nav-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="4" width="18" height="17" rx="3" stroke="currentColor" stroke-width="2"/>
+          <path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="8" cy="15" r="1.5" fill="currentColor"/>
+          <circle cx="12" cy="15" r="1.5" fill="currentColor"/>
+          <circle cx="16" cy="15" r="1.5" fill="currentColor"/>
+        </svg>
+      </div>
       Планер
     </button>
     <button class="nav-btn" data-page="hab" onclick="go('hab')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77 5.82 21.02 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <div class="nav-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M12 3l2.5 5L20 9l-4 3.9 1 5.6L12 16l-5 2.5 1-5.6L4 9l5.5-1L12 3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="currentColor" opacity=".2"/>
+          <path d="M12 3l2.5 5L20 9l-4 3.9 1 5.6L12 16l-5 2.5 1-5.6L4 9l5.5-1L12 3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+      </div>
       Привычки
     </button>
     <button class="nav-btn" data-page="goals" onclick="go('goals')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      <div class="nav-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+          <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+          <circle cx="12" cy="12" r="2" fill="currentColor"/>
+        </svg>
+      </div>
       Цели
     </button>
-    <button class="nav-btn" data-page="books" onclick="go('books')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-      Книги
-    </button>
     <button class="nav-btn" data-page="vit" onclick="go('vit')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+      <div class="nav-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="3" y="6" width="18" height="13" rx="3" stroke="currentColor" stroke-width="2"/>
+          <path d="M3 10h18M8 6V4M16 6V4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="8" cy="14" r="1.5" fill="currentColor"/>
+          <circle cx="12" cy="14" r="1.5" fill="currentColor"/>
+          <circle cx="16" cy="14" r="1.5" fill="currentColor"/>
+        </svg>
+      </div>
       Витамины
+    </button>
+    <button class="nav-btn" data-page="books" onclick="go('books')">
+      <div class="nav-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="currentColor" opacity=".15"/>
+          <path d="M9 7h6M9 11h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      Книги
     </button>
   </nav>
 </div>
@@ -505,13 +475,14 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
 <!-- MODAL: TASK -->
 <div class="modal-overlay" id="m-task">
   <div class="modal-box">
+    <div class="modal-handle"></div>
     <div class="modal-title">Новая задача</div>
     <div class="modal-field">
       <label>Название задачи</label>
       <input id="t-text" placeholder="Что нужно сделать?" oninput="validateModal('m-task')">
     </div>
     <div class="modal-field">
-      <label>Дата (необязательно)</label>
+      <label>Дата</label>
       <input id="t-date" type="date">
     </div>
     <div class="modal-field">
@@ -525,6 +496,7 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
 <!-- MODAL: HABIT -->
 <div class="modal-overlay" id="m-hab">
   <div class="modal-box">
+    <div class="modal-handle"></div>
     <div class="modal-title">Новая привычка</div>
     <div class="modal-field">
       <label>Название</label>
@@ -533,6 +505,11 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
     <div class="modal-field">
       <label>Иконка</label>
       <div class="emoji-picker" id="h-emoji-pick"></div>
+    </div>
+    <div class="modal-field">
+      <label>Дни выполнения</label>
+      <button class="all-days-btn" id="all-days-btn" onclick="toggleAllDays()">✓ Каждый день</button>
+      <div class="day-selector" id="h-days-pick"></div>
     </div>
     <div class="modal-field">
       <label>Связать с целью (необязательно)</label>
@@ -545,29 +522,29 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
 <!-- MODAL: GOAL -->
 <div class="modal-overlay" id="m-goal">
   <div class="modal-box">
+    <div class="modal-handle"></div>
     <div class="modal-title">Новая цель</div>
     <div class="modal-field">
       <label>Название цели</label>
       <input id="g-title" placeholder="Моя цель" oninput="validateModal('m-goal')">
     </div>
-    <!-- ДАТЫ В ОДНОЙ СТРОКЕ -->
     <div class="dates-row">
       <div class="modal-field">
-        <label>Дата начала</label>
+        <label>Начало</label>
         <input id="g-start" type="date" oninput="validateModal('m-goal')">
       </div>
       <div class="modal-field">
-        <label>Дата конца</label>
+        <label>Конец</label>
         <input id="g-end" type="date" oninput="validateModal('m-goal')">
       </div>
     </div>
     <div class="modal-field">
-      <label>Связать с привычкой (необязательно)</label>
+      <label>Привязать привычку</label>
       <select id="g-hab"></select>
     </div>
     <div class="modal-field">
       <label>Целевых раз в неделю</label>
-      <input id="g-tpw" type="number" min="1" max="7" value="3" placeholder="3">
+      <input id="g-tpw" type="number" min="1" max="7" value="3">
     </div>
     <button class="save-btn" id="save-goal" onclick="saveGoal()" disabled>Сохранить</button>
   </div>
@@ -576,6 +553,7 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
 <!-- MODAL: BOOK -->
 <div class="modal-overlay" id="m-book">
   <div class="modal-box">
+    <div class="modal-handle"></div>
     <div class="modal-title">Новая книга</div>
     <div class="modal-field">
       <label>Название книги</label>
@@ -594,7 +572,7 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
       <input type="file" id="b-cover-input" accept="image/*" style="display:none" onchange="previewBookCover()">
       <div class="ava-upload-btn" onclick="document.getElementById('b-cover-input').click()">📷 Загрузить обложку</div>
       <div id="b-cover-preview" style="margin-top:8px;display:none">
-        <img id="b-cover-img" style="width:80px;height:120px;object-fit:cover;border-radius:8px;border:2px solid var(--accent)">
+        <img id="b-cover-img" style="width:80px;height:120px;object-fit:cover;border-radius:10px;border:2px solid var(--accent)">
       </div>
     </div>
     <button class="save-btn" id="save-book" onclick="saveBook()" disabled>Сохранить</button>
@@ -604,6 +582,7 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
 <!-- MODAL: VITAMIN -->
 <div class="modal-overlay" id="m-vit">
   <div class="modal-box">
+    <div class="modal-handle"></div>
     <div class="modal-title">Новый витамин</div>
     <div class="modal-field">
       <label>Название</label>
@@ -632,6 +611,7 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
 <!-- MODAL: AVATAR -->
 <div class="modal-overlay" id="m-ava">
   <div class="modal-box">
+    <div class="modal-handle"></div>
     <div class="modal-title">Аватар</div>
     <div class="ava-preview" id="ava-prev-wrap"></div>
     <input type="file" id="ava-input" accept="image/*" style="display:none" onchange="avaFileChange()">
@@ -641,134 +621,139 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
 </div>
 
 <script>
-/* ── TELEGRAM ─────────────────────────────── */
-const tg = window.Telegram?.WebApp || { initData:'', initDataUnsafe:{}, ready:()=>{}, expand:()=>{},
-  setHeaderColor:()=>{}, setBackgroundColor:()=>{}, HapticFeedback:{impactOccurred:()=>{}},
-  BackButton:{ show:()=>{}, hide:()=>{}, onClick:()=>{}, offClick:()=>{} } };
+/* ═══════════════════════════════════════════
+   TELEGRAM
+═══════════════════════════════════════════ */
+const tg = window.Telegram?.WebApp || {
+  initData:'', initDataUnsafe:{}, ready:()=>{}, expand:()=>{},
+  setHeaderColor:()=>{}, setBackgroundColor:()=>{},
+  HapticFeedback:{impactOccurred:()=>{}},
+  BackButton:{ show:()=>{}, hide:()=>{}, onClick:()=>{}, offClick:()=>{} }
+};
 tg.ready(); tg.expand();
-tg.setHeaderColor('#0f0f13'); tg.setBackgroundColor('#0f0f13');
+tg.setHeaderColor('#ffffff'); tg.setBackgroundColor('#f5f6fa');
 const IS_TG = tg.initData.length > 0;
 
-/* ── CONSTANTS ────────────────────────────── */
+/* ═══════════════════════════════════════════
+   CONSTANTS
+═══════════════════════════════════════════ */
 const LEVELS = [
   {n:'Новичок',xp:0},{n:'Ученик',xp:100},{n:'Искатель',xp:250},
   {n:'Воин',xp:500},{n:'Мастер',xp:900},{n:'Герой',xp:1400},
   {n:'Легенда',xp:2000},{n:'Бог',xp:3000}
 ];
 const HAB_EMOJIS = ['💪','📚','🧘','🏃','🎯','✍️','🥗','💧','🎨','🎵','💤','🧹','🐕','🌿','🏋️','🚴','🤸','📝'];
-const VIT_EMOJIS = ['💊','🌟','☀️','🫐','🍋','🥕','🍵','💧','🧴','🌿','🫧','⚡'];
-const VIT_TIMES = ['Утро','День','Вечер','Ночь'];
-const DAYS_SHORT = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
-const DAYS_FULL = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
-const MONTHS = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
-const BOOK_STATUSES = { reading:'Читаю', done:'Прочитал', want:'Хочу прочитать' };
+const VIT_EMOJIS  = ['💊','🌟','☀️','🫐','🍋','🥕','🍵','💧','🧴','🌿','🫧','⚡'];
+const VIT_TIMES   = ['Утро','День','Вечер','Ночь'];
+const DAYS_SHORT  = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+const DAYS_FULL   = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
+const MONTHS      = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+const ALL_DAYS    = [0,1,2,3,4,5,6]; // 0=Вс
 
-/* ── STATE ────────────────────────────────── */
-const SK = 'lq_v6';
-const OLD_KEYS = ['lq5','lq_v4','lq_v5'];
+/* ═══════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════ */
+const SK = 'lq_v7';
+const OLD_KEYS = ['lq5','lq_v4','lq_v5','lq_v6'];
 
 function defaultState() {
-  return { name:'', isLoggedIn:false, isSubscribed:false, xp:0,
+  return {
+    name:'', isLoggedIn:false, isSubscribed:false, xp:0,
     habits:[], weeks:{}, goals:[], avatar:'',
-    books:[], vitamins:[], booksTab:'reading', vitDate:'' };
+    books:[], vitamins:[], booksTab:'reading'
+  };
 }
 
 function loadState() {
-  // Попытка загрузить текущую версию
   try {
     const raw = localStorage.getItem(SK);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      // Убедимся, что все поля есть
-      const def = defaultState();
-      return Object.assign({}, def, parsed);
-    }
+    if (raw) return Object.assign({}, defaultState(), JSON.parse(raw));
   } catch(e) {}
-
-  // Миграция со старых ключей
   for (const ok of OLD_KEYS) {
     try {
       const raw = localStorage.getItem(ok);
       if (!raw) continue;
-      const old = JSON.parse(raw);
-      const def = defaultState();
-      const merged = Object.assign({}, def, old);
-      // Сохраняем под новым ключом
+      const merged = Object.assign({}, defaultState(), JSON.parse(raw));
       localStorage.setItem(SK, JSON.stringify(merged));
       return merged;
     } catch(e) {}
   }
-
   return defaultState();
 }
 
 let S = loadState();
+function sv() { try { localStorage.setItem(SK, JSON.stringify(S)); } catch(e) {} }
 
-function sv() {
-  try { localStorage.setItem(SK, JSON.stringify(S)); } catch(e) {}
-}
-
-/* ── HELPERS ──────────────────────────────── */
-const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
-const today = () => new Date().toISOString().slice(0,10);
-const todayDate = () => new Date();
-const haptic = (t='light') => { try { tg.HapticFeedback.impactOccurred(t); } catch(e) {} };
+/* ═══════════════════════════════════════════
+   HELPERS
+═══════════════════════════════════════════ */
+const uid     = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+const today   = () => new Date().toISOString().slice(0,10);
+const haptic  = (t='light') => { try { tg.HapticFeedback.impactOccurred(t); } catch(e) {} };
 
 function getLevel(xp) {
   let lv = 0;
-  for (let i = LEVELS.length-1; i >= 0; i--) { if (xp >= LEVELS[i].xp) { lv = i; break; } }
-  return { idx: lv, ...LEVELS[lv], next: LEVELS[lv+1] || null };
+  for (let i = LEVELS.length-1; i >= 0; i--) { if (xp >= LEVELS[i].xp) { lv=i; break; } }
+  return { idx:lv, ...LEVELS[lv], next:LEVELS[lv+1]||null };
 }
-
 function getLvlPct(xp) {
   const lv = getLevel(xp);
   if (!lv.next) return 100;
-  const base = lv.xp, top = lv.next.xp;
-  return Math.min(100, Math.round((xp - base) / (top - base) * 100));
+  return Math.min(100, Math.round((xp-lv.xp)/(lv.next.xp-lv.xp)*100));
 }
+function addXP(n) { S.xp = Math.max(0, S.xp+n); sv(); rHeader(); }
 
-function addXP(n) {
-  S.xp = Math.max(0, S.xp + n);
-  sv();
-  rHeader();
-}
-
-function getWeekKey(offset = 0) {
+function getWeekKey(offset=0) {
   const d = new Date();
-  d.setDate(d.getDate() - d.getDay() + offset * 7);
+  d.setDate(d.getDate() - d.getDay() + offset*7);
   return d.toISOString().slice(0,10);
 }
-
 function getCurrentWeekKey() { return getWeekKey(0); }
 
 function ensureWeek(wk) {
   if (!S.weeks[wk]) S.weeks[wk] = { tasks:[], notes:'' };
   if (!S.weeks[wk].tasks) S.weeks[wk].tasks = [];
-  if (S.weeks[wk].notes === undefined) S.weeks[wk].notes = '';
 }
 
 function getWeekDates(wk) {
-  const sun = new Date(wk + 'T00:00:00');
-  const days = [];
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(sun); d.setDate(sun.getDate() + i);
-    days.push(d.toISOString().slice(0,10));
-  }
-  return days;
+  const sun = new Date(wk+'T00:00:00');
+  return Array.from({length:7}, (_,i) => {
+    const d = new Date(sun); d.setDate(sun.getDate()+i);
+    return d.toISOString().slice(0,10);
+  });
 }
 
-function fmt(dateStr) {
-  const d = new Date(dateStr + 'T00:00:00');
+function fmt(ds) {
+  const d = new Date(ds+'T00:00:00');
   return `${d.getDate()} ${MONTHS[d.getMonth()]}`;
 }
 
-/* ── NAVIGATION ───────────────────────────── */
+/* ── Прогресс привычки за текущую неделю ── */
+function habWeekPct(h) {
+  const wk = getCurrentWeekKey();
+  const weekDates = getWeekDates(wk);
+  const targetDays = h.days || ALL_DAYS; // дни недели (0=Вс..6=Сб)
+  // Считаем сколько дней-мишеней на этой неделе уже прошло или сегодня
+  const todayStr = today();
+  const targetThisWeek = weekDates.filter(d => {
+    const dow = new Date(d+'T00:00:00').getDay();
+    return targetDays.includes(dow) && d <= todayStr;
+  });
+  if (!targetThisWeek.length) return 0;
+  const done = targetThisWeek.filter(d => h.completions && h.completions.includes(d)).length;
+  return Math.round(done / targetThisWeek.length * 100);
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
 let curPage = 'dash';
+let planWeekOffset = 0;
 
 function go(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  const el = document.getElementById('p-' + page);
+  const el = document.getElementById('p-'+page);
   if (el) el.classList.add('active');
   const nb = document.querySelector(`.nav-btn[data-page="${page}"]`);
   if (nb) nb.classList.add('active');
@@ -776,149 +761,208 @@ function go(page) {
   renderPage(page);
 }
 
-function renderPage(page) {
-  if (page === 'dash') rDash();
-  else if (page === 'plan') rPlanner();
-  else if (page === 'hab') rHabits();
-  else if (page === 'goals') rGoals();
-  else if (page === 'books') rBooks();
-  else if (page === 'vit') rVit();
+function renderPage(p) {
+  if (p==='dash')  rDash();
+  else if (p==='plan')  rPlanner();
+  else if (p==='hab')   rHabits();
+  else if (p==='goals') rGoals();
+  else if (p==='books') rBooks();
+  else if (p==='vit')   rVit();
 }
 
-function rAll() {
-  rHeader();
-  renderPage(curPage);
-}
+function rAll() { rHeader(); renderPage(curPage); }
 
-/* ── HEADER ───────────────────────────────── */
+/* ═══════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════ */
 function rHeader() {
   const lv = getLevel(S.xp);
   const pct = getLvlPct(S.xp);
   const nextXp = lv.next ? lv.next.xp : S.xp;
-  const avaHtml = S.avatar
-    ? `<img src="${S.avatar}" alt="ava">`
-    : '🧑';
-
   document.getElementById('hdr').innerHTML = `
     <div class="hdr-top">
-      <div class="hdr-ava" onclick="openModal('m-ava')">${avaHtml}</div>
+      <div class="hdr-ava" onclick="openModal('m-ava')">
+        ${S.avatar ? `<img src="${S.avatar}">` : '🧑'}
+      </div>
       <div class="hdr-info">
         <div class="hdr-name">${S.name || 'Игрок'}</div>
         <div class="hdr-lvl">Ур. ${lv.idx+1} · ${lv.n}</div>
       </div>
       <div class="hdr-btns">
-        ${!S.isSubscribed ? `<button class="hdr-btn btn-prem" onclick="buyPrem()">⭐ Премиум</button>` : ''}
+        ${!S.isSubscribed ? `<button class="hdr-btn btn-prem" onclick="buyPrem()">⭐ Premium</button>` : ''}
         ${!IS_TG ? `<button class="hdr-btn btn-out" onclick="logout()">Выйти</button>` : ''}
       </div>
     </div>
-    <div class="xp-bar-wrap">
-      <div class="xp-bar-fill" style="width:${pct}%"></div>
+    <div class="xp-row">
+      <div class="xp-bar-wrap"><div class="xp-bar-fill" style="width:${pct}%"></div></div>
+      <div class="xp-label">${S.xp}/${nextXp} XP</div>
     </div>
-    <div class="xp-label">${S.xp} / ${nextXp} XP · ${lv.n}</div>
   `;
-
-  // Синхронизируем превью аватара в модале
   const wrap = document.getElementById('ava-prev-wrap');
   if (wrap) wrap.innerHTML = S.avatar ? `<img src="${S.avatar}">` : '🧑';
 }
 
-/* ── DASHBOARD ────────────────────────────── */
+/* ═══════════════════════════════════════════
+   DASHBOARD
+═══════════════════════════════════════════ */
 function rDash() {
   const wk = getCurrentWeekKey();
   ensureWeek(wk);
   const tasks = S.weeks[wk].tasks;
-  const done = tasks.filter(t => t.done).length;
-  const total = tasks.length;
-  const habsDone = S.habits.filter(h => {
-    if (!h.completions) return false;
-    return h.completions.includes(today());
+  const done = tasks.filter(t=>t.done).length;
+  const todayStr = today();
+  const td = new Date();
+
+  // Привычки сегодня
+  const habsDone = S.habits.filter(h => h.completions && h.completions.includes(todayStr)).length;
+  const habsActiveToday = S.habits.filter(h => {
+    const dow = td.getDay();
+    return (h.days || ALL_DAYS).includes(dow);
   }).length;
 
   // Стрик
   let streak = 0;
-  const td = new Date();
-  for (let i = 0; i < 30; i++) {
-    const d = new Date(td); d.setDate(td.getDate() - i);
+  for (let i=0; i<60; i++) {
+    const d = new Date(td); d.setDate(td.getDate()-i);
     const ds = d.toISOString().slice(0,10);
-    const hasAny = S.habits.some(h => h.completions && h.completions.includes(ds))
-      || Object.values(S.weeks).some(w => w.tasks && w.tasks.some(t => t.done && t.date === ds));
+    const hasAny = S.habits.some(h => h.completions && h.completions.includes(ds));
     if (hasAny) streak++; else break;
   }
 
-  // Последние 7 дней для кружков
-  const dots7 = [];
-  for (let i = 6; i >= 0; i--) {
-    const d = new Date(); d.setDate(d.getDate() - i);
+  // Витамины сегодня
+  let vitTotal=0, vitDone=0;
+  (S.vitamins||[]).forEach(v => {
+    if (v.endDate && todayStr>v.endDate) return;
+    const times = v.times||['Утро'];
+    vitTotal += times.length;
+    vitDone += times.filter(t => v.taken&&v.taken[todayStr]&&v.taken[todayStr].includes(t)).length;
+  });
+  const vitPct = vitTotal>0 ? Math.round(vitDone/vitTotal*100) : 0;
+
+  // Книги
+  const readingBooks = (S.books||[]).filter(b=>b.status==='reading').length;
+  const doneBooks = (S.books||[]).filter(b=>b.status==='done').length;
+
+  // 7-дневная активность
+  const dots7 = Array.from({length:7}, (_,i) => {
+    const d = new Date(td); d.setDate(td.getDate()-(6-i));
     const ds = d.toISOString().slice(0,10);
-    const active = S.habits.some(h => h.completions && h.completions.includes(ds));
-    dots7.push({ label: DAYS_SHORT[d.getDay()], active });
+    const active = S.habits.some(h=>h.completions&&h.completions.includes(ds));
+    return { label:DAYS_SHORT[d.getDay()], active, isToday:ds===todayStr };
+  });
+
+  // Недавние задачи
+  const recentTasks = [...tasks].slice(-5).reverse();
+
+  // Общий прогресс привычек на этой неделе
+  let totalHabPct = 0;
+  if (S.habits.length) {
+    totalHabPct = Math.round(S.habits.reduce((acc,h)=>acc+habWeekPct(h),0)/S.habits.length);
   }
 
-  // Недавние задачи (до 5)
-  const recentTasks = tasks.slice(-5).reverse();
-
   document.getElementById('p-dash').innerHTML = `
-    <div class="section-hdr"><div class="section-title">Дашборд</div></div>
+    <div class="dash-welcome">Привет, ${S.name||'Игрок'}! 👋</div>
+    <div class="dash-date">${td.getDate()} ${MONTHS[td.getMonth()]}, ${DAYS_FULL[td.getDay()]}</div>
 
-    <div class="dash-stats">
-      <div class="stat-tile">
-        <div class="val" style="color:var(--green)">${done}/${total}</div>
-        <div class="lbl">Задач сегодня</div>
+    <!-- Быстрая статистика -->
+    <div class="dash-quick-grid">
+      <div class="dash-quick-tile" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe)">
+        <div class="dqt-icon">✅</div>
+        <div class="dqt-val" style="color:var(--accent)">${done}/${tasks.length}</div>
+        <div class="dqt-lbl" style="color:var(--accent)">Задач сегодня</div>
       </div>
-      <div class="stat-tile">
-        <div class="val" style="color:var(--violet)">${habsDone}/${S.habits.length}</div>
-        <div class="lbl">Привычек</div>
+      <div class="dash-quick-tile" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0)">
+        <div class="dqt-icon">🌟</div>
+        <div class="dqt-val" style="color:var(--green)">${habsDone}/${habsActiveToday}</div>
+        <div class="dqt-lbl" style="color:var(--green)">Привычек</div>
       </div>
-      <div class="stat-tile">
-        <div class="val" style="color:var(--yellow)">🔥${streak}</div>
-        <div class="lbl">Дней стрика</div>
+      <div class="dash-quick-tile" style="background:linear-gradient(135deg,#fef3c7,#fde68a)">
+        <div class="dqt-icon">🔥</div>
+        <div class="dqt-val" style="color:var(--yellow)">${streak}</div>
+        <div class="dqt-lbl" style="color:var(--yellow)">Дней стрика</div>
       </div>
-      <div class="stat-tile">
-        <div class="val" style="color:var(--accent)">${S.xp}</div>
-        <div class="lbl">Очков опыта</div>
+      <div class="dash-quick-tile" style="background:linear-gradient(135deg,#ede9fe,#c4b5fd)">
+        <div class="dqt-icon">⚡</div>
+        <div class="dqt-val" style="color:var(--violet)">${S.xp}</div>
+        <div class="dqt-lbl" style="color:var(--violet)">Очков XP</div>
       </div>
     </div>
 
+    <!-- Витамины + Книги -->
+    <div class="stats-grid">
+      <div class="stat-tile">
+        <div class="ico" style="background:var(--violet-soft)">💊</div>
+        <div class="val" style="color:var(--violet)">${vitPct}%</div>
+        <div class="lbl">Витамины сегодня</div>
+        <div class="prog-wrap" style="width:100%;margin-top:4px;margin-bottom:0">
+          <div class="prog-fill" style="width:${vitPct}%;background:var(--violet)"></div>
+        </div>
+      </div>
+      <div class="stat-tile">
+        <div class="ico" style="background:var(--blue-soft)">📚</div>
+        <div class="val" style="color:var(--blue)">${readingBooks}</div>
+        <div class="lbl">Читаю сейчас · ${doneBooks} прочитано</div>
+      </div>
+    </div>
+
+    <!-- Прогресс привычек за неделю -->
     <div class="card">
-      <div class="card-title">Активность за неделю</div>
-      <div class="streak-row">${dots7.map(d=>`<div class="streak-dot${d.active?' done':''}">${d.label}</div>`).join('')}</div>
+      <div class="card-title">Прогресс привычек</div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <div class="prog-wrap" style="flex:1;height:10px">
+          <div class="prog-fill" style="width:${totalHabPct}%;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div>
+        </div>
+        <div style="font-size:14px;font-weight:800;color:var(--accent)">${totalHabPct}%</div>
+      </div>
+      <div class="streak-row">
+        ${dots7.map(d=>`
+          <div class="streak-dot${d.active?' done':''}${d.isToday&&!d.active?' ':''}" style="${d.isToday&&!d.active?'border-color:var(--accent);color:var(--accent)':''}">
+            ${d.label}
+          </div>
+        `).join('')}
+      </div>
     </div>
 
+    <!-- Цели -->
+    ${S.goals.length ? `
+    <div class="card">
+      <div class="card-title">Активные цели</div>
+      <div class="dash-goals-mini">
+        ${S.goals.slice(0,4).map(g => {
+          const pct = calcGoalPct(g);
+          return `
+            <div class="dash-goals-mini-row">
+              <div class="dash-goal-name">${g.title}</div>
+              <div style="flex:1;margin:0 10px">
+                <div class="prog-wrap" style="height:6px;margin-bottom:0">
+                  <div class="prog-fill" style="width:${pct}%;background:var(--accent)"></div>
+                </div>
+              </div>
+              <div class="dash-goal-pct">${pct}%</div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>` : ''}
+
+    <!-- Задачи этой недели -->
     ${recentTasks.length ? `
     <div class="card">
       <div class="card-title">Задачи этой недели</div>
-      ${recentTasks.map(t => `
+      ${recentTasks.map(t=>`
         <div class="task-row">
-          <div class="task-cb ${t.done?'done':''}" onclick="togTask('${t.id}')">
-            ${t.done ? '✓' : ''}
-          </div>
-          <div class="task-text ${t.done?'done':''}">${t.text}</div>
+          <div class="task-cb${t.done?' done':''}" onclick="togTask('${t.id}')"></div>
+          <div class="task-text${t.done?' done':''}">${t.text}</div>
+          <button class="task-del" onclick="delTask('${t.id}')">✕</button>
         </div>
       `).join('')}
-    </div>` : ''}
-
-    ${S.goals.length ? `
-    <div class="card">
-      <div class="card-title">Цели</div>
-      ${S.goals.slice(0,3).map(g => {
-        const pct = calcGoalPct(g);
-        return `
-          <div style="margin-bottom:10px">
-            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-              <span style="font-size:13px;font-weight:600">${g.title}</span>
-              <span style="font-size:12px;color:var(--accent2)">${pct}%</span>
-            </div>
-            <div class="prog-wrap"><div class="prog-fill" style="width:${pct}%;background:var(--accent)"></div></div>
-          </div>
-        `;
-      }).join('')}
     </div>` : ''}
   `;
 }
 
-/* ── PLANNER ──────────────────────────────── */
-let planWeekOffset = 0;
-
+/* ═══════════════════════════════════════════
+   PLANNER
+═══════════════════════════════════════════ */
 function rPlanner() {
   const wk = getWeekKey(planWeekOffset);
   ensureWeek(wk);
@@ -926,290 +970,257 @@ function rPlanner() {
   const days = getWeekDates(wk);
   const todayStr = today();
 
-  // Группируем задачи по дням (null = без даты)
   const byDay = {};
-  days.forEach(d => byDay[d] = []);
-  byDay['nodate'] = [];
+  days.forEach(d => byDay[d]=[]);
+  byDay['nodate']=[];
   tasks.forEach(t => {
-    if (t.date && byDay[t.date] !== undefined) byDay[t.date].push(t);
-    else if (t.date && t.date >= days[0] && t.date <= days[6]) byDay[t.date] = byDay[t.date] || [];
+    if (t.date && days.includes(t.date)) byDay[t.date].push(t);
     else byDay['nodate'].push(t);
   });
 
   const doneCount = tasks.filter(t=>t.done).length;
+  const weekLabel = planWeekOffset===0?'Эта неделя':planWeekOffset===1?'Следующая':planWeekOffset===-1?'Прошлая':'';
 
   let html = `
     <div class="section-hdr">
-      <button onclick="planWeekOffset--;rPlanner()" style="background:none;border:none;color:var(--text2);font-size:20px;cursor:pointer">‹</button>
-      <div class="section-title">${planWeekOffset===0?'Эта неделя':planWeekOffset===1?'Следующая неделя':planWeekOffset===-1?'Прошлая неделя':'Неделя'}</div>
-      <button onclick="planWeekOffset++;rPlanner()" style="background:none;border:none;color:var(--text2);font-size:20px;cursor:pointer">›</button>
+      <button onclick="planWeekOffset--;rPlanner()" style="background:none;border:none;color:var(--text2);font-size:24px;cursor:pointer;padding:4px">‹</button>
+      <div class="section-title">${weekLabel||'Неделя'}</div>
+      <button onclick="planWeekOffset++;rPlanner()" style="background:none;border:none;color:var(--text2);font-size:24px;cursor:pointer;padding:4px">›</button>
     </div>
-    <div class="card" style="margin-bottom:12px">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="font-size:13px;color:var(--text2)">Выполнено ${doneCount} из ${tasks.length}</span>
-        <span style="font-size:13px;color:var(--accent)">${tasks.length?Math.round(doneCount/tasks.length*100):0}%</span>
+    <div class="card" style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span style="font-size:13px;color:var(--text2);font-weight:600">Выполнено ${doneCount} из ${tasks.length}</span>
+        <span style="font-size:14px;font-weight:800;color:var(--accent)">${tasks.length?Math.round(doneCount/tasks.length*100):0}%</span>
       </div>
-      <div class="xp-bar-wrap" style="margin-top:8px">
-        <div class="xp-bar-fill" style="width:${tasks.length?Math.round(doneCount/tasks.length*100):0}%"></div>
+      <div class="prog-wrap" style="height:10px;margin-bottom:0">
+        <div class="prog-fill" style="width:${tasks.length?Math.round(doneCount/tasks.length*100):0}%;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div>
       </div>
     </div>
   `;
 
-  days.forEach((d, i) => {
-    const dtasks = byDay[d] || [];
-    const isToday = d === todayStr;
-    const dn = new Date(d + 'T00:00:00');
+  days.forEach(d => {
+    const dtasks = byDay[d]||[];
+    const isToday = d===todayStr;
+    const dn = new Date(d+'T00:00:00');
     html += `
-      <div class="card" style="${isToday?'border-color:var(--accent)':''}">
+      <div class="card" style="${isToday?'border-color:var(--accent);border-width:2px':''}">
         <div class="card-title" style="${isToday?'color:var(--accent)':''}">
-          ${DAYS_SHORT[dn.getDay()]} · ${fmt(d)} ${isToday?'· Сегодня':''}
+          ${DAYS_SHORT[dn.getDay()]} · ${fmt(d)}${isToday?' · Сегодня':''}
         </div>
-        ${dtasks.map(t => taskRowHtml(t)).join('')}
-        ${!dtasks.length ? `<div style="font-size:13px;color:var(--text2);padding:4px 0">Нет задач</div>` : ''}
+        ${dtasks.map(t=>taskRowHtml(t)).join('')}
+        ${!dtasks.length?`<div style="font-size:13px;color:var(--text2);padding:4px 0">Нет задач</div>`:''}
       </div>
     `;
   });
 
   if (byDay['nodate'].length) {
-    html += `
-      <div class="card">
-        <div class="card-title">Без даты</div>
-        ${byDay['nodate'].map(t => taskRowHtml(t)).join('')}
-      </div>
-    `;
+    html += `<div class="card"><div class="card-title">Без даты</div>${byDay['nodate'].map(t=>taskRowHtml(t)).join('')}</div>`;
   }
-
   document.getElementById('p-plan').innerHTML = html;
 }
 
 function taskRowHtml(t) {
-  const goal = S.goals.find(g => g.id === t.goalId);
+  const goal = S.goals.find(g=>g.id===t.goalId);
   return `
     <div class="task-row">
-      <div class="task-cb ${t.done?'done':''}" onclick="togTask('${t.id}')">
-        ${t.done?'✓':''}
-      </div>
-      <div class="task-text ${t.done?'done':''}" style="flex:1">${t.text}</div>
-      ${goal ? `<div class="task-goal-dot" style="background:var(--accent)" title="${goal.title}"></div>` : ''}
+      <div class="task-cb${t.done?' done':''}" onclick="togTask('${t.id}')"></div>
+      <div class="task-text${t.done?' done':''}" style="flex:1">${t.text}</div>
+      ${goal?`<div class="task-goal-dot" style="background:var(--accent)"></div>`:''}
       <button class="task-del" onclick="delTask('${t.id}')">✕</button>
     </div>
   `;
 }
 
 function togTask(id) {
-  const wk = getCurrentWeekKey();
-  ensureWeek(wk);
-  // Ищем задачу во всех неделях
-  let found = null, foundWk = null;
-  for (const [wKey, w] of Object.entries(S.weeks)) {
-    const t = w.tasks && w.tasks.find(x => x.id === id);
-    if (t) { found = t; foundWk = wKey; break; }
+  for (const [,w] of Object.entries(S.weeks)) {
+    const t = w.tasks&&w.tasks.find(x=>x.id===id);
+    if (t) { t.done=!t.done; t.done?addXP(10):addXP(-10); haptic(); sv(); break; }
   }
-  if (!found) return;
-  found.done = !found.done;
-  found.done ? addXP(10) : addXP(-10);
-  haptic();
-  sv();
-  if (curPage === 'plan') rPlanner();
-  else if (curPage === 'dash') rDash();
+  if (curPage==='plan') rPlanner();
+  else if (curPage==='dash') rDash();
 }
 
 function delTask(id) {
   for (const wKey of Object.keys(S.weeks)) {
     const w = S.weeks[wKey];
     if (!w.tasks) continue;
-    const idx = w.tasks.findIndex(t => t.id === id);
-    if (idx !== -1) { w.tasks.splice(idx, 1); break; }
+    const idx = w.tasks.findIndex(t=>t.id===id);
+    if (idx!==-1) { w.tasks.splice(idx,1); break; }
   }
-  sv();
-  rPlanner();
+  sv(); rPlanner();
 }
 
-/* ── HABITS ───────────────────────────────── */
+/* ═══════════════════════════════════════════
+   HABITS
+═══════════════════════════════════════════ */
 function rHabits() {
   const wk = getCurrentWeekKey();
   const weekDays = getWeekDates(wk);
   const todayStr = today();
 
-  let html = `
-    <div class="section-hdr">
-      <div class="section-title">Привычки</div>
-    </div>
-  `;
+  // Цвета для привычек
+  const colors = ['#7c6af7','#22c55e','#f59e0b','#3b82f6','#ec4899','#14b8a6','#f97316','#8b5cf6'];
+
+  let html = `<div class="section-hdr"><div class="section-title">Привычки</div></div>`;
 
   if (!S.habits.length) {
-    html += `<div class="empty-state">У тебя пока нет привычек.<br>Нажми + чтобы добавить!</div>`;
+    html += `<div class="empty-state">
+      <div class="empty-icon">🌟</div>
+      <div class="empty-title">Нет привычек</div>
+      <div>Нажми + чтобы добавить первую привычку!</div>
+    </div>`;
   } else {
-    S.habits.forEach(h => {
-      if (!h.completions) h.completions = [];
-      const linkedGoal = S.goals.find(g => g.id === h.goalId);
-      const todayDone = h.completions.includes(todayStr);
+    S.habits.forEach((h, idx) => {
+      if (!h.completions) h.completions=[];
+      const targetDays = h.days||ALL_DAYS;
+      const linkedGoal = S.goals.find(g=>g.id===h.goalId);
+      const color = colors[idx % colors.length];
+      const pct = habWeekPct(h);
 
       html += `
         <div class="hab-card">
           <div class="hab-top">
-            <div class="hab-icon" onclick="togHabToday('${h.id}')">${h.icon || '💪'}</div>
+            <div class="hab-icon-wrap" style="background:${color}22">
+              <span style="font-size:24px">${h.icon||'💪'}</span>
+            </div>
             <div class="hab-info">
               <div class="hab-name">${h.name}</div>
-              ${linkedGoal ? `<div class="hab-goal-link">🎯 ${linkedGoal.title}</div>` : ''}
+              <div class="hab-sub">
+                ${targetDays.length===7?'Каждый день':targetDays.map(d=>DAYS_SHORT[d]).join(', ')}
+                ${linkedGoal?` · 🎯 ${linkedGoal.title}`:''}
+              </div>
             </div>
             <button class="hab-del" onclick="delHab('${h.id}')">🗑</button>
           </div>
-          <div class="hab-week">
-            ${weekDays.map((d, i) => {
-              const dn = new Date(d + 'T00:00:00');
+          <div class="hab-days-row">
+            ${weekDays.map((d,i) => {
+              const dow = new Date(d+'T00:00:00').getDay();
+              const isTarget = targetDays.includes(dow);
               const done = h.completions.includes(d);
-              const isToday = d === todayStr;
-              return `<div class="hab-day${done?' done':''}${isToday?' today':''}" onclick="togHab('${h.id}','${d}')">
-                <span>${DAYS_SHORT[dn.getDay()]}</span>${done?'✓':''}
+              const isToday = d===todayStr;
+              return `<div class="hab-day-btn${done?' done':''}${isToday?' today':''}${!isTarget?' inactive':''}"
+                onclick="${isTarget?`togHab('${h.id}','${d}')`:''}" >
+                <span class="day-num">${DAYS_SHORT[new Date(d+'T00:00:00').getDay()]}</span>
+                ${done?'✓':''}
               </div>`;
             }).join('')}
+          </div>
+          <div class="hab-prog-row">
+            <div class="prog-wrap" style="flex:1;height:6px;margin-bottom:0">
+              <div class="prog-fill" style="width:${pct}%;background:${color}"></div>
+            </div>
+            <div class="hab-prog-pct" style="color:${color}">${pct}%</div>
           </div>
         </div>
       `;
     });
   }
-
   document.getElementById('p-hab').innerHTML = html;
 }
 
 function togHab(habId, dateStr) {
-  const h = S.habits.find(x => x.id === habId);
+  const h = S.habits.find(x=>x.id===habId);
   if (!h) return;
-  if (!h.completions) h.completions = [];
+  if (!h.completions) h.completions=[];
   const idx = h.completions.indexOf(dateStr);
-  if (idx === -1) { h.completions.push(dateStr); addXP(15); }
-  else { h.completions.splice(idx, 1); addXP(-15); }
-  haptic();
-  sv();
-  rHabits();
-  // Перерисовываем цели если привычка связана
-  if (curPage === 'goals') rGoals();
+  if (idx===-1) { h.completions.push(dateStr); addXP(15); }
+  else { h.completions.splice(idx,1); addXP(-15); }
+  haptic(); sv(); rHabits();
+  // Обновить цели если привязаны
+  if (curPage==='goals') rGoals();
 }
-
-function togHabToday(habId) { togHab(habId, today()); }
 
 function delHab(habId) {
-  S.habits = S.habits.filter(h => h.id !== habId);
-  // Убираем ссылки на привычку из целей
-  S.goals.forEach(g => { if (g.habitId === habId) g.habitId = null; });
-  sv();
-  rHabits();
+  S.habits = S.habits.filter(h=>h.id!==habId);
+  S.goals.forEach(g=>{ if(g.habitId===habId) g.habitId=null; });
+  sv(); rHabits();
 }
 
-/* ── GOALS ────────────────────────────────── */
-
-/**
- * Вычисляет процент выполнения цели на основе completions привычки
- * ИСПРАВЛЕННАЯ ЛОГИКА:
- * - Перебираем каждую неделю в периоде цели
- * - Считаем сколько раз привычка выполнена за эту неделю
- * - Капаем до targetPerWeek
- * - Суммируем и делим на totalTarget
- */
+/* ═══════════════════════════════════════════
+   GOALS  ← ИСПРАВЛЕННАЯ ПРИВЯЗКА
+═══════════════════════════════════════════ */
 function calcGoalPct(g) {
   if (!g.habitId || !g.targetPerWeek) return 0;
+  const habit = S.habits.find(h=>h.id===g.habitId);
+  if (!habit || !habit.completions || !habit.completions.length) return 0;
 
-  const habit = S.habits.find(h => h.id === g.habitId);
-  if (!habit || !habit.completions) return 0;
+  const startDate = new Date(g.startDate+'T00:00:00');
+  const endDate   = new Date(g.endDate+'T00:00:00');
+  if (isNaN(startDate.getTime())||isNaN(endDate.getTime())) return 0;
 
-  const startDate = new Date(g.startDate + 'T00:00:00');
-  const endDate = new Date(g.endDate + 'T00:00:00');
-
-  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) return 0;
-
-  const msPerDay = 86400000;
-  const totalDays = Math.round((endDate - startDate) / msPerDay) + 1;
-  if (totalDays <= 0) return 0;
-
-  const totalWeeks = Math.ceil(totalDays / 7);
+  const MS_DAY = 86400000;
+  const totalDays  = Math.round((endDate-startDate)/MS_DAY)+1;
+  if (totalDays<=0) return 0;
+  const totalWeeks = Math.ceil(totalDays/7);
   const totalTarget = g.targetPerWeek * totalWeeks;
+  if (totalTarget<=0) return 0;
 
-  if (totalTarget <= 0) return 0;
-
-  // Считаем все completions в рамках периода цели
-  let completedInPeriod = 0;
-
-  // Идём по неделям
-  for (let weekIdx = 0; weekIdx < totalWeeks; weekIdx++) {
-    const weekStart = new Date(startDate.getTime() + weekIdx * 7 * msPerDay);
-    const weekEnd = new Date(Math.min(
-      weekStart.getTime() + 6 * msPerDay,
-      endDate.getTime()
-    ));
-
-    const weekStartStr = weekStart.toISOString().slice(0,10);
-    const weekEndStr = weekEnd.toISOString().slice(0,10);
-
-    // Считаем completions за эту неделю
-    let weekCount = habit.completions.filter(d => d >= weekStartStr && d <= weekEndStr).length;
-    // Капируем до targetPerWeek
-    weekCount = Math.min(weekCount, g.targetPerWeek);
-    completedInPeriod += weekCount;
+  let completedTotal = 0;
+  for (let w=0; w<totalWeeks; w++) {
+    const wStart = new Date(startDate.getTime()+w*7*MS_DAY);
+    const wEnd   = new Date(Math.min(wStart.getTime()+6*MS_DAY, endDate.getTime()));
+    const wStartStr = wStart.toISOString().slice(0,10);
+    const wEndStr   = wEnd.toISOString().slice(0,10);
+    const cnt = habit.completions.filter(d=>d>=wStartStr&&d<=wEndStr).length;
+    completedTotal += Math.min(cnt, g.targetPerWeek);
   }
-
-  return Math.min(100, Math.round(completedInPeriod / totalTarget * 100));
+  return Math.min(100, Math.round(completedTotal/totalTarget*100));
 }
 
 function calcExpectedPct(g) {
-  if (!g.startDate || !g.endDate) return 0;
-  const now = new Date();
-  const start = new Date(g.startDate + 'T00:00:00');
-  const end = new Date(g.endDate + 'T00:00:00');
-  if (now <= start) return 0;
-  if (now >= end) return 100;
-  const elapsed = now - start;
-  const total = end - start;
-  return Math.round(elapsed / total * 100);
+  if (!g.startDate||!g.endDate) return 0;
+  const now=new Date(), start=new Date(g.startDate+'T00:00:00'), end=new Date(g.endDate+'T00:00:00');
+  if (now<=start) return 0;
+  if (now>=end) return 100;
+  return Math.round((now-start)/(end-start)*100);
 }
 
 function rGoals() {
-  let html = `
-    <div class="section-hdr">
-      <div class="section-title">Цели</div>
-    </div>
-  `;
+  let html = `<div class="section-hdr"><div class="section-title">Цели</div></div>`;
 
   if (!S.goals.length) {
-    html += `<div class="empty-state">Нет целей. Нажми + чтобы добавить!</div>`;
+    html += `<div class="empty-state">
+      <div class="empty-icon">🎯</div>
+      <div class="empty-title">Нет целей</div>
+      <div>Нажми + чтобы поставить первую цель!</div>
+    </div>`;
   } else {
     const now = new Date();
     S.goals.forEach(g => {
       const pct = calcGoalPct(g);
       const expPct = calcExpectedPct(g);
-      const habit = g.habitId ? S.habits.find(h => h.id === g.habitId) : null;
-      const endDate = g.endDate ? new Date(g.endDate + 'T00:00:00') : null;
-      const daysLeft = endDate ? Math.ceil((endDate - now) / 86400000) : null;
+      const habit = g.habitId ? S.habits.find(h=>h.id===g.habitId) : null;
+      const endDate = g.endDate ? new Date(g.endDate+'T00:00:00') : null;
+      const daysLeft = endDate ? Math.ceil((endDate-now)/86400000) : null;
 
       let badge = '';
-      if (pct >= 100) badge = `<span class="goal-badge badge-ok">✅ Выполнено</span>`;
-      else if (endDate && daysLeft < 0) badge = `<span class="goal-badge badge-over">❌ Просрочено</span>`;
-      else if (endDate && daysLeft <= 7) badge = `<span class="goal-badge badge-soon">⚠️ Скоро: ${daysLeft}д</span>`;
-      else badge = `<span class="goal-badge badge-active">🎯 В процессе</span>`;
+      if (pct>=100) badge=`<span class="goal-badge badge-ok">✅ Выполнено</span>`;
+      else if (endDate&&daysLeft<0) badge=`<span class="goal-badge badge-over">❌ Просрочено</span>`;
+      else if (endDate&&daysLeft<=7) badge=`<span class="goal-badge badge-soon">⚠️ ${daysLeft}д</span>`;
+      else badge=`<span class="goal-badge badge-active">🎯 В процессе</span>`;
 
-      // Мини-сетка последних дней привычки
+      // Мини-сетка последних 7 дней привычки
       let habGrid = '';
-      if (habit && habit.completions) {
-        const last7 = [];
-        for (let i = 6; i >= 0; i--) {
-          const d = new Date(); d.setDate(d.getDate() - i);
-          const ds = d.toISOString().slice(0,10);
-          last7.push({ d: ds, label: DAYS_SHORT[d.getDay()], done: habit.completions.includes(ds) });
-        }
+      if (habit&&habit.completions) {
+        const last7 = Array.from({length:7},(_,i)=>{
+          const d=new Date(); d.setDate(d.getDate()-(6-i));
+          const ds=d.toISOString().slice(0,10);
+          return {ds, label:DAYS_SHORT[d.getDay()], done:habit.completions.includes(ds)};
+        });
         habGrid = `
-          <div style="margin-top:8px">
-            <div style="font-size:11px;color:var(--text2);margin-bottom:4px">${habit.icon||'💪'} ${habit.name} — последние 7 дней</div>
-            <div class="goal-hab-grid">
-              ${last7.map(x => `<div class="goal-hab-dot${x.done?' done':''}" title="${x.d}">${x.label}</div>`).join('')}
+          <div style="margin-top:10px">
+            <div style="font-size:11px;color:var(--text2);margin-bottom:6px;font-weight:600">
+              ${habit.icon||'💪'} ${habit.name} — последние 7 дней
             </div>
-          </div>
-        `;
+            <div class="goal-hab-grid">
+              ${last7.map(x=>`<div class="goal-hab-dot${x.done?' done':''}" title="${x.ds}">${x.label}</div>`).join('')}
+            </div>
+          </div>`;
       }
 
-      const totalWeeks = g.endDate && g.startDate
-        ? Math.ceil((new Date(g.endDate+'T00:00:00') - new Date(g.startDate+'T00:00:00')) / 86400000 / 7)
-        : 0;
-      const totalTarget = g.targetPerWeek * totalWeeks;
+      const totalWeeks = g.endDate&&g.startDate
+        ? Math.ceil((new Date(g.endDate+'T00:00:00')-new Date(g.startDate+'T00:00:00'))/86400000/7) : 0;
+      const totalTarget = g.targetPerWeek*totalWeeks;
 
       html += `
         <div class="goal-card">
@@ -1218,158 +1229,151 @@ function rGoals() {
             ${badge}
           </div>
           <div class="goal-meta">
-            ${g.startDate ? fmt(g.startDate) : ''} — ${g.endDate ? fmt(g.endDate) : ''}
-            ${g.targetPerWeek ? ` · ${g.targetPerWeek}×/нед · Цель: ${totalTarget} раз` : ''}
+            ${g.startDate?fmt(g.startDate):''} — ${g.endDate?fmt(g.endDate):''}
+            ${g.targetPerWeek?` · ${g.targetPerWeek}×/нед · Цель: ${totalTarget} раз`:''}
           </div>
           <div class="prog-wrap">
             <div class="prog-fill" style="width:${pct}%;background:linear-gradient(90deg,var(--accent),var(--accent2))"></div>
-            ${expPct > 0 && pct < 100 ? `<div class="prog-expected" style="left:${expPct}%"></div>` : ''}
+            ${expPct>0&&pct<100?`<div class="prog-expected" style="left:${expPct}%"></div>`:''}
           </div>
           <div class="prog-label">
             <span>${pct}% выполнено</span>
-            ${expPct > 0 && pct < 100 ? `<span style="color:var(--yellow)">Ожидаемый прогресс: ${expPct}%</span>` : ''}
+            ${expPct>0&&pct<100?`<span style="color:var(--yellow);font-weight:600">Ожидаемо: ${expPct}%</span>`:''}
           </div>
           ${habGrid}
-          <button class="goal-del" onclick="delGoal('${g.id}')" style="margin-top:8px;width:100%;border-radius:10px;padding:6px;background:var(--surface2);color:var(--red);font-size:13px">Удалить</button>
+          <button class="goal-del-btn" onclick="delGoal('${g.id}')">🗑 Удалить цель</button>
         </div>
       `;
     });
   }
-
   document.getElementById('p-goals').innerHTML = html;
 }
 
-function delGoal(id) {
-  S.goals = S.goals.filter(g => g.id !== id);
-  sv(); rGoals();
-}
+function delGoal(id) { S.goals=S.goals.filter(g=>g.id!==id); sv(); rGoals(); }
 
-/* ── BOOKS ────────────────────────────────── */
+/* ═══════════════════════════════════════════
+   BOOKS
+═══════════════════════════════════════════ */
 let curBookId = null;
 let newBookCoverB64 = '';
 
 function rBooks() {
-  if (!S.books) S.books = [];
-  const tab = S.booksTab || 'reading';
-  const books = S.books.filter(b => (b.status || 'reading') === tab);
+  if (!S.books) S.books=[];
+  const tab = S.booksTab||'reading';
+  const books = S.books.filter(b=>(b.status||'reading')===tab);
 
-  // Статистика
-  const readCount = S.books.filter(b => b.status === 'done').length;
-  const totalPages = S.books.filter(b => b.status === 'done').reduce((sum,b) => sum + (b.total||0), 0);
-  const readingCount = S.books.filter(b => b.status === 'reading').length;
-
+  const readCount = S.books.filter(b=>b.status==='done').length;
+  const totalPages = S.books.filter(b=>b.status==='done').reduce((s,b)=>s+(b.total||0),0);
+  const readingCount = S.books.filter(b=>b.status==='reading').length;
   const thisYear = new Date().getFullYear();
-  const thisYearCount = S.books.filter(b => {
-    if (b.status !== 'done' || !b.finishedDate) return false;
-    return new Date(b.finishedDate).getFullYear() === thisYear;
-  }).length;
+  const thisYearCount = S.books.filter(b=>b.status==='done'&&b.finishedDate&&new Date(b.finishedDate).getFullYear()===thisYear).length;
+
+  // Стрик чтения (дни, когда хоть одна книга обновлялась)
+  // Упрощённо: дни с XP от книг не отслеживаем отдельно, показываем readingCount
+  const tabIcons = { reading:'📖', done:'✅', want:'💜' };
 
   let html = `
     <div class="section-hdr"><div class="section-title">Книги</div></div>
 
-    <div class="books-stats">
-      <div class="stat-tile">
-        <div class="val" style="color:var(--green)">${thisYearCount || readCount}</div>
-        <div class="lbl">Прочитано</div>
-      </div>
-      <div class="stat-tile">
-        <div class="val" style="color:var(--accent)">${readingCount}</div>
-        <div class="lbl">Читаю</div>
-      </div>
-      <div class="stat-tile">
-        <div class="val" style="color:var(--yellow)">${(totalPages/1000).toFixed(0)}K</div>
-        <div class="lbl">Страниц</div>
-      </div>
+    <div class="books-tabs">
+      <button class="books-tab${tab==='reading'?' active':''}" onclick="setBooksTab('reading')">
+        📖 Читаю
+      </button>
+      <button class="books-tab${tab==='done'?' active':''}" onclick="setBooksTab('done')">
+        ✅ Прочитано
+      </button>
+      <button class="books-tab${tab==='want'?' active':''}" onclick="setBooksTab('want')">
+        💜 Хочу
+      </button>
     </div>
 
-    <div class="books-tabs">
-      <button class="books-tab${tab==='reading'?' active':''}" onclick="setBooksTab('reading')">Читаю</button>
-      <button class="books-tab${tab==='done'?' active':''}" onclick="setBooksTab('done')">Прочитал</button>
-      <button class="books-tab${tab==='want'?' active':''}" onclick="setBooksTab('want')">Хочу прочитать</button>
+    <div class="stats-grid-3" style="margin-bottom:16px">
+      <div class="stat-tile">
+        <div class="ico" style="background:var(--accent-soft);font-size:20px">📚</div>
+        <div class="val" style="color:var(--accent);font-size:20px">${thisYearCount||readCount}</div>
+        <div class="lbl">Книг прочитано в этом году</div>
+      </div>
+      <div class="stat-tile">
+        <div class="ico" style="background:var(--blue-soft);font-size:20px">📄</div>
+        <div class="val" style="color:var(--blue);font-size:20px">${totalPages}</div>
+        <div class="lbl">Страниц прочитано</div>
+      </div>
+      <div class="stat-tile">
+        <div class="ico" style="background:var(--yellow-soft);font-size:20px">🔥</div>
+        <div class="val" style="color:var(--yellow);font-size:20px">${readingCount}</div>
+        <div class="lbl">Дней серия чтения</div>
+      </div>
     </div>
   `;
 
   if (!books.length) {
-    html += `<div class="empty-state">Нет книг в этом разделе.<br>Нажми + чтобы добавить!</div>`;
+    html += `<div class="empty-state">
+      <div class="empty-icon">📚</div>
+      <div class="empty-title">Нет книг в процессе</div>
+      <div>Нажми + чтобы добавить</div>
+    </div>`;
   } else {
     html += `<div class="books-grid">`;
     books.forEach(b => {
-      const pct = b.total > 0 ? Math.min(100, Math.round((b.current||0) / b.total * 100)) : 0;
-      const r = 16; const circ = 2 * Math.PI * r;
-      const dash = circ * pct / 100;
-      const statusColor = b.status === 'done' ? 'var(--green)' : b.status === 'want' ? 'var(--yellow)' : 'var(--accent)';
-
-      const coverHtml = b.cover
-        ? `<img src="${b.cover}" alt="cover" style="width:100%;height:100%;object-fit:cover">`
-        : `<span style="font-size:40px">📖</span>`;
-
-      const starsHtml = b.rating
-        ? `<div class="book-stars">${[1,2,3,4,5].map(i=>`<span class="book-star">${i<=b.rating?'⭐':'☆'}</span>`).join('')}</div>`
-        : '';
-
+      const pct = b.total>0 ? Math.min(100,Math.round((b.current||0)/b.total*100)) : 0;
+      const r=16; const circ=2*Math.PI*r; const dash=circ*pct/100;
+      const statusColor = b.status==='done'?'var(--green)':b.status==='want'?'var(--yellow)':'var(--accent)';
       html += `
         <div class="book-card" onclick="openBook('${b.id}')">
-          <div class="book-cover" style="width:100%;aspect-ratio:2/3;overflow:hidden;position:relative;background:var(--surface2);display:flex;align-items:center;justify-content:center;">
-            ${coverHtml}
+          <div class="book-cover-wrap">
+            ${b.cover?`<img src="${b.cover}" alt="cover">`:`<span style="font-size:40px">📖</span>`}
             <div class="book-status-dot" style="background:${statusColor}"></div>
-            ${b.status === 'reading' ? `
+            ${b.status==='reading'?`
             <div class="book-circ">
-              <svg viewBox="0 0 42 42">
-                <circle cx="21" cy="21" r="${r}" fill="none" stroke="rgba(0,0,0,.5)" stroke-width="4"/>
-                <circle cx="21" cy="21" r="${r}" fill="none" stroke="var(--accent)" stroke-width="4"
+              <svg viewBox="0 0 44 44">
+                <circle cx="22" cy="22" r="${r}" fill="rgba(0,0,0,.4)" stroke="none"/>
+                <circle cx="22" cy="22" r="${r}" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="4"/>
+                <circle cx="22" cy="22" r="${r}" fill="none" stroke="#fff" stroke-width="4"
                   stroke-dasharray="${dash} ${circ}" stroke-linecap="round"/>
               </svg>
               <div class="book-circ-text">${pct}%</div>
-            </div>` : ''}
+            </div>`:''}
           </div>
           <div class="book-info">
             <div class="book-info-title">${b.title}</div>
-            ${b.author ? `<div class="book-info-author">${b.author}</div>` : ''}
-            ${starsHtml}
+            ${b.author?`<div class="book-info-author">${b.author}</div>`:''}
+            ${b.rating?`<div class="book-stars">${[1,2,3,4,5].map(i=>`<span>${i<=b.rating?'⭐':'☆'}</span>`).join('')}</div>`:''}
           </div>
         </div>
       `;
     });
     html += `</div>`;
   }
-
   document.getElementById('p-books').innerHTML = html;
 }
 
-function setBooksTab(tab) {
-  S.booksTab = tab;
-  sv();
-  rBooks();
-}
+function setBooksTab(tab) { S.booksTab=tab; sv(); rBooks(); }
 
 function openBook(id) {
-  const b = S.books.find(x => x.id === id);
+  const b = S.books.find(x=>x.id===id);
   if (!b) return;
   curBookId = id;
   document.getElementById('bok-ov-title').textContent = b.title;
-
-  const r = 50; const circ = 2 * Math.PI * r;
-  const pct = b.total > 0 ? Math.min(100, Math.round((b.current||0)/b.total*100)) : 0;
-  const dash = circ * pct / 100;
+  const pct = b.total>0 ? Math.min(100,Math.round((b.current||0)/b.total*100)) : 0;
 
   document.getElementById('bok-ov-body').innerHTML = `
     <div class="bok-cover-wrap" onclick="document.getElementById('bok-file-input').click()">
-      ${b.cover ? `<img src="${b.cover}" alt="cover">` : `<span>📖</span>`}
-      <div class="bok-cover-edit">Изменить обложку</div>
+      ${b.cover?`<img src="${b.cover}">`:`<span>📖</span>`}
+      <div class="bok-cover-edit">Нажми чтобы изменить</div>
     </div>
     <input type="file" id="bok-file-input" accept="image/*" style="display:none" onchange="bokCoverChange()">
 
     <div class="bok-status-tabs">
-      <button class="bok-status-tab${(b.status||'reading')==='reading'?' active':''}" onclick="bokSetStatus('reading')">Читаю</button>
-      <button class="bok-status-tab${(b.status||'reading')==='done'?' active':''}" onclick="bokSetStatus('done')">Прочитал</button>
-      <button class="bok-status-tab${(b.status||'reading')==='want'?' active':''}" onclick="bokSetStatus('want')">Хочу</button>
+      <button class="bok-status-tab${(b.status||'reading')==='reading'?' active':''}" onclick="bokSetStatus('reading')">📖 Читаю</button>
+      <button class="bok-status-tab${(b.status||'reading')==='done'?' active':''}" onclick="bokSetStatus('done')">✅ Прочитал</button>
+      <button class="bok-status-tab${(b.status||'reading')==='want'?' active':''}" onclick="bokSetStatus('want')">💜 Хочу</button>
     </div>
 
-    <div style="margin-bottom:14px">
-      <div style="font-size:13px;color:var(--text2);margin-bottom:8px">Прогресс чтения</div>
+    <div style="margin-bottom:18px">
+      <div class="sec-label">Прогресс чтения</div>
       <div class="bok-prog-row">
         <input class="bok-prog-input" id="bok-cur" type="number" min="0" max="${b.total}" value="${b.current||0}" oninput="bokUpdateProg()">
-        <span style="font-size:13px;color:var(--text2)">/ ${b.total} стр</span>
+        <span style="font-size:13px;color:var(--text2);font-weight:600">/ ${b.total} стр</span>
         <div class="bok-prog-bar-wrap">
           <div class="bok-prog-bar" id="bok-prog-bar" style="width:${pct}%"></div>
         </div>
@@ -1377,21 +1381,20 @@ function openBook(id) {
       </div>
     </div>
 
-    <div style="margin-bottom:14px">
-      <div style="font-size:13px;color:var(--text2);margin-bottom:8px">Рейтинг</div>
+    <div style="margin-bottom:18px">
+      <div class="sec-label">Рейтинг</div>
       <div class="bok-stars" id="bok-stars">
         ${[1,2,3,4,5].map(i=>`<span onclick="bokSetRating(${i})">${i<=(b.rating||0)?'⭐':'☆'}</span>`).join('')}
       </div>
     </div>
 
-    <div style="margin-bottom:14px">
-      <div style="font-size:13px;color:var(--text2);margin-bottom:8px">Заметки</div>
+    <div style="margin-bottom:18px">
+      <div class="sec-label">Заметки</div>
       <textarea class="bok-notes" id="bok-notes" placeholder="Мысли о книге...">${b.notes||''}</textarea>
     </div>
 
-    <button class="bok-save-btn" onclick="bokSave()">Сохранить</button>
+    <button class="bok-save-btn" onclick="bokSave()">💾 Сохранить</button>
   `;
-
   document.getElementById('book-overlay').classList.add('open');
   tg.BackButton.show();
   tg.BackButton.onClick(closeBookOverlay);
@@ -1399,137 +1402,89 @@ function openBook(id) {
 
 function closeBookOverlay() {
   document.getElementById('book-overlay').classList.remove('open');
-  tg.BackButton.hide();
-  curBookId = null;
-  rBooks();
+  tg.BackButton.hide(); curBookId=null; rBooks();
 }
-
 function bokCoverChange() {
-  const inp = document.getElementById('bok-file-input');
+  const inp=document.getElementById('bok-file-input');
   if (!inp.files[0]) return;
-  const fr = new FileReader();
-  fr.onload = e => {
-    const b = S.books.find(x => x.id === curBookId);
-    if (b) { b.cover = e.target.result; sv(); }
-    const wrap = document.querySelector('.bok-cover-wrap');
-    if (wrap) wrap.innerHTML = `<img src="${e.target.result}" alt="cover"><div class="bok-cover-edit">Изменить обложку</div>`;
+  const fr=new FileReader();
+  fr.onload=e=>{
+    const b=S.books.find(x=>x.id===curBookId);
+    if (b) { b.cover=e.target.result; sv(); }
+    const wrap=document.querySelector('.bok-cover-wrap');
+    if (wrap) wrap.innerHTML=`<img src="${e.target.result}"><div class="bok-cover-edit">Нажми чтобы изменить</div>`;
   };
   fr.readAsDataURL(inp.files[0]);
 }
-
 function bokSetStatus(status) {
-  const b = S.books.find(x => x.id === curBookId);
+  const b=S.books.find(x=>x.id===curBookId);
   if (!b) return;
-  b.status = status;
-  if (status === 'done' && !b.finishedDate) b.finishedDate = today();
-  document.querySelectorAll('.bok-status-tab').forEach(el => el.classList.remove('active'));
+  b.status=status;
+  if (status==='done'&&!b.finishedDate) b.finishedDate=today();
+  document.querySelectorAll('.bok-status-tab').forEach(el=>el.classList.remove('active'));
   event.target.classList.add('active');
 }
-
 function bokSetRating(r) {
-  const b = S.books.find(x => x.id === curBookId);
-  if (!b) return;
-  b.rating = r;
-  const stars = document.getElementById('bok-stars');
-  if (stars) stars.innerHTML = [1,2,3,4,5].map(i=>`<span onclick="bokSetRating(${i})">${i<=r?'⭐':'☆'}</span>`).join('');
+  const b=S.books.find(x=>x.id===curBookId);
+  if (!b) return; b.rating=r;
+  const stars=document.getElementById('bok-stars');
+  if (stars) stars.innerHTML=[1,2,3,4,5].map(i=>`<span onclick="bokSetRating(${i})">${i<=r?'⭐':'☆'}</span>`).join('');
 }
-
 function bokUpdateProg() {
-  const b = S.books.find(x => x.id === curBookId);
-  if (!b) return;
-  const inp = document.getElementById('bok-cur');
-  const val = Math.min(b.total, Math.max(0, parseInt(inp.value)||0));
-  const pct = b.total > 0 ? Math.round(val/b.total*100) : 0;
-  const bar = document.getElementById('bok-prog-bar');
-  const pctEl = document.getElementById('bok-prog-pct');
-  if (bar) bar.style.width = pct + '%';
-  if (pctEl) pctEl.textContent = pct + '%';
+  const b=S.books.find(x=>x.id===curBookId); if (!b) return;
+  const val=Math.min(b.total,Math.max(0,parseInt(document.getElementById('bok-cur').value)||0));
+  const pct=b.total>0?Math.round(val/b.total*100):0;
+  const bar=document.getElementById('bok-prog-bar'); if (bar) bar.style.width=pct+'%';
+  const pctEl=document.getElementById('bok-prog-pct'); if (pctEl) pctEl.textContent=pct+'%';
 }
-
 function bokSave() {
-  const b = S.books.find(x => x.id === curBookId);
-  if (!b) return;
-  const cur = parseInt(document.getElementById('bok-cur').value) || 0;
-  const oldCur = b.current || 0;
-  b.current = Math.min(b.total, Math.max(0, cur));
-  const notesEl = document.getElementById('bok-notes');
-  if (notesEl) b.notes = notesEl.value;
-  // XP за прогресс чтения
-  if (b.current > oldCur) addXP(Math.floor((b.current - oldCur) / 10));
-  if (b.current >= b.total) { b.status = 'done'; if (!b.finishedDate) b.finishedDate = today(); }
-  sv();
-  closeBookOverlay();
-  haptic('medium');
+  const b=S.books.find(x=>x.id===curBookId); if (!b) return;
+  const cur=parseInt(document.getElementById('bok-cur').value)||0;
+  const old=b.current||0; b.current=Math.min(b.total,Math.max(0,cur));
+  const notesEl=document.getElementById('bok-notes'); if (notesEl) b.notes=notesEl.value;
+  if (b.current>old) addXP(Math.floor((b.current-old)/10));
+  if (b.current>=b.total) { b.status='done'; if (!b.finishedDate) b.finishedDate=today(); }
+  sv(); closeBookOverlay(); haptic('medium');
 }
-
 function delBook() {
   if (!curBookId) return;
-  S.books = S.books.filter(b => b.id !== curBookId);
-  sv();
-  closeBookOverlay();
+  S.books=S.books.filter(b=>b.id!==curBookId); sv(); closeBookOverlay();
 }
 
-/* ── VITAMINS ─────────────────────────────── */
+/* ═══════════════════════════════════════════
+   VITAMINS
+═══════════════════════════════════════════ */
 function rVit() {
-  if (!S.vitamins) S.vitamins = [];
-  const todayStr = today();
-  const td = new Date();
+  if (!S.vitamins) S.vitamins=[];
+  const todayStr=today(); const td=new Date();
 
-  // Прогресс сегодня
-  let totalToday = 0, doneToday = 0;
-  S.vitamins.forEach(v => {
-    if (v.endDate && todayStr > v.endDate) return;
-    const times = v.times || ['Утро'];
-    totalToday += times.length;
-    const taken = v.taken || {};
-    doneToday += times.filter(t => taken[todayStr] && taken[todayStr].includes(t)).length;
+  let totalToday=0, doneToday=0;
+  S.vitamins.forEach(v=>{
+    if (v.endDate&&todayStr>v.endDate) return;
+    const times=v.times||['Утро']; totalToday+=times.length;
+    doneToday+=times.filter(t=>v.taken&&v.taken[todayStr]&&v.taken[todayStr].includes(t)).length;
   });
-  const heroPct = totalToday > 0 ? Math.round(doneToday/totalToday*100) : 0;
-  const heroR = 35; const heroCirc = 2*Math.PI*heroR;
-  const heroDash = heroCirc * heroPct / 100;
+  const heroPct=totalToday>0?Math.round(doneToday/totalToday*100):0;
+  const heroR=35; const heroCirc=2*Math.PI*heroR; const heroDash=heroCirc*heroPct/100;
 
-  const dn = td.getDay();
-  const dateStr2 = `${td.getDate()} ${MONTHS[td.getMonth()]}, ${DAYS_FULL[dn]}`;
-
-  // Статистика
-  let streakDays = 0;
-  for (let i = 0; i < 30; i++) {
-    const d = new Date(td); d.setDate(td.getDate()-i);
-    const ds = d.toISOString().slice(0,10);
-    const anyDone = S.vitamins.some(v => {
-      const taken = v.taken || {};
-      return taken[ds] && taken[ds].length > 0;
-    });
-    if (anyDone) streakDays++; else break;
+  let streakDays=0;
+  for (let i=0;i<30;i++){
+    const d=new Date(td); d.setDate(td.getDate()-i);
+    const ds=d.toISOString().slice(0,10);
+    if (S.vitamins.some(v=>v.taken&&v.taken[ds]&&v.taken[ds].length)) streakDays++; else break;
   }
+  let totalPills=0;
+  S.vitamins.forEach(v=>Object.values(v.taken||{}).forEach(arr=>totalPills+=(arr||[]).length));
+  const daySet=new Set();
+  S.vitamins.forEach(v=>Object.entries(v.taken||{}).forEach(([d,arr])=>{if(arr&&arr.length)daySet.add(d);}));
 
-  let totalPills = 0;
-  S.vitamins.forEach(v => {
-    const taken = v.taken || {};
-    Object.values(taken).forEach(arr => totalPills += (arr||[]).length);
+  const hist7=Array.from({length:7},(_,i)=>{
+    const d=new Date(td); d.setDate(td.getDate()-(6-i));
+    const ds=d.toISOString().slice(0,10);
+    let tot=0,dn2=0;
+    S.vitamins.forEach(v=>{const times=v.times||['Утро'];tot+=times.length;dn2+=times.filter(t=>v.taken&&v.taken[ds]&&v.taken[ds].includes(t)).length;});
+    return {label:DAYS_SHORT[d.getDay()],pct:tot>0?Math.round(dn2/tot*100):0};
   });
-
-  let daysWithAny = 0;
-  const daySet = new Set();
-  S.vitamins.forEach(v => {
-    Object.entries(v.taken||{}).forEach(([d, arr]) => { if(arr && arr.length) daySet.add(d); });
-  });
-  daysWithAny = daySet.size;
-
-  // 7-дневная история
-  const hist7 = [];
-  for (let i = 6; i >= 0; i--) {
-    const d = new Date(td); d.setDate(td.getDate()-i);
-    const ds = d.toISOString().slice(0,10);
-    let tot = 0, dn2 = 0;
-    S.vitamins.forEach(v => {
-      const times = v.times||['Утро'];
-      tot += times.length;
-      const taken = v.taken||{};
-      dn2 += times.filter(t => taken[ds] && taken[ds].includes(t)).length;
-    });
-    hist7.push({ label: DAYS_SHORT[d.getDay()], pct: tot > 0 ? Math.round(dn2/tot*100) : 0 });
-  }
 
   let html = `
     <div class="vit-hero">
@@ -1545,71 +1500,60 @@ function rVit() {
         </div>
       </div>
       <div class="vit-hero-info">
-        <div class="vit-hero-date">${dateStr2}</div>
+        <div class="vit-hero-date">${td.getDate()} ${MONTHS[td.getMonth()]}</div>
         <div class="vit-hero-title">Витамины</div>
-        <div class="vit-hero-sub">Сегодня выпито ${doneToday} из ${totalToday}</div>
+        <div class="vit-hero-sub">Сегодня ${doneToday} из ${totalToday}</div>
       </div>
     </div>
-
-    <div class="vit-stats">
-      <div class="stat-tile"><div class="val" style="color:var(--violet)">🔥${streakDays}</div><div class="lbl">Дней стрика</div></div>
-      <div class="stat-tile"><div class="val" style="color:var(--green)">${daysWithAny}</div><div class="lbl">Активных дней</div></div>
-      <div class="stat-tile"><div class="val" style="color:var(--blue)">${totalPills}</div><div class="lbl">Всего принято</div></div>
+    <div class="stats-grid-3" style="margin-bottom:14px">
+      <div class="stat-tile"><div style="font-size:24px">🔥</div><div class="val" style="color:var(--violet)">${streakDays}</div><div class="lbl">Дней стрика</div></div>
+      <div class="stat-tile"><div style="font-size:24px">📅</div><div class="val" style="color:var(--green)">${daySet.size}</div><div class="lbl">Активных дней</div></div>
+      <div class="stat-tile"><div style="font-size:24px">💊</div><div class="val" style="color:var(--blue)">${totalPills}</div><div class="lbl">Принято всего</div></div>
     </div>
-
     <div class="section-hdr"><div class="section-title">Сегодня</div></div>
   `;
 
   if (!S.vitamins.length) {
-    html += `<div class="empty-state">Нет витаминов.<br>Нажми + чтобы добавить!</div>`;
+    html+=`<div class="empty-state"><div class="empty-icon">💊</div><div class="empty-title">Нет витаминов</div><div>Нажми + чтобы добавить!</div></div>`;
   } else {
-    S.vitamins.forEach(v => {
-      if (v.endDate && todayStr > v.endDate) return;
-      const taken = v.taken || {};
-      const times = v.times || ['Утро'];
-      const allDone = times.every(t => taken[todayStr] && taken[todayStr].includes(t));
-
-      // Дни недели
-      const weekDates = [];
-      for (let i = 0; i < 7; i++) {
-        const d = new Date(td); const sun = new Date(td); sun.setDate(td.getDate()-td.getDay());
-        const day = new Date(sun); day.setDate(sun.getDate()+i);
-        const ds = day.toISOString().slice(0,10);
-        const dayTimes = times;
-        const fullDone = dayTimes.every(t => taken[ds] && taken[ds].includes(t));
-        const partDone = dayTimes.some(t => taken[ds] && taken[ds].includes(t));
-        weekDates.push({ label: DAYS_SHORT[day.getDay()], full: fullDone, part: partDone && !fullDone });
-      }
-
-      html += `
+    S.vitamins.forEach(v=>{
+      if (v.endDate&&todayStr>v.endDate) return;
+      const taken=v.taken||{}, times=v.times||['Утро'];
+      const weekDates=Array.from({length:7},(_,i)=>{
+        const sun=new Date(td); sun.setDate(td.getDate()-td.getDay());
+        const day=new Date(sun); day.setDate(sun.getDate()+i);
+        const ds=day.toISOString().slice(0,10);
+        const full=times.every(t=>taken[ds]&&taken[ds].includes(t));
+        const part=times.some(t=>taken[ds]&&taken[ds].includes(t));
+        return {label:DAYS_SHORT[day.getDay()],full,part:part&&!full};
+      });
+      html+=`
         <div class="vit-card">
           <div class="vit-top">
-            <div class="vit-emoji" onclick="vitToggleAll('${v.id}')">${v.emoji||'💊'}</div>
+            <div class="vit-emoji-wrap">${v.emoji||'💊'}</div>
             <div class="vit-info">
               <div class="vit-name">${v.name}</div>
-              <div class="vit-dose">${v.dose||''} ${v.endDate?'· до '+fmt(v.endDate):''}</div>
+              <div class="vit-dose">${v.dose||''}${v.endDate?' · до '+fmt(v.endDate):''}</div>
             </div>
             <button class="vit-del" onclick="delVit('${v.id}')">🗑</button>
           </div>
           <div class="vit-times">
-            ${times.map(t => {
-              const done = taken[todayStr] && taken[todayStr].includes(t);
+            ${times.map(t=>{const done=taken[todayStr]&&taken[todayStr].includes(t);
               return `<div class="vit-time-badge${done?' done':''}" onclick="vitToggle('${v.id}','${t}')">${t}</div>`;
             }).join('')}
           </div>
           <div class="vit-week-row">
-            ${weekDates.map(d => `<div class="vit-week-day${d.full?' full':d.part?' partial':''}"><span>${d.label}</span>${d.full?'✓':''}</div>`).join('')}
+            ${weekDates.map(d=>`<div class="vit-week-day${d.full?' full':d.part?' partial':''}"><span>${d.label}</span>${d.full?'✓':''}</div>`).join('')}
           </div>
         </div>
       `;
     });
   }
 
-  // История 7 дней
-  html += `
-    <div class="vit-history">
-      <div class="section-hdr" style="margin-bottom:8px"><div class="section-title">История 7 дней</div></div>
-      ${hist7.map(h => `
+  html+=`
+    <div class="card" style="margin-top:14px">
+      <div class="card-title">История 7 дней</div>
+      ${hist7.map(h=>`
         <div class="vit-hist-row">
           <div class="vit-hist-label">${h.label}</div>
           <div class="vit-hist-bar-wrap"><div class="vit-hist-bar-fill" style="width:${h.pct}%"></div></div>
@@ -1618,96 +1562,40 @@ function rVit() {
       `).join('')}
     </div>
   `;
-
   document.getElementById('p-vit').innerHTML = html;
 }
 
-function vitToggle(vitId, time) {
-  const v = S.vitamins.find(x => x.id === vitId);
-  if (!v) return;
-  if (!v.taken) v.taken = {};
-  const ds = today();
-  if (!v.taken[ds]) v.taken[ds] = [];
-  const idx = v.taken[ds].indexOf(time);
-  if (idx === -1) { v.taken[ds].push(time); addXP(5); haptic(); }
-  else { v.taken[ds].splice(idx, 1); addXP(-5); }
+function vitToggle(vitId,time) {
+  const v=S.vitamins.find(x=>x.id===vitId); if (!v) return;
+  if (!v.taken) v.taken={};
+  const ds=today(); if (!v.taken[ds]) v.taken[ds]=[];
+  const idx=v.taken[ds].indexOf(time);
+  if (idx===-1){v.taken[ds].push(time);addXP(5);haptic();}
+  else{v.taken[ds].splice(idx,1);addXP(-5);}
   sv(); rVit();
 }
+function delVit(vitId) { S.vitamins=S.vitamins.filter(v=>v.id!==vitId); sv(); rVit(); }
 
-function vitToggleAll(vitId) {
-  const v = S.vitamins.find(x => x.id === vitId);
-  if (!v) return;
-  if (!v.taken) v.taken = {};
-  const ds = today();
-  const times = v.times || ['Утро'];
-  const allDone = times.every(t => v.taken[ds] && v.taken[ds].includes(t));
-  if (allDone) { v.taken[ds] = []; addXP(-times.length*5); }
-  else { v.taken[ds] = [...times]; addXP(times.length*5); haptic('medium'); }
-  sv(); rVit();
-}
-
-function delVit(vitId) {
-  S.vitamins = S.vitamins.filter(v => v.id !== vitId);
-  sv(); rVit();
-}
-
-/* ── FAB & MODALS ─────────────────────────── */
+/* ═══════════════════════════════════════════
+   FAB & MODALS
+═══════════════════════════════════════════ */
 function openFab() {
   haptic();
-  if (curPage === 'plan') openModal('m-task');
-  else if (curPage === 'hab') openModal('m-hab');
-  else if (curPage === 'goals') openModal('m-goal');
-  else if (curPage === 'books') openModal('m-book');
-  else if (curPage === 'vit') openModal('m-vit');
-  else openModal('m-task');
+  const map = {dash:'m-task',plan:'m-task',hab:'m-hab',goals:'m-goal',books:'m-book',vit:'m-vit'};
+  openModal(map[curPage]||'m-task');
 }
 
 function openModal(id) {
-  // Заполняем дропдауны
-  if (id === 'm-task') {
-    fillGoalSelect('t-goal');
-    document.getElementById('t-text').value = '';
-    document.getElementById('t-date').value = today();
-    validateModal(id);
-  }
-  if (id === 'm-hab') {
-    fillGoalSelect('h-goal');
-    document.getElementById('h-name').value = '';
-    buildEmojiPicker('h-emoji-pick', HAB_EMOJIS, 'hab');
-    validateModal(id);
-  }
-  if (id === 'm-goal') {
-    fillHabSelect('g-hab');
-    document.getElementById('g-title').value = '';
-    document.getElementById('g-start').value = today();
-    document.getElementById('g-end').value = '';
-    document.getElementById('g-tpw').value = '3';
-    validateModal(id);
-  }
-  if (id === 'm-book') {
-    document.getElementById('b-title').value = '';
-    document.getElementById('b-author').value = '';
-    document.getElementById('b-total').value = '';
-    document.getElementById('b-cover-preview').style.display = 'none';
-    newBookCoverB64 = '';
-    validateModal(id);
-  }
-  if (id === 'm-vit') {
-    document.getElementById('v-name').value = '';
-    document.getElementById('v-dose').value = '';
-    document.getElementById('v-end').value = '';
-    buildEmojiPicker('v-emoji-pick', VIT_EMOJIS, 'vit');
-    buildTimesPicker();
-    validateModal(id);
-  }
-  if (id === 'm-ava') {
-    const wrap = document.getElementById('ava-prev-wrap');
-    if (wrap) wrap.innerHTML = S.avatar ? `<img src="${S.avatar}">` : '🧑';
-  }
-
+  if (id==='m-task') { fillGoalSelect('t-goal'); document.getElementById('t-text').value=''; document.getElementById('t-date').value=today(); }
+  if (id==='m-hab') { fillGoalSelect('h-goal'); document.getElementById('h-name').value=''; buildEmojiPicker('h-emoji-pick',HAB_EMOJIS,'hab'); buildDaysPicker(); }
+  if (id==='m-goal') { fillHabSelect('g-hab'); document.getElementById('g-title').value=''; document.getElementById('g-start').value=today(); document.getElementById('g-end').value=''; document.getElementById('g-tpw').value='3'; }
+  if (id==='m-book') { document.getElementById('b-title').value=''; document.getElementById('b-author').value=''; document.getElementById('b-total').value=''; document.getElementById('b-cover-preview').style.display='none'; newBookCoverB64=''; }
+  if (id==='m-vit') { document.getElementById('v-name').value=''; document.getElementById('v-dose').value=''; document.getElementById('v-end').value=''; buildEmojiPicker('v-emoji-pick',VIT_EMOJIS,'vit'); buildTimesPicker(); selTimes=new Set(['Утро']); buildTimesPicker(); }
+  if (id==='m-ava') { const w=document.getElementById('ava-prev-wrap'); if(w) w.innerHTML=S.avatar?`<img src="${S.avatar}">`:'🧑'; }
+  validateModal(id);
   document.getElementById(id).classList.add('open');
   tg.BackButton.show();
-  tg.BackButton.onClick(() => closeModal(id));
+  tg.BackButton.onClick(()=>closeModal(id));
 }
 
 function closeModal(id) {
@@ -1716,246 +1604,167 @@ function closeModal(id) {
 }
 
 function fillGoalSelect(selId) {
-  const sel = document.getElementById(selId);
-  if (!sel) return;
-  sel.innerHTML = `<option value="">— Без цели —</option>` +
-    S.goals.map(g => `<option value="${g.id}">${g.title}</option>`).join('');
+  const sel=document.getElementById(selId); if (!sel) return;
+  sel.innerHTML=`<option value="">— Без цели —</option>`+S.goals.map(g=>`<option value="${g.id}">${g.title}</option>`).join('');
 }
-
 function fillHabSelect(selId) {
-  const sel = document.getElementById(selId);
-  if (!sel) return;
-  sel.innerHTML = `<option value="">— Без привычки —</option>` +
-    S.habits.map(h => `<option value="${h.id}">${h.icon||'💪'} ${h.name}</option>`).join('');
+  const sel=document.getElementById(selId); if (!sel) return;
+  sel.innerHTML=`<option value="">— Без привычки —</option>`+S.habits.map(h=>`<option value="${h.id}">${h.icon||'💪'} ${h.name}</option>`).join('');
 }
 
-let selEmoji = { hab: '💪', vit: '💊' };
+/* ── Emoji picker ── */
+let selEmoji={hab:'💪',vit:'💊'};
+function buildEmojiPicker(containerId,emojis,type) {
+  const c=document.getElementById(containerId); if (!c) return;
+  c.innerHTML=emojis.map(e=>`<button class="emoji-btn${selEmoji[type]===e?' sel':''}" onclick="selEmojiClick('${type}','${e}','${containerId}','${containerId==='h-emoji-pick'?'hab':'vit'}')">${e}</button>`).join('');
+}
+function selEmojiClick(type,emoji,containerId) {
+  selEmoji[type]=emoji;
+  buildEmojiPicker(containerId,type==='hab'?HAB_EMOJIS:VIT_EMOJIS,type);
+}
 
-function buildEmojiPicker(containerId, emojis, type) {
-  const c = document.getElementById(containerId);
-  if (!c) return;
-  c.innerHTML = emojis.map(e => `
-    <button class="emoji-btn${selEmoji[type]===e?' sel':''}" onclick="selEmojiClick('${type}','${e}','${containerId}')">${e}</button>
+/* ── Days picker ── */
+let selDays = new Set(ALL_DAYS);
+function buildDaysPicker() {
+  const c=document.getElementById('h-days-pick'); if (!c) return;
+  const allBtn=document.getElementById('all-days-btn');
+  const allSel=selDays.size===7;
+  if (allBtn) { allBtn.textContent=allSel?'✓ Каждый день':'Каждый день'; allBtn.className='all-days-btn'+(allSel?' sel':''); }
+  c.innerHTML=DAYS_SHORT.map((d,i)=>`
+    <div class="day-sel-btn${selDays.has(i)?' sel':''}" onclick="toggleDay(${i})">${d}</div>
   `).join('');
 }
-
-function selEmojiClick(type, emoji, containerId) {
-  selEmoji[type] = emoji;
-  buildEmojiPicker(containerId, type === 'hab' ? HAB_EMOJIS : VIT_EMOJIS, type);
+function toggleDay(i) {
+  if (selDays.has(i)) { if (selDays.size>1) selDays.delete(i); }
+  else selDays.add(i);
+  buildDaysPicker();
+  validateModal('m-hab');
+}
+function toggleAllDays() {
+  if (selDays.size===7) { selDays=new Set([new Date().getDay()]); }
+  else { selDays=new Set(ALL_DAYS); }
+  buildDaysPicker();
 }
 
-let selTimes = new Set(['Утро']);
+/* ── Times picker ── */
+let selTimes=new Set(['Утро']);
 function buildTimesPicker() {
-  const c = document.getElementById('v-times-pick');
-  if (!c) return;
-  c.innerHTML = VIT_TIMES.map(t => `
-    <div class="time-toggle${selTimes.has(t)?' sel':''}" onclick="toggleTime('${t}')">${t}</div>
-  `).join('');
+  const c=document.getElementById('v-times-pick'); if (!c) return;
+  c.innerHTML=VIT_TIMES.map(t=>`<div class="time-toggle${selTimes.has(t)?' sel':''}" onclick="toggleTime('${t}')">${t}</div>`).join('');
 }
-function toggleTime(t) {
-  if (selTimes.has(t)) selTimes.delete(t); else selTimes.add(t);
-  buildTimesPicker();
-}
+function toggleTime(t) { if(selTimes.has(t))selTimes.delete(t); else selTimes.add(t); buildTimesPicker(); }
 
-/* ── VALIDATION ───────────────────────────── */
+/* ── Validation ── */
 function validateModal(modalId) {
-  let valid = false;
-  if (modalId === 'm-task') {
-    valid = !!document.getElementById('t-text')?.value.trim();
-    setBtn('save-task', valid);
-  } else if (modalId === 'm-hab') {
-    valid = !!document.getElementById('h-name')?.value.trim();
-    setBtn('save-hab', valid);
-  } else if (modalId === 'm-goal') {
-    const title = document.getElementById('g-title')?.value.trim();
-    const end = document.getElementById('g-end')?.value;
-    valid = !!(title && end);
-    setBtn('save-goal', valid);
-  } else if (modalId === 'm-book') {
-    const title = document.getElementById('b-title')?.value.trim();
-    const total = parseInt(document.getElementById('b-total')?.value);
-    valid = !!(title && total > 0);
-    setBtn('save-book', valid);
-  } else if (modalId === 'm-vit') {
-    valid = !!document.getElementById('v-name')?.value.trim();
-    setBtn('save-vit', valid);
-  }
+  if (modalId==='m-task') setBtn('save-task',!!document.getElementById('t-text')?.value.trim());
+  else if (modalId==='m-hab') setBtn('save-hab',!!document.getElementById('h-name')?.value.trim());
+  else if (modalId==='m-goal') setBtn('save-goal',!!(document.getElementById('g-title')?.value.trim()&&document.getElementById('g-end')?.value));
+  else if (modalId==='m-book') setBtn('save-book',!!(document.getElementById('b-title')?.value.trim()&&parseInt(document.getElementById('b-total')?.value)>0));
+  else if (modalId==='m-vit') setBtn('save-vit',!!document.getElementById('v-name')?.value.trim());
 }
+function setBtn(id,enabled) { const b=document.getElementById(id); if(b){b.disabled=!enabled;} }
 
-function setBtn(id, enabled) {
-  const btn = document.getElementById(id);
-  if (!btn) return;
-  btn.disabled = !enabled;
-}
-
-/* ── SAVE ACTIONS ─────────────────────────── */
+/* ── Save actions ── */
 function saveTask() {
-  const text = document.getElementById('t-text').value.trim();
-  if (!text) return;
-  const date = document.getElementById('t-date').value || today();
-  const goalId = document.getElementById('t-goal').value || null;
-
-  const wk = getCurrentWeekKey();
-  ensureWeek(wk);
-  S.weeks[wk].tasks.push({ id: uid(), text, date, done: false, goalId });
-  sv();
-  closeModal('m-task');
-  if (curPage === 'plan') rPlanner();
-  else if (curPage === 'dash') rDash();
-  haptic();
+  const text=document.getElementById('t-text').value.trim(); if (!text) return;
+  const date=document.getElementById('t-date').value||today();
+  const goalId=document.getElementById('t-goal').value||null;
+  const wk=getCurrentWeekKey(); ensureWeek(wk);
+  S.weeks[wk].tasks.push({id:uid(),text,date,done:false,goalId});
+  sv(); closeModal('m-task');
+  if (curPage==='plan') rPlanner(); else rDash(); haptic();
 }
 
 function saveHab() {
-  const name = document.getElementById('h-name').value.trim();
-  if (!name) return;
-  const goalId = document.getElementById('h-goal').value || null;
-
-  S.habits.push({ id: uid(), name, icon: selEmoji.hab, goalId, completions: [] });
-  sv();
-  closeModal('m-hab');
-  rHabits();
-  haptic();
+  const name=document.getElementById('h-name').value.trim(); if (!name) return;
+  const goalId=document.getElementById('h-goal').value||null;
+  S.habits.push({id:uid(),name,icon:selEmoji.hab,goalId,days:[...selDays],completions:[]});
+  sv(); closeModal('m-hab'); rHabits(); haptic();
 }
 
 function saveGoal() {
-  const title = document.getElementById('g-title').value.trim();
-  const start = document.getElementById('g-start').value || today();
-  const end = document.getElementById('g-end').value;
-  const habitId = document.getElementById('g-hab').value || null;
-  const tpw = parseInt(document.getElementById('g-tpw').value) || 3;
-  if (!title || !end) return;
-
-  S.goals.push({
-    id: uid(), title,
-    startDate: start, endDate: end,
-    habitId, targetPerWeek: tpw
-  });
-  sv();
-  closeModal('m-goal');
-  rGoals();
-  haptic();
+  const title=document.getElementById('g-title').value.trim();
+  const start=document.getElementById('g-start').value||today();
+  const end=document.getElementById('g-end').value;
+  const habitId=document.getElementById('g-hab').value||null;
+  const tpw=parseInt(document.getElementById('g-tpw').value)||3;
+  if (!title||!end) return;
+  S.goals.push({id:uid(),title,startDate:start,endDate:end,habitId,targetPerWeek:tpw});
+  sv(); closeModal('m-goal'); rGoals(); haptic();
 }
 
 function saveBook() {
-  const title = document.getElementById('b-title').value.trim();
-  const author = document.getElementById('b-author').value.trim();
-  const total = parseInt(document.getElementById('b-total').value);
-  if (!title || !total) return;
-
-  S.books.push({
-    id: uid(), title, author, total,
-    current: 0, status: 'reading',
-    rating: 0, notes: '', cover: newBookCoverB64 || ''
-  });
-  S.booksTab = 'reading';
-  sv();
-  closeModal('m-book');
-  rBooks();
-  haptic();
+  const title=document.getElementById('b-title').value.trim();
+  const author=document.getElementById('b-author').value.trim();
+  const total=parseInt(document.getElementById('b-total').value);
+  if (!title||!total) return;
+  S.books.push({id:uid(),title,author,total,current:0,status:'reading',rating:0,notes:'',cover:newBookCoverB64||''});
+  S.booksTab='reading'; sv(); closeModal('m-book'); rBooks(); haptic();
 }
 
 function previewBookCover() {
-  const inp = document.getElementById('b-cover-input');
-  if (!inp.files[0]) return;
-  const fr = new FileReader();
-  fr.onload = e => {
-    newBookCoverB64 = e.target.result;
-    document.getElementById('b-cover-preview').style.display = 'block';
-    document.getElementById('b-cover-img').src = e.target.result;
+  const inp=document.getElementById('b-cover-input'); if (!inp.files[0]) return;
+  const fr=new FileReader();
+  fr.onload=e=>{
+    newBookCoverB64=e.target.result;
+    document.getElementById('b-cover-preview').style.display='block';
+    document.getElementById('b-cover-img').src=e.target.result;
   };
   fr.readAsDataURL(inp.files[0]);
 }
 
 function saveVit() {
-  const name = document.getElementById('v-name').value.trim();
-  if (!name) return;
-  const dose = document.getElementById('v-dose').value.trim();
-  const endDate = document.getElementById('v-end').value || null;
-  const times = [...selTimes];
-
-  S.vitamins.push({
-    id: uid(), name, dose, emoji: selEmoji.vit,
-    times: times.length ? times : ['Утро'],
-    endDate, taken: {}
-  });
-  sv();
-  closeModal('m-vit');
-  rVit();
-  haptic();
+  const name=document.getElementById('v-name').value.trim(); if (!name) return;
+  const dose=document.getElementById('v-dose').value.trim();
+  const endDate=document.getElementById('v-end').value||null;
+  const times=[...selTimes];
+  S.vitamins.push({id:uid(),name,dose,emoji:selEmoji.vit,times:times.length?times:['Утро'],endDate,taken:{}});
+  sv(); closeModal('m-vit'); rVit(); haptic();
 }
 
-/* ── AVATAR ───────────────────────────────── */
+/* ── Avatar ── */
 function avaFileChange() {
-  const inp = document.getElementById('ava-input');
-  if (!inp.files[0]) return;
-  const fr = new FileReader();
-  fr.onload = e => {
-    S.avatar = e.target.result;
-    sv();
-    rHeader();
-    const wrap = document.getElementById('ava-prev-wrap');
-    if (wrap) wrap.innerHTML = `<img src="${e.target.result}">`;
-  };
+  const inp=document.getElementById('ava-input'); if (!inp.files[0]) return;
+  const fr=new FileReader();
+  fr.onload=e=>{ S.avatar=e.target.result; sv(); rHeader(); const w=document.getElementById('ava-prev-wrap'); if(w) w.innerHTML=`<img src="${e.target.result}">`; };
   fr.readAsDataURL(inp.files[0]);
 }
 
-/* ── AUTH ─────────────────────────────────── */
+/* ═══════════════════════════════════════════
+   AUTH
+═══════════════════════════════════════════ */
 function startApp() {
-  const name = document.getElementById('land-name').value.trim() || 'Игрок';
-  S.name = name;
-  S.isLoggedIn = true;
-  sv();
-  document.getElementById('landing').style.display = 'none';
+  const name=document.getElementById('land-name').value.trim()||'Игрок';
+  S.name=name; S.isLoggedIn=true; sv();
+  document.getElementById('landing').style.display='none';
+  document.getElementById('shell').style.display='flex';
   rAll();
 }
+function logout() { S.isLoggedIn=false; sv(); document.getElementById('landing').style.display='flex'; document.getElementById('shell').style.display='none'; }
+function buyPrem() { S.isSubscribed=true; sv(); rHeader(); haptic('medium'); }
 
-function logout() {
-  S.isLoggedIn = false;
-  sv();
-  document.getElementById('landing').style.display = 'flex';
-}
-
-function buyPrem() {
-  S.isSubscribed = true;
-  sv();
-  rHeader();
-  haptic('medium');
-}
-
-/* ── INIT ─────────────────────────────────── */
+/* ═══════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════ */
 function init() {
-  // Закрытие модалов по клику на оверлей
-  document.querySelectorAll('.modal-overlay').forEach(el => {
-    el.addEventListener('click', e => {
-      if (e.target === el) closeModal(el.id);
-    });
+  document.querySelectorAll('.modal-overlay').forEach(el=>{
+    el.addEventListener('click',e=>{ if(e.target===el) closeModal(el.id); });
   });
 
   if (IS_TG) {
-    const tgUser = tg.initDataUnsafe?.user;
-    if (tgUser) {
-      S.name = tgUser.first_name || S.name || 'Игрок';
-      S.isLoggedIn = true;
-      sv();
-    }
+    const tgUser=tg.initDataUnsafe?.user;
+    if (tgUser) { S.name=tgUser.first_name||S.name||'Игрок'; S.isLoggedIn=true; sv(); }
   }
 
   if (!S.isLoggedIn) {
-    document.getElementById('landing').style.display = 'flex';
-    document.getElementById('shell').style.display = 'none';
+    document.getElementById('landing').style.display='flex';
+    document.getElementById('shell').style.display='none';
   } else {
-    document.getElementById('landing').style.display = 'none';
-    document.getElementById('shell').style.display = 'flex';
+    document.getElementById('landing').style.display='none';
+    document.getElementById('shell').style.display='flex';
     rAll();
   }
 }
-
-// Переопределяем startApp для корректного показа shell
-const _origStartApp = startApp;
-window.startApp = function() {
-  _origStartApp();
-  document.getElementById('shell').style.display = 'flex';
-};
 
 init();
 </script>
