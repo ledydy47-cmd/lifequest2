@@ -46,12 +46,12 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
   background:var(--card);border-top:1px solid var(--border);
   display:flex;z-index:200;box-shadow:0 -3px 16px rgba(0,0,0,.06);}
 .nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:3px;background:none;border:none;cursor:pointer;color:var(--sub);
-  font-size:.48rem;font-weight:600;text-transform:uppercase;letter-spacing:.3px;
-  padding:6px 1px;position:relative;transition:color .2s;}
-.nb svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+  gap:2px;background:none;border:none;cursor:pointer;color:var(--sub);
+  font-size:.42rem;font-weight:600;text-transform:uppercase;letter-spacing:.3px;
+  padding:5px 1px;position:relative;transition:color .2s;}
+.nb svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
 .nb.active{color:var(--primary);}
-.nb.active::after{content:'';position:absolute;bottom:5px;width:18px;height:3px;border-radius:2px;background:var(--primary);}
+.nb.active::after{content:'';position:absolute;bottom:4px;width:16px;height:3px;border-radius:2px;background:var(--primary);}
 
 /* ── FAB ── */
 .fab{position:fixed;right:18px;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 10px);
@@ -77,10 +77,10 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .lv-n{font-size:1.1rem;font-weight:900;color:var(--gold2);}
 .xp-bar-bg{height:7px;background:rgba(0,0,0,.2);border-radius:4px;margin-top:6px;}
 .xp-fill{height:7px;background:var(--gold2);border-radius:4px;transition:width .5s;}
-.dash-stats{display:flex;gap:10px;margin-top:8px;}
-.dash-stat{flex:1;background:rgba(255,255,255,.15);border-radius:12px;padding:8px 6px;text-align:center;}
-.dash-stat-val{font-size:1.15rem;font-weight:900;}
-.dash-stat-lbl{font-size:.58rem;opacity:.82;margin-top:1px;}
+.dash-stats{display:flex;gap:8px;margin-top:8px;}
+.dash-stat{flex:1;background:rgba(255,255,255,.15);border-radius:12px;padding:7px 4px;text-align:center;}
+.dash-stat-val{font-size:1rem;font-weight:900;}
+.dash-stat-lbl{font-size:.54rem;opacity:.82;margin-top:1px;}
 
 /* ── XP FLASH ── */
 .xp-flash{position:fixed;pointer-events:none;font-size:.85rem;font-weight:800;
@@ -126,19 +126,16 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .plan-slider-wrap{flex:1;overflow:hidden;}
 .plan-slider{display:flex;height:100%;transition:transform .32s cubic-bezier(.4,0,.2,1);}
 .day-slide{flex-shrink:0;width:100vw;height:100%;overflow-y:auto;padding-bottom:20px;}
-.ds-head{min-height:32vh;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;padding:18px;}
+.ds-head{min-height:32vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;}
 .ds-day-name{font-size:1.2rem;font-weight:800;color:white;}
 .ds-date{font-size:.78rem;color:rgba(255,255,255,.75);margin-top:2px;}
-.ds-today-tag{margin-top:5px;background:rgba(255,255,255,.25);color:white;
-  font-size:.68rem;font-weight:700;padding:2px 10px;border-radius:20px;}
+.ds-today-tag{margin-top:5px;background:rgba(255,255,255,.25);color:white;font-size:.68rem;font-weight:700;padding:2px 10px;border-radius:20px;}
 .ds-circ-wrap{display:flex;flex-direction:column;align-items:center;margin-top:12px;}
 .ds-circ{width:min(34vw,140px);height:min(34vw,140px);position:relative;}
 .ds-circ svg{transform:rotate(-90deg);width:100%;height:100%;}
 .ds-cbg{fill:none;stroke:rgba(255,255,255,.2);stroke-width:8;}
 .ds-cfill{fill:none;stroke:white;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .5s;}
-.ds-cpct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-size:1.3rem;font-weight:900;color:white;}
+.ds-cpct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:900;color:white;}
 .ds-cstat{font-size:.72rem;color:rgba(255,255,255,.8);margin-top:4px;}
 .ds-body{padding:12px 14px;}
 .ds-body-title{font-size:.68rem;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
@@ -148,8 +145,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .t-inp{flex:1;border:none;background:none;font-size:.88rem;color:var(--text);outline:none;}
 .t-done .t-inp{text-decoration:line-through;color:var(--sub);}
 .t-goal-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.btn-add-t{display:flex;align-items:center;gap:6px;margin-top:10px;padding:9px 12px;
-  border-radius:12px;border:1.5px dashed;background:none;cursor:pointer;font-size:.83rem;font-weight:700;width:100%;}
+.btn-add-t{display:flex;align-items:center;gap:6px;margin-top:10px;padding:9px 12px;border-radius:12px;border:1.5px dashed;background:none;cursor:pointer;font-size:.83rem;font-weight:700;width:100%;}
 
 /* ── GOALS ── */
 .goal-card{border-bottom:1px solid var(--border);padding:14px;}
@@ -167,38 +163,23 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .glh-name{font-size:.8rem;font-weight:700;}
 .glh-sub{font-size:.65rem;color:var(--sub);}
 .gwg-row{display:flex;gap:4px;margin-top:6px;}
-.gwg-chip{flex:1;height:24px;border-radius:6px;font-size:.58rem;font-weight:700;
-  display:flex;align-items:center;justify-content:center;color:white;opacity:.28;}
+.gwg-chip{flex:1;height:24px;border-radius:6px;font-size:.58rem;font-weight:700;display:flex;align-items:center;justify-content:center;color:white;opacity:.28;}
 .gwg-chip.done{opacity:1;}
 
 /* ════════════════════════════════════
-   BOOKS — НОВЫЙ ДИЗАЙН
+   BOOKS
 ════════════════════════════════════ */
-/* Фильтр-таббар */
-.bk-tabs{display:flex;gap:0;padding:12px 14px 8px;background:transparent;}
+.bk-tabs{display:flex;padding:12px 14px 8px;}
 .bk-tab{flex:1;padding:8px 4px;border-radius:24px;border:1.5px solid var(--border);
-  font-size:.75rem;font-weight:700;cursor:pointer;background:none;color:var(--sub);
+  font-size:.72rem;font-weight:700;cursor:pointer;background:none;color:var(--sub);
   text-align:center;transition:all .2s;margin:0 3px;}
 .bk-tab.active{background:var(--primary);color:white;border-color:var(--primary);}
-
-/* Статистика читателя */
-.bk-stats{display:flex;gap:0;margin:0 14px 12px;background:var(--card);
-  border-radius:var(--r);box-shadow:var(--sh);border:1px solid var(--border);overflow:hidden;}
+.bk-stats{display:flex;margin:0 14px 12px;background:var(--card);border-radius:var(--r);box-shadow:var(--sh);border:1px solid var(--border);overflow:hidden;}
 .bk-stat{flex:1;padding:14px 8px;text-align:center;position:relative;}
-.bk-stat+.bk-stat::before{content:'';position:absolute;left:0;top:20%;height:60%;
-  width:1px;background:var(--border);}
+.bk-stat+.bk-stat::before{content:'';position:absolute;left:0;top:20%;height:60%;width:1px;background:var(--border);}
 .bk-stat-icon{font-size:1.3rem;margin-bottom:4px;}
 .bk-stat-val{font-size:1.3rem;font-weight:900;color:var(--primary);}
-.bk-stat-lbl{font-size:.6rem;color:var(--sub);margin-top:2px;line-height:1.3;}
-
-/* Стрик-баннер */
-.bk-streak{margin:0 14px 12px;background:linear-gradient(135deg,#e07a5f,#f2b705);
-  border-radius:14px;padding:12px 16px;display:flex;align-items:center;gap:10px;color:white;}
-.bk-streak-icon{font-size:1.8rem;}
-.bk-streak-val{font-size:1.4rem;font-weight:900;}
-.bk-streak-lbl{font-size:.72rem;opacity:.9;}
-
-/* Сетка книг */
+.bk-stat-lbl{font-size:.58rem;color:var(--sub);margin-top:2px;line-height:1.3;}
 .bk-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:0 14px 14px;}
 .bk-grid-item{position:relative;border-radius:14px;overflow:hidden;cursor:pointer;
   box-shadow:0 4px 18px rgba(0,0,0,.18);aspect-ratio:2/3;background:#2a3a30;}
@@ -208,33 +189,88 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .bk-grid-ph-icon{font-size:2.5rem;margin-bottom:8px;}
 .bk-grid-ph-title{font-size:.78rem;font-weight:700;line-height:1.3;}
 .bk-grid-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7) 0%,rgba(0,0,0,.0) 45%);}
-/* Круговой прогресс поверх обложки */
 .bk-circ-wrap{position:absolute;top:8px;right:8px;width:48px;height:48px;}
 .bk-circ-wrap svg{width:48px;height:48px;transform:rotate(-90deg);}
-.bk-circ-bg{fill:rgba(0,0,0,.45);} /* фоновый круг */
+.bk-circ-bg{fill:rgba(0,0,0,.45);}
 .bk-circ-track{fill:none;stroke:rgba(255,255,255,.25);stroke-width:4;}
 .bk-circ-fill{fill:none;stroke:white;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset .5s;}
 .bk-circ-fill.done-clr{stroke:var(--gold2);}
 .bk-circ-pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   font-size:.6rem;font-weight:900;color:white;text-shadow:0 1px 3px rgba(0,0,0,.6);}
-/* Нижняя подпись на карточке */
 .bk-grid-info{position:absolute;bottom:0;left:0;right:0;padding:10px 10px 8px;}
 .bk-grid-title{font-size:.78rem;font-weight:800;color:white;line-height:1.25;
-  text-shadow:0 1px 4px rgba(0,0,0,.8);display:-webkit-box;-webkit-line-clamp:2;
-  -webkit-box-orient:vertical;overflow:hidden;}
-.bk-grid-author{font-size:.62rem;color:rgba(255,255,255,.7);margin-top:2px;
-  text-shadow:0 1px 3px rgba(0,0,0,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-/* Бейдж статуса */
-.bk-status-dot{position:absolute;top:8px;left:8px;width:8px;height:8px;border-radius:50%;
-  box-shadow:0 0 0 2px rgba(255,255,255,.5);}
-
-/* Пустой список */
+  text-shadow:0 1px 4px rgba(0,0,0,.8);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.bk-grid-author{font-size:.62rem;color:rgba(255,255,255,.7);margin-top:2px;text-shadow:0 1px 3px rgba(0,0,0,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bk-status-dot{position:absolute;top:8px;left:8px;width:8px;height:8px;border-radius:50%;box-shadow:0 0 0 2px rgba(255,255,255,.5);}
 .bk-empty{padding:40px 20px;text-align:center;color:var(--sub);}
 .bk-empty-icon{font-size:3rem;margin-bottom:12px;}
 .bk-empty-txt{font-size:.9rem;font-weight:600;}
 .bk-empty-sub{font-size:.78rem;margin-top:6px;opacity:.7;}
 
-/* ── NOTES OVERLAY ── */
+/* ════════════════════════════════════
+   VITAMINS TRACKER
+════════════════════════════════════ */
+/* Hero-карточка сегодня */
+.vit-hero{margin:14px 14px 0;border-radius:var(--r);padding:18px;
+  background:linear-gradient(135deg,#5b4fcf,#8b6fcf,#b09be8);color:white;position:relative;overflow:hidden;}
+.vit-hero::after{content:'💊';position:absolute;right:-10px;top:-10px;font-size:80px;opacity:.12;}
+.vit-hero-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.vit-hero-title{font-size:1.1rem;font-weight:800;}
+.vit-hero-date{font-size:.72rem;opacity:.8;}
+/* Большой круговой прогресс в герое */
+.vit-big-circ{display:flex;flex-direction:column;align-items:center;margin-bottom:14px;}
+.vit-big-circ-svg{width:110px;height:110px;}
+.vit-big-circ-svg .vbg{fill:rgba(255,255,255,.12);}
+.vit-big-circ-svg .vtr{fill:none;stroke:rgba(255,255,255,.2);stroke-width:8;}
+.vit-big-circ-svg .vfill{fill:none;stroke:var(--gold2);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .6s;}
+.vit-big-pct{font-size:1.6rem;font-weight:900;color:white;margin-top:4px;}
+.vit-big-sub{font-size:.72rem;opacity:.85;}
+/* Строки витаминов сегодня */
+.vit-today-list{display:flex;flex-direction:column;gap:8px;}
+.vit-today-item{background:rgba(255,255,255,.15);border-radius:14px;padding:11px 14px;
+  display:flex;align-items:center;gap:12px;backdrop-filter:blur(4px);cursor:pointer;transition:all .2s;}
+.vit-today-item.taken{background:rgba(255,255,255,.28);}
+.vit-today-item.taken .vit-check-circle{background:var(--gold2);border-color:var(--gold2);}
+.vit-today-item.taken .vit-check-circle::after{content:'✓';color:#3d3000;font-weight:900;font-size:.85rem;}
+.vit-check-circle{width:32px;height:32px;border-radius:50%;border:2.5px solid rgba(255,255,255,.5);
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.vit-today-name{font-size:.92rem;font-weight:700;color:white;flex:1;}
+.vit-today-dose{font-size:.68rem;color:rgba(255,255,255,.75);}
+.vit-today-time{font-size:.65rem;background:rgba(255,255,255,.2);padding:2px 8px;border-radius:20px;color:white;white-space:nowrap;}
+/* Серия и статистика */
+.vit-streak-row{display:flex;gap:10px;margin:10px 14px 12px;}
+.vit-streak-card{flex:1;background:var(--card);border-radius:14px;padding:12px 10px;text-align:center;
+  box-shadow:var(--sh);border:1px solid var(--border);}
+.vit-streak-val{font-size:1.3rem;font-weight:900;color:var(--c2);}
+.vit-streak-lbl{font-size:.6rem;color:var(--sub);margin-top:2px;}
+/* Список всех витаминов */
+.vit-list-hdr{display:flex;align-items:center;justify-content:space-between;padding:0 16px;margin-bottom:6px;}
+.vit-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--border);}
+.vit-item:last-child{border-bottom:none;}
+.vit-emoji-wrap{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;
+  justify-content:center;font-size:1.5rem;flex-shrink:0;}
+.vit-info{flex:1;min-width:0;}
+.vit-name{font-size:.93rem;font-weight:700;}
+.vit-dose{font-size:.72rem;color:var(--sub);margin-top:2px;}
+.vit-time-badges{display:flex;gap:4px;margin-top:4px;flex-wrap:wrap;}
+.vit-time-badge{font-size:.6rem;padding:2px 8px;border-radius:20px;font-weight:700;color:white;}
+/* Прогресс недели (7 точек) */
+.vit-week-dots{display:flex;gap:4px;margin-top:6px;}
+.vit-wd{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:.58rem;font-weight:700;color:white;}
+/* Курс */
+.vit-course-badge{font-size:.62rem;padding:2px 8px;border-radius:20px;
+  background:#f0eaf8;color:var(--c2);font-weight:700;white-space:nowrap;}
+/* История (7 дней) */
+.vit-history{margin:0 14px 12px;}
+.vit-hist-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);}
+.vit-hist-row:last-child{border-bottom:none;}
+.vit-hist-date{font-size:.72rem;color:var(--sub);width:60px;flex-shrink:0;}
+.vit-hist-bar-wrap{flex:1;height:8px;background:var(--border);border-radius:4px;}
+.vit-hist-bar{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--c2),var(--c1));transition:width .4s;}
+.vit-hist-pct{font-size:.7rem;font-weight:700;color:var(--c2);width:32px;text-align:right;}
+
+/* ── NOTES / DETAIL OVERLAY (книги) ── */
 .notes-over{position:fixed;inset:0;background:var(--bg);z-index:2000;display:none;flex-direction:column;}
 .notes-over.on{display:flex;}
 .no-hdr{background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;}
@@ -246,28 +282,22 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .no-bk-cover{width:56px;height:80px;border-radius:8px;object-fit:cover;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.2);}
 .no-bk-cover-ph{width:56px;height:80px;border-radius:8px;background:linear-gradient(135deg,#2d6e57,#5bbf95);
   display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
-.no-bk-title{font-size:.95rem;font-weight:800;color:var(--text);}
+.no-bk-title{font-size:.95rem;font-weight:800;}
 .no-bk-author{font-size:.75rem;color:var(--sub);margin-top:2px;}
-/* Прогресс в нотах */
 .no-prog-wrap{margin-top:10px;}
 .no-prog-row{display:flex;justify-content:space-between;font-size:.72rem;color:var(--sub);margin-bottom:4px;}
 .no-prog-bg{height:7px;background:var(--border);border-radius:4px;}
 .no-prog-fill{height:7px;border-radius:4px;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .5s;}
-/* Страницы */
 .no-pages-row{display:flex;align-items:center;gap:8px;margin-top:8px;}
-.no-page-inp{width:60px;border:1.5px solid var(--border);border-radius:10px;
-  padding:5px 8px;text-align:center;font-size:.85rem;outline:none;background:var(--bg);}
+.no-page-inp{width:60px;border:1.5px solid var(--border);border-radius:10px;padding:5px 8px;text-align:center;font-size:.85rem;outline:none;background:var(--bg);}
 .no-page-inp:focus{border-color:var(--primary);}
-/* Звёзды */
 .no-stars{display:flex;gap:4px;margin-top:8px;}
 .no-star{font-size:22px;color:#ddd;cursor:pointer;transition:color .15s;}
 .no-star.on{color:var(--gold);}
-/* Статус кнопки */
 .no-status-row{display:flex;gap:6px;margin-top:8px;}
 .no-st-btn{flex:1;padding:6px 4px;border-radius:10px;border:1.5px solid var(--border);
   font-size:.68rem;font-weight:700;cursor:pointer;background:none;color:var(--sub);text-align:center;transition:all .15s;}
 .no-st-btn.active{color:white;border-color:transparent;}
-/* Цитаты */
 .no-body{flex:1;overflow-y:auto;padding:14px;}
 .quote-item{background:var(--card);border-radius:12px;padding:11px 14px;margin-bottom:10px;
   border-left:4px solid var(--primary);font-size:.85rem;line-height:1.5;position:relative;}
@@ -297,17 +327,26 @@ select.finp{-webkit-appearance:none;}
 .day-chip{padding:6px 9px;border-radius:10px;border:1.5px solid var(--border);
   font-size:.72rem;font-weight:700;cursor:pointer;color:var(--sub);background:none;transition:all .15s;}
 .day-chip.sel{color:white;border-color:transparent;}
-.file-lbl{display:flex;align-items:center;justify-content:center;gap:8px;
-  padding:11px;border:1.5px dashed var(--border);border-radius:12px;cursor:pointer;
-  color:var(--sub);font-size:.83rem;margin:6px 0;}
+.file-lbl{display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;
+  border:1.5px dashed var(--border);border-radius:12px;cursor:pointer;color:var(--sub);font-size:.83rem;margin:6px 0;}
 .status-sel{display:flex;gap:6px;margin:6px 0;}
 .st-btn{flex:1;padding:8px 4px;border-radius:10px;border:1.5px solid var(--border);
   font-size:.7rem;font-weight:700;cursor:pointer;background:none;color:var(--sub);text-align:center;transition:all .15s;}
 .st-btn.sel{color:white;border-color:transparent;}
 .av-preview{width:84px;height:84px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 12px;border:3px solid var(--accent);}
 .av-ph{width:84px;height:84px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto 12px;}
+/* Emoji picker для витаминов */
+.emoji-grid{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;}
+.emoji-opt{width:38px;height:38px;border-radius:10px;border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:1.3rem;cursor:pointer;transition:all .15s;background:none;}
+.emoji-opt.sel{border-color:var(--primary);background:#e8f5ee;}
+/* Время приёма */
+.time-sel{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0;}
+.time-chip{padding:6px 12px;border-radius:20px;border:1.5px solid var(--border);
+  font-size:.75rem;font-weight:700;cursor:pointer;background:none;color:var(--sub);transition:all .15s;}
+.time-chip.sel{background:var(--c2);color:white;border-color:var(--c2);}
 
-/* ── ACHIEVEMENTS ── */
+/* ── ACHIEVEMENT GRID ── */
 .ach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:10px;}
 .ach-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 4px;
   border-radius:12px;border:1.5px solid var(--border);text-align:center;}
@@ -353,12 +392,15 @@ select.finp{-webkit-appearance:none;}
         </div>
         <div class="dash-stats">
           <div class="dash-stat"><div class="dash-stat-val" id="dashTaskPct">—</div><div class="dash-stat-lbl">Задачи сегодня</div></div>
-          <div class="dash-stat"><div class="dash-stat-val" id="dashHabPct">—</div><div class="dash-stat-lbl">Привычки недели</div></div>
-          <div class="dash-stat"><div class="dash-stat-val" id="dashGoalPct">—</div><div class="dash-stat-lbl">Цели в работе</div></div>
+          <div class="dash-stat"><div class="dash-stat-val" id="dashHabPct">—</div><div class="dash-stat-lbl">Привычки</div></div>
+          <div class="dash-stat"><div class="dash-stat-val" id="dashVitPct">—</div><div class="dash-stat-lbl">Витамины</div></div>
+          <div class="dash-stat"><div class="dash-stat-val" id="dashGoalPct">—</div><div class="dash-stat-lbl">Цели</div></div>
         </div>
       </div>
       <div class="sec">Привычки на сегодня</div>
       <div class="card"><div class="card-body" id="todH"></div></div>
+      <div class="sec">Витамины на сегодня</div>
+      <div class="card"><div class="card-body" id="todV"></div></div>
       <div class="sec">Достижения</div>
       <div class="card"><div class="ach-grid" id="achGrid"></div></div>
     </div>
@@ -388,15 +430,65 @@ select.finp{-webkit-appearance:none;}
       <div class="card" id="goalsList"></div>
     </div>
 
-    <!-- BOOKS — НОВЫЙ ДИЗАЙН -->
+    <!-- VITAMINS -->
+    <div class="page" id="page-vit">
+      <!-- Hero today -->
+      <div class="vit-hero" id="vitHero">
+        <div class="vit-hero-top">
+          <div>
+            <div class="vit-hero-title">💊 Витамины сегодня</div>
+            <div class="vit-hero-date" id="vitHeroDate"></div>
+          </div>
+        </div>
+        <div class="vit-big-circ">
+          <svg class="vit-big-circ-svg" viewBox="0 0 110 110">
+            <circle class="vbg" cx="55" cy="55" r="52"/>
+            <circle class="vtr" cx="55" cy="55" r="46" transform="rotate(-90 55 55)"/>
+            <circle class="vfill" id="vitCircFill" cx="55" cy="55" r="46"
+              stroke-dasharray="289.03" stroke-dashoffset="289.03" transform="rotate(-90 55 55)"/>
+          </svg>
+          <div class="vit-big-pct" id="vitBigPct">0%</div>
+          <div class="vit-big-sub" id="vitBigSub">принято 0 из 0</div>
+        </div>
+        <div class="vit-today-list" id="vitTodayList"></div>
+      </div>
+
+      <!-- Серия + статистика -->
+      <div class="vit-streak-row">
+        <div class="vit-streak-card">
+          <div class="vit-streak-val" id="vitStreakVal">0</div>
+          <div class="vit-streak-lbl">🔥 Серия дней</div>
+        </div>
+        <div class="vit-streak-card">
+          <div class="vit-streak-val" id="vitTotalDays">0</div>
+          <div class="vit-streak-lbl">📅 Всего дней</div>
+        </div>
+        <div class="vit-streak-card">
+          <div class="vit-streak-val" id="vitTotalTaken">0</div>
+          <div class="vit-streak-lbl">💊 Всего принято</div>
+        </div>
+      </div>
+
+      <!-- История 7 дней -->
+      <div class="sec">История (7 дней)</div>
+      <div class="card"><div style="padding:12px 14px;" id="vitHistory"></div></div>
+
+      <!-- Список всех витаминов -->
+      <div class="sec" style="display:flex;align-items:center;justify-content:space-between;">
+        <span>Мои витамины</span>
+      </div>
+      <div class="card" id="vitList"></div>
+
+      <!-- BOOKS hidden here — separate page -->
+    </div>
+
+    <!-- BOOKS -->
     <div class="page" id="page-books">
-      <!-- Табы фильтра -->
       <div class="bk-tabs">
         <button class="bk-tab active" data-filter="reading" onclick="setBkFilter('reading',this)">Читаю</button>
         <button class="bk-tab" data-filter="done" onclick="setBkFilter('done',this)">Прочитано</button>
         <button class="bk-tab" data-filter="want" onclick="setBkFilter('want',this)">Хочу читать</button>
       </div>
-      <!-- Статистика -->
       <div class="bk-stats">
         <div class="bk-stat">
           <div class="bk-stat-icon">📚</div>
@@ -414,13 +506,12 @@ select.finp{-webkit-appearance:none;}
           <div class="bk-stat-lbl">Дней серия чтения</div>
         </div>
       </div>
-      <!-- Сетка книг -->
       <div class="bk-grid" id="bkGrid"></div>
     </div>
 
-  </div><!-- /content -->
+  </div>
 
-  <!-- NAV -->
+  <!-- BOTTOM NAV — 6 вкладок -->
   <nav id="nav">
     <button class="nb active" onclick="go('dash',this)">
       <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -438,6 +529,10 @@ select.finp{-webkit-appearance:none;}
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
       <span>Цели</span>
     </button>
+    <button class="nb" onclick="go('vit',this)">
+      <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2v-4M9 21H5a2 2 0 01-2-2v-4m0 0h18"/></svg>
+      <span>Витамины</span>
+    </button>
     <button class="nb" onclick="go('books',this)">
       <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
       <span>Книги</span>
@@ -445,7 +540,6 @@ select.finp{-webkit-appearance:none;}
   </nav>
 </div>
 
-<!-- FAB -->
 <button class="fab" onclick="fabAct()">+</button>
 
 <!-- MAIN MODAL -->
@@ -462,13 +556,13 @@ select.finp{-webkit-appearance:none;}
 <div class="overlay" id="subOv">
   <div class="modal">
     <div class="m-title">⭐ ЛайфКвест Premium</div>
-    <p style="color:var(--sub);font-size:.85rem;margin-bottom:14px;">Разблокируй неограниченные привычки, цели и книги!</p>
+    <p style="color:var(--sub);font-size:.85rem;margin-bottom:14px;">Разблокируй все возможности приложения!</p>
     <button class="btn-main" onclick="buySub()">Активировать Premium</button>
     <button class="btn-cancel" onclick="document.getElementById('subOv').classList.remove('on')">Позже</button>
   </div>
 </div>
 
-<!-- BOOK NOTES / DETAIL OVERLAY -->
+<!-- BOOK NOTES OVERLAY -->
 <div class="notes-over" id="notesOver">
   <div class="no-hdr">
     <button class="no-back" onclick="closeNotes()">
@@ -477,8 +571,6 @@ select.finp{-webkit-appearance:none;}
     <div class="no-title" id="noTitle">Книга</div>
     <button class="no-del" onclick="delCurBook()">Удалить</button>
   </div>
-
-  <!-- Hero block с фото, прогрессом, страницами, звёздами, статусом -->
   <div class="no-bk-hero">
     <div class="no-bk-hero-inner">
       <div id="noBkCover"></div>
@@ -488,7 +580,6 @@ select.finp{-webkit-appearance:none;}
         <div class="no-stars" id="noStars"></div>
       </div>
     </div>
-    <!-- Прогресс страниц -->
     <div class="no-prog-wrap">
       <div class="no-prog-row">
         <span id="noPagesLbl">0 / 0 стр.</span>
@@ -501,10 +592,8 @@ select.finp{-webkit-appearance:none;}
       <span style="font-size:.82rem;color:var(--sub);">/ <span id="noPageTotal">0</span> стр.</span>
       <button onclick="savePageFromNotes()" style="padding:6px 14px;background:var(--primary);color:white;border:none;border-radius:10px;font-size:.82rem;font-weight:700;cursor:pointer;margin-left:auto;">Сохранить</button>
     </div>
-    <!-- Статус -->
     <div class="no-status-row" id="noStatusRow"></div>
   </div>
-
   <div class="no-body" id="nList"></div>
   <div class="no-inp-wrap">
     <input type="text" class="no-inp" id="nInp" placeholder="Добавить цитату или заметку…">
@@ -517,70 +606,81 @@ select.finp{-webkit-appearance:none;}
 <input type="file" id="bookCoverFile" accept="image/*" style="display:none" onchange="handleBookCoverUpload(event)">
 
 <script>
-/* ══════════════════════════════════════════════
+/* ═══════════════════════════════════════
    TELEGRAM
-══════════════════════════════════════════════ */
+═══════════════════════════════════════ */
 const tg = window.Telegram?.WebApp || null;
 const IS_TG = !!(tg?.initData?.length > 0);
 if (tg) { tg.ready(); tg.expand(); tg.setHeaderColor('#2d6e57'); tg.setBackgroundColor('#f2f6f3'); }
 
-/* ══════════════════════════════════════════════
+/* ═══════════════════════════════════════
    CONSTANTS
-══════════════════════════════════════════════ */
+═══════════════════════════════════════ */
 const COLORS  = ['#5bbf95','#5b9bbf','#a07cc5','#e07a5f','#f2b705','#e05c8a','#3d8b6e'];
 const DN      = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
 const DN_FULL = ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'];
 const LEVELS  = ['Новичок','Ученик','Искатель','Воин','Мастер','Герой','Легенда','Бог'];
 
+// Эмодзи для витаминов
+const VIT_EMOJIS = ['💊','🫐','🍋','☀️','🌿','🧴','💉','🫁','🧬','❤️','🦷','👁️','🦴','🏃','🧠','😴'];
+// Цвета для витаминов
+const VIT_COLORS = ['#a07cc5','#5b9bbf','#f2b705','#5bbf95','#e07a5f','#e05c8a','#3d8b6e','#5bbf95'];
+// Времена приёма
+const VIT_TIMES  = ['Утро','День','Вечер','Ночь'];
+const VIT_TIME_COLORS = {Утро:'#f2b705',День:'#5b9bbf',Вечер:'#e07a5f',Ночь:'#a07cc5'};
+
 const ACHS = [
-  {id:'first_xp',  icon:'✅', name:'Первый шаг',    req:s=>(s.xp||0)>=10},
-  {id:'xp_100',    icon:'⚡', name:'100 XP',         req:s=>(s.xp||0)>=100},
-  {id:'xp_500',    icon:'💎', name:'500 XP',         req:s=>(s.xp||0)>=500},
-  {id:'xp_1000',   icon:'👑', name:'1000 XP',        req:s=>(s.xp||0)>=1000},
-  {id:'hab_3',     icon:'🔥', name:'3 привычки',     req:s=>(s.habits||[]).length>=3},
-  {id:'hab_7',     icon:'🌟', name:'7 привычек',     req:s=>(s.habits||[]).length>=7},
-  {id:'goal_1',    icon:'🎯', name:'Первая цель',    req:s=>(s.goals||[]).length>=1},
-  {id:'book_1',    icon:'📖', name:'Первая книга',   req:s=>(s.books||[]).length>=1},
-  {id:'book_done', icon:'🏆', name:'Книга прочтена', req:s=>(s.books||[]).some(b=>b.current>=b.total&&b.total>0)},
-  {id:'goal_done', icon:'🥇', name:'Цель выполнена', req:s=>(s.goals||[]).some(g=>calcGoalPct(g)>=100)},
+  {id:'first_xp',  icon:'✅', name:'Первый шаг',       req:s=>(s.xp||0)>=10},
+  {id:'xp_100',    icon:'⚡', name:'100 XP',            req:s=>(s.xp||0)>=100},
+  {id:'xp_500',    icon:'💎', name:'500 XP',            req:s=>(s.xp||0)>=500},
+  {id:'xp_1000',   icon:'👑', name:'1000 XP',           req:s=>(s.xp||0)>=1000},
+  {id:'hab_3',     icon:'🔥', name:'3 привычки',        req:s=>(s.habits||[]).length>=3},
+  {id:'goal_1',    icon:'🎯', name:'Первая цель',       req:s=>(s.goals||[]).length>=1},
+  {id:'book_1',    icon:'📖', name:'Первая книга',      req:s=>(s.books||[]).length>=1},
+  {id:'book_done', icon:'🏆', name:'Книга прочтена',    req:s=>(s.books||[]).some(b=>b.current>=b.total&&b.total>0)},
+  {id:'vit_1',     icon:'💊', name:'Первый витамин',    req:s=>(s.vitamins||[]).length>=1},
+  {id:'vit_streak7',icon:'🌟',name:'Серия 7 дней',      req:s=>calcVitStreak()>=7},
+  {id:'vit_streak30',icon:'🏅',name:'Серия 30 дней',    req:s=>calcVitStreak()>=30},
 ];
 
-const STATUS_LABELS = {reading:'Читаю', done:'Прочитано', want:'Хочу читать'};
+const STATUS_LABELS    = {reading:'Читаю', done:'Прочитано', want:'Хочу читать'};
 const STATUS_DOT_COLORS = {reading:'#5bbf95', done:'#a07cc5', want:'#f2b705'};
 
-/* ══════════════════════════════════════════════
+/* ═══════════════════════════════════════
    STATE
-══════════════════════════════════════════════ */
-function defaultState() {
+═══════════════════════════════════════ */
+function defaultState(){
   return {
     name: (IS_TG && tg?.initDataUnsafe?.user?.first_name) || 'Искатель',
     isLoggedIn: IS_TG, isSubscribed: false,
     xp: 0, avatar: null, unlockedAchs: [],
     habits: [], weeks: {}, goals: [], books: [],
-    readingDays: [] // массив дат 'YYYY-MM-DD' когда пользователь вносил страницы
+    readingDays: [],
+    vitamins: [],      // [{id, name, emoji, dose, times:[], days:[], color, courseEnd, notes}]
+    vitLog: {}         // {'YYYY-MM-DD': {vitId: {Утро:bool, День:bool, ...}}}
   };
 }
 
 let S = defaultState();
-try { const d = localStorage.getItem('lq_v4'); if (d) S = { ...defaultState(), ...JSON.parse(d) }; } catch(e) {}
-function sv() { localStorage.setItem('lq_v4', JSON.stringify(S)); }
+try { const d=localStorage.getItem('lq_v5'); if(d) S={...defaultState(),...JSON.parse(d)}; } catch(e){}
+function sv(){ localStorage.setItem('lq_v5',JSON.stringify(S)); }
 
-/* ══════════════════════════════════════════════
+/* ═══════════════════════════════════════
    HELPERS
-══════════════════════════════════════════════ */
-function uid() { return Math.random().toString(36).slice(2,9); }
+═══════════════════════════════════════ */
+function uid(){ return Math.random().toString(36).slice(2,9); }
 
-function lvData(xp) {
-  let lv=1, used=0;
-  while(true){ const n=lv*100; if(used+n>xp) break; used+=n; lv++; if(lv>99) break; }
-  return {lv, into:xp-used, need:lv*100, pct:Math.round((xp-used)/(lv*100)*100), name:LEVELS[Math.min(lv-1,LEVELS.length-1)]};
+function lvData(xp){
+  let lv=1,used=0;
+  while(true){const n=lv*100;if(used+n>xp)break;used+=n;lv++;if(lv>99)break;}
+  return{lv,into:xp-used,need:lv*100,pct:Math.round((xp-used)/(lv*100)*100),name:LEVELS[Math.min(lv-1,LEVELS.length-1)]};
 }
 
 function getMon(off=0){
-  const d=new Date(); d.setHours(0,0,0,0);
-  const day=d.getDay(); d.setDate(d.getDate()+(day===0?-6:1-day)+off*7); return d;
+  const d=new Date();d.setHours(0,0,0,0);
+  const day=d.getDay();d.setDate(d.getDate()+(day===0?-6:1-day)+off*7);return d;
 }
-function wKey(off=wOff){ const m=getMon(off); return `w_${m.getFullYear()}_${m.getMonth()}_${m.getDate()}`; }
+function wKey(off=wOff){const m=getMon(off);return `w_${m.getFullYear()}_${m.getMonth()}_${m.getDate()}`;}
 function getWD(off=wOff){
   const k=wKey(off);
   if(!S.weeks[k]) S.weeks[k]={tasks:[],habits:{}};
@@ -588,24 +688,93 @@ function getWD(off=wOff){
   if(!S.weeks[k].habits) S.weeks[k].habits={};
   return S.weeks[k];
 }
-function todayIdx(){ const d=new Date().getDay(); return d===0?6:d-1; }
-function isCW(){ return wOff===0; }
-function todayStr(){ return new Date().toISOString().split('T')[0]; }
-function curYear(){ return new Date().getFullYear(); }
+function todayIdx(){const d=new Date().getDay();return d===0?6:d-1;}
+function isCW(){return wOff===0;}
+function todayStr(){return new Date().toISOString().split('T')[0];}
+function curYear(){return new Date().getFullYear();}
 
-/* Стрик чтения */
-function calcReadingStreak(){
-  const days = [...new Set(S.readingDays||[])].sort();
-  if(!days.length) return 0;
-  let streak=0; const today=todayStr();
-  let cur=new Date(today);
+function dateMinusDays(n){
+  const d=new Date();d.setDate(d.getDate()-n);return d.toISOString().split('T')[0];
+}
+function formatDateRu(str){
+  const d=new Date(str+'T00:00:00');
+  return d.toLocaleDateString('ru',{day:'numeric',month:'short'});
+}
+
+/* ═══════════════════════════════════════
+   VITAMIN HELPERS
+═══════════════════════════════════════ */
+// Возвращает log для текущего дня (создаёт если нет)
+function getVitLog(dateStr){
+  if(!S.vitLog) S.vitLog={};
+  if(!S.vitLog[dateStr]) S.vitLog[dateStr]={};
+  return S.vitLog[dateStr];
+}
+
+// Проверяет: все времена витамина за день приняты?
+function isVitFullyTaken(vitId, dateStr){
+  const vit=(S.vitamins||[]).find(v=>v.id===vitId); if(!vit) return false;
+  const times=vit.times||['Утро'];
+  const log=getVitLog(dateStr)[vitId]||{};
+  return times.every(t=>!!log[t]);
+}
+
+// Процент принятых витаминов за день
+function vitDayPct(dateStr){
+  const vits=(S.vitamins||[]).filter(v=>isVitScheduledToday(v,dateStr));
+  if(!vits.length) return 0;
+  let total=0,done=0;
+  vits.forEach(v=>{
+    const times=v.times||['Утро'];
+    const log=getVitLog(dateStr)[v.id]||{};
+    total+=times.length;
+    times.forEach(t=>{if(log[t]) done++;});
+  });
+  return total?Math.round(done/total*100):0;
+}
+
+// Расписание: витамин активен в этот день?
+function isVitScheduledToday(vit, dateStr){
+  // Проверяем курс (если есть конец курса)
+  if(vit.courseEnd && dateStr>vit.courseEnd) return false;
+  // Проверяем дни недели
+  const d=new Date(dateStr+'T00:00:00');
+  const di=d.getDay()===0?6:d.getDay()-1;
+  const days=vit.days||[0,1,2,3,4,5,6];
+  return days.includes(di);
+}
+
+// Серия дней (подряд без пропусков)
+function calcVitStreak(){
+  let streak=0;
   for(let i=0;i<365;i++){
-    const ds=cur.toISOString().split('T')[0];
-    if(days.includes(ds)) streak++;
-    else if(i>0) break; // допускаем пропуск только если это сегодня и ещё не отмечен
-    cur.setDate(cur.getDate()-1);
+    const ds=dateMinusDays(i);
+    const vits=(S.vitamins||[]).filter(v=>isVitScheduledToday(v,ds));
+    if(!vits.length){if(i===0) continue; break;}
+    const pct=vitDayPct(ds);
+    if(pct>=100) streak++;
+    else if(i===0) continue; // сегодня ещё не закончен день
+    else break;
   }
   return streak;
+}
+
+// Всего дней с хоть одним витамином
+function calcVitTotalDays(){
+  return Object.keys(S.vitLog||{}).filter(ds=>{
+    return Object.values(S.vitLog[ds]||{}).some(t=>Object.values(t).some(Boolean));
+  }).length;
+}
+
+// Всего принято витаминов
+function calcVitTotalTaken(){
+  let n=0;
+  Object.values(S.vitLog||{}).forEach(dayLog=>{
+    Object.values(dayLog).forEach(timeLog=>{
+      Object.values(timeLog).forEach(v=>{if(v) n++;});
+    });
+  });
+  return n;
 }
 
 function addXp(n,el){
@@ -613,49 +782,48 @@ function addXp(n,el){
   if(tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
   if(el){
     const r=el.getBoundingClientRect();
-    const f=document.createElement('div'); f.className='xp-flash';
+    const f=document.createElement('div');f.className='xp-flash';
     f.textContent=`+${n} XP`;
     f.style.cssText=`left:${r.left+r.width/2-18}px;top:${r.top+window.scrollY-10}px;`;
-    document.body.appendChild(f); setTimeout(()=>f.remove(),1100);
+    document.body.appendChild(f);setTimeout(()=>f.remove(),1100);
   }
   checkAchs();
 }
-function subXp(n){ S.xp=Math.max(0,S.xp-n); }
+function subXp(n){S.xp=Math.max(0,S.xp-n);}
 
 function checkAchs(){
   const ua=S.unlockedAchs||[];
-  ACHS.forEach(a=>{ if(!ua.includes(a.id)&&a.req(S)) ua.push(a.id); });
+  ACHS.forEach(a=>{if(!ua.includes(a.id)&&a.req(S)) ua.push(a.id);});
   S.unlockedAchs=ua;
 }
 
 function checkPrem(feature){
   if(S.isSubscribed) return true;
-  const lim={habits:3,goals:3,books:5};
+  const lim={habits:3,goals:3,books:5,vitamins:5};
   if(lim[feature]!==undefined){
-    const cnt={habits:(S.habits||[]).length,goals:(S.goals||[]).length,books:(S.books||[]).length};
-    if(cnt[feature]>=lim[feature]){ openSubModal(); return false; }
+    const cnt={habits:(S.habits||[]).length,goals:(S.goals||[]).length,
+      books:(S.books||[]).length,vitamins:(S.vitamins||[]).length};
+    if(cnt[feature]>=lim[feature]){openSubModal();return false;}
   }
   return true;
 }
 
-/* Goal progress */
 function calcGoalPct(g){
   if(!g.habitId||!g.targetPerWeek||!g.startDate||!g.endDate) return 0;
-  const start=new Date(g.startDate), end=new Date(g.endDate);
-  const totalWeeks=Math.max(1,Math.ceil((end-start)/(7*24*60*60*1000)));
+  const start=new Date(g.startDate),end=new Date(g.endDate);
+  const totalWeeks=Math.max(1,Math.ceil((end-start)/(7*864e5)));
   const totalTarget=g.targetPerWeek*totalWeeks;
-  const today_=new Date(); today_.setHours(0,0,0,0);
+  const today_=new Date();today_.setHours(0,0,0,0);
   let factTotal=0;
   Object.keys(S.weeks).forEach(wk=>{
     const wdh=(S.weeks[wk].habits||{})[g.habitId]||{};
-    const parts=wk.split('_');
-    if(parts.length<4) return;
+    const parts=wk.split('_');if(parts.length<4) return;
     const monDate=new Date(parseInt(parts[1]),parseInt(parts[2]),parseInt(parts[3]));
     if(isNaN(monDate.getTime())) return;
     let weekDone=0;
     for(let di=0;di<7;di++){
       if(!wdh[di]) continue;
-      const day=new Date(monDate); day.setDate(monDate.getDate()+di);
+      const day=new Date(monDate);day.setDate(monDate.getDate()+di);
       if(day>=start&&day<=end&&day<=today_) weekDone++;
     }
     factTotal+=Math.min(weekDone,g.targetPerWeek);
@@ -663,42 +831,54 @@ function calcGoalPct(g){
   return totalTarget>0?Math.min(100,Math.round(factTotal/totalTarget*100)):0;
 }
 function getGoalFact(g){
-  if(!g.habitId) return {fact:0,total:0,weeks:0};
-  const start=new Date(g.startDate), end=new Date(g.endDate);
-  const totalWeeks=Math.max(1,Math.ceil((end-start)/(7*24*60*60*1000)));
+  if(!g.habitId) return{fact:0,total:0,weeks:0};
+  const start=new Date(g.startDate),end=new Date(g.endDate);
+  const totalWeeks=Math.max(1,Math.ceil((end-start)/(7*864e5)));
   const totalTarget=g.targetPerWeek*totalWeeks;
-  const today_=new Date(); today_.setHours(0,0,0,0);
+  const today_=new Date();today_.setHours(0,0,0,0);
   let factTotal=0;
   Object.keys(S.weeks).forEach(wk=>{
     const wdh=(S.weeks[wk].habits||{})[g.habitId]||{};
-    const parts=wk.split('_');
-    if(parts.length<4) return;
+    const parts=wk.split('_');if(parts.length<4) return;
     const monDate=new Date(parseInt(parts[1]),parseInt(parts[2]),parseInt(parts[3]));
     if(isNaN(monDate.getTime())) return;
     let weekDone=0;
     for(let di=0;di<7;di++){
       if(!wdh[di]) continue;
-      const day=new Date(monDate); day.setDate(monDate.getDate()+di);
+      const day=new Date(monDate);day.setDate(monDate.getDate()+di);
       if(day>=start&&day<=end&&day<=today_) weekDone++;
     }
     factTotal+=Math.min(weekDone,g.targetPerWeek);
   });
-  return {fact:factTotal,total:totalTarget,weeks:totalWeeks};
+  return{fact:factTotal,total:totalTarget,weeks:totalWeeks};
 }
 
-/* ══════════════════════════════════════════════
+function calcReadingStreak(){
+  const days=[...new Set(S.readingDays||[])].sort();
+  if(!days.length) return 0;
+  let streak=0;const today=todayStr();let cur=new Date(today);
+  for(let i=0;i<365;i++){
+    const ds=cur.toISOString().split('T')[0];
+    if(days.includes(ds)) streak++;
+    else if(i>0) break;
+    cur.setDate(cur.getDate()-1);
+  }
+  return streak;
+}
+
+/* ═══════════════════════════════════════
    NAVIGATION
-══════════════════════════════════════════════ */
-let curPg='dash', wOff=0, curDayIdx=todayIdx(), curBookId=null, mCtx=null;
-let _tmpBookCover=null, pendingBookId=null, bkFilter='reading';
+═══════════════════════════════════════ */
+let curPg='dash',wOff=0,curDayIdx=todayIdx(),curBookId=null,mCtx=null;
+let _tmpBookCover=null,pendingBookId=null,bkFilter='reading';
+let _selEmoji='💊',_selTimes=[],_selVitDays=[];
 
 function go(id,btn){
   curPg=id;
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
-  const pg=document.getElementById('page-'+id); if(pg) pg.classList.add('active');
+  const pg=document.getElementById('page-'+id);if(pg) pg.classList.add('active');
   if(btn) btn.classList.add('active');
-  // lazy render
   rAll();
 }
 
@@ -709,17 +889,16 @@ function setBkFilter(f,btn){
   rBooks();
 }
 
-/* ══════════════════════════════════════════════
-   RENDER — ключевая оптимизация:
-   каждая функция рендерит только свой DOM-узел
-   через innerHTML один раз (не несколько мелких)
-══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════
+   RENDER
+═══════════════════════════════════════ */
 function rAll(){
   rHeader();
   if(curPg==='dash')   rDash();
   if(curPg==='plan')   rPlanner();
   if(curPg==='habits') rHabits();
   if(curPg==='goals')  rGoals();
+  if(curPg==='vit')    rVit();
   if(curPg==='books')  rBooks();
 }
 
@@ -742,21 +921,22 @@ function rDash(){
   document.getElementById('xpNums').textContent=`${ld.into} / ${ld.need} XP`;
   document.getElementById('xpFill').style.width=ld.pct+'%';
 
-  const wd=getWD(0); const ti=todayIdx();
+  const wd=getWD(0);const ti=todayIdx();
   const tt=(wd.tasks||[]).filter(t=>t.dayIdx===ti);
-  const td=tt.filter(t=>t.done).length;
-  document.getElementById('dashTaskPct').textContent=tt.length?Math.round(td/tt.length*100)+'%':'—';
+  document.getElementById('dashTaskPct').textContent=tt.length?Math.round(tt.filter(t=>t.done).length/tt.length*100)+'%':'—';
 
   let hT=0,hD=0;
   (S.habits||[]).forEach(h=>{
-    const days=h.days||[0,1,2,3,4,5,6];
-    const wdh=(getWD(0).habits||{})[h.id]||{};
+    const days=h.days||[0,1,2,3,4,5,6];const wdh=(getWD(0).habits||{})[h.id]||{};
     days.forEach(d=>{hT++;if(wdh[d])hD++;});
   });
   document.getElementById('dashHabPct').textContent=hT?Math.round(hD/hT*100)+'%':'—';
 
-  const activeGoals=(S.goals||[]).filter(g=>calcGoalPct(g)<100).length;
-  document.getElementById('dashGoalPct').textContent=(S.goals||[]).length?activeGoals+'шт':'—';
+  const vPct=vitDayPct(todayStr());
+  document.getElementById('dashVitPct').textContent=(S.vitamins||[]).length?vPct+'%':'—';
+
+  document.getElementById('dashGoalPct').textContent=(S.goals||[]).length?
+    (S.goals||[]).filter(g=>calcGoalPct(g)<100).length+'шт':'—';
 
   /* Today habits */
   const todHEl=document.getElementById('todH');
@@ -782,34 +962,159 @@ function rDash(){
     todHEl.innerHTML=html;
   }
 
+  /* Today vitamins widget */
+  const todVEl=document.getElementById('todV');
+  const todVits=(S.vitamins||[]).filter(v=>isVitScheduledToday(v,todayStr()));
+  if(!todVits.length){
+    todVEl.innerHTML='<div style="color:var(--sub);font-size:.85rem;padding:6px 0;">Нет витаминов на сегодня</div>';
+  } else {
+    let html='';
+    todVits.forEach(v=>{
+      const taken=isVitFullyTaken(v.id,todayStr());
+      html+=`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);" onclick="quickToggleVit('${v.id}')">
+        <div style="width:36px;height:36px;border-radius:12px;background:${v.color||'#a07cc5'}22;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">${v.emoji||'💊'}</div>
+        <div style="flex:1">
+          <div style="font-size:.88rem;font-weight:700;${taken?'text-decoration:line-through;color:var(--sub);':''}">${v.name}</div>
+          <div style="font-size:.65rem;color:var(--sub);">${v.dose||''} · ${(v.times||['Утро']).join(', ')}</div>
+        </div>
+        <div style="width:26px;height:26px;border-radius:50%;border:2px solid ${taken?'var(--accent)':'var(--border)'};background:${taken?'var(--accent)':'transparent'};display:flex;align-items:center;justify-content:center;font-size:.85rem;">${taken?'✓':''}</div>
+      </div>`;
+    });
+    todVEl.innerHTML=html;
+  }
+
   checkAchs();
   const ua=S.unlockedAchs||[];
   let achHtml='';
-  ACHS.forEach(a=>{
-    achHtml+=`<div class="ach-item ${ua.includes(a.id)?'unlocked':''}">
-      <div class="ach-icon">${ua.includes(a.id)?a.icon:'🔒'}</div>
-      <div class="ach-name">${a.name}</div>
+  ACHS.forEach(a=>{achHtml+=`<div class="ach-item ${ua.includes(a.id)?'unlocked':''}"><div class="ach-icon">${ua.includes(a.id)?a.icon:'🔒'}</div><div class="ach-name">${a.name}</div></div>`;});
+  document.getElementById('achGrid').innerHTML=achHtml;
+}
+
+/* ── VITAMINS PAGE ── */
+function rVit(){
+  const td=todayStr();
+  const d=new Date();
+  document.getElementById('vitHeroDate').textContent=
+    d.toLocaleDateString('ru',{weekday:'long',day:'numeric',month:'long'});
+
+  /* Большой круг */
+  const pct=vitDayPct(td);
+  const CIRC=289.03;
+  const off=CIRC-(CIRC*pct/100);
+  document.getElementById('vitCircFill').style.strokeDashoffset=off;
+  document.getElementById('vitBigPct').textContent=pct+'%';
+
+  const todVits=(S.vitamins||[]).filter(v=>isVitScheduledToday(v,td));
+  let doneCnt=0; todVits.forEach(v=>{if(isVitFullyTaken(v.id,td)) doneCnt++;});
+  document.getElementById('vitBigSub').textContent=`принято ${doneCnt} из ${todVits.length}`;
+
+  /* Список витаминов сегодня */
+  let todayHtml='';
+  if(!todVits.length){
+    todayHtml='<div style="color:rgba(255,255,255,.6);font-size:.85rem;text-align:center;padding:10px 0;">Нет витаминов на сегодня</div>';
+  } else {
+    todVits.forEach(v=>{
+      const taken=isVitFullyTaken(v.id,td);
+      const times=v.times||['Утро'];
+      const log=getVitLog(td)[v.id]||{};
+      const timeBadges=times.map(t=>`
+        <div class="vit-time-badge" style="background:${taken&&log[t]?VIT_TIME_COLORS[t]||'#888':VIT_TIME_COLORS[t]+'55'||'#88888855'};
+          cursor:pointer;opacity:${log[t]?1:.55};"
+          onclick="event.stopPropagation();togVitTime('${v.id}','${t}',this)">
+          ${log[t]?'✓ ':''} ${t}
+        </div>`).join('');
+      todayHtml+=`<div class="vit-today-item ${taken?'taken':''}" onclick="togVitAll('${v.id}')">
+        <div class="vit-check-circle"></div>
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="font-size:1.1rem;">${v.emoji||'💊'}</span>
+            <span class="vit-today-name">${v.name}</span>
+          </div>
+          ${v.dose?`<div class="vit-today-dose">${v.dose}</div>`:''}
+          <div style="display:flex;gap:4px;margin-top:5px;flex-wrap:wrap;">${timeBadges}</div>
+        </div>
+      </div>`;
+    });
+  }
+  document.getElementById('vitTodayList').innerHTML=todayHtml;
+
+  /* Серия и статистика */
+  document.getElementById('vitStreakVal').textContent=calcVitStreak();
+  document.getElementById('vitTotalDays').textContent=calcVitTotalDays();
+  document.getElementById('vitTotalTaken').textContent=calcVitTotalTaken();
+
+  /* История 7 дней */
+  let histHtml='';
+  for(let i=6;i>=0;i--){
+    const ds=dateMinusDays(i);
+    const p=vitDayPct(ds);
+    const isToday=i===0;
+    histHtml+=`<div class="vit-hist-row">
+      <div class="vit-hist-date">${isToday?'Сегодня':formatDateRu(ds)}</div>
+      <div class="vit-hist-bar-wrap"><div class="vit-hist-bar" style="width:${p}%;"></div></div>
+      <div class="vit-hist-pct">${p}%</div>
+    </div>`;
+  }
+  document.getElementById('vitHistory').innerHTML=histHtml;
+
+  /* Список всех витаминов */
+  const vitListEl=document.getElementById('vitList');
+  if(!(S.vitamins||[]).length){
+    vitListEl.innerHTML='<div class="card-body" style="color:var(--sub);text-align:center;padding:20px;">Нет витаминов. Нажми +</div>';
+    return;
+  }
+  let listHtml='';
+  (S.vitamins||[]).forEach((v,vi)=>{
+    const col=v.color||VIT_COLORS[vi%VIT_COLORS.length];
+    const days=v.days||[0,1,2,3,4,5,6];
+    // Точки недели
+    const weekDots=DN.map((dn,di)=>{
+      const active=days.includes(di);
+      const ds=dateForDayIdx(di);
+      const log=(S.vitLog[ds]||{})[v.id]||{};
+      const times=v.times||['Утро'];
+      const done=active&&times.every(t=>!!log[t]);
+      return `<div class="vit-wd" style="background:${active?(done?col:col+'44'):'var(--border)'};color:${active?'white':'var(--sub)'};">${dn}</div>`;
+    }).join('');
+    const timeBadges=(v.times||['Утро']).map(t=>`<span class="vit-time-badge" style="background:${VIT_TIME_COLORS[t]||'#888'};">${t}</span>`).join(' ');
+    listHtml+=`<div class="vit-item">
+      <div class="vit-emoji-wrap" style="background:${col}22;">${v.emoji||'💊'}</div>
+      <div class="vit-info">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div class="vit-name">${v.name}</div>
+          <button class="del-btn" onclick="delVit('${v.id}')">🗑</button>
+        </div>
+        ${v.dose?`<div class="vit-dose">${v.dose}</div>`:''}
+        <div class="vit-time-badges">${timeBadges}</div>
+        ${v.courseEnd?`<div style="margin-top:4px;"><span class="vit-course-badge">Курс до ${v.courseEnd}</span></div>`:''}
+        <div class="vit-week-dots" style="margin-top:6px;">${weekDots}</div>
+      </div>
     </div>`;
   });
-  document.getElementById('achGrid').innerHTML=achHtml;
+  vitListEl.innerHTML=listHtml;
+}
+
+// Получить дату текущей недели для дня недели idx
+function dateForDayIdx(di){
+  const mon=getMon(0);
+  const d=new Date(mon);d.setDate(d.getDate()+di);
+  return d.toISOString().split('T')[0];
 }
 
 /* ── PLANNER ── */
 function rPlanner(){
-  const wd=getWD(); const mon=getMon(wOff);
-  const end=new Date(mon); end.setDate(end.getDate()+6);
+  const wd=getWD();const mon=getMon(wOff);
+  const end=new Date(mon);end.setDate(end.getDate()+6);
   document.getElementById('wkL').textContent=
     `${mon.getDate()} ${mon.toLocaleString('ru',{month:'short'})} — ${end.getDate()} ${end.toLocaleString('ru',{month:'short'})}`;
-
   const slider=document.getElementById('planSlider');
-  let slidesHtml='';
-  const CIRC=282.74;
+  let slidesHtml='';const CIRC=282.74;
   for(let i=0;i<7;i++){
     const col=COLORS[i];
     const tasks=(wd.tasks||[]).filter(t=>t.dayIdx===i);
-    const done=tasks.filter(t=>t.done).length; const total=tasks.length;
+    const done=tasks.filter(t=>t.done).length;const total=tasks.length;
     const pct=total?Math.round(done/total*100):0;
-    const d=new Date(mon); d.setDate(d.getDate()+i);
+    const d=new Date(mon);d.setDate(d.getDate()+i);
     const dStr=`${d.getDate()} ${d.toLocaleString('ru',{month:'long'})}`;
     const off2=CIRC-(CIRC*pct/100);
     let tasksHtml=tasks.length?'':'<div style="text-align:center;color:var(--sub);padding:16px;font-size:.85rem;">Нет задач на этот день</div>';
@@ -851,43 +1156,39 @@ function rPlanner(){
     </div>`;
   }
   slider.innerHTML=slidesHtml;
-  rPlanDots(); goToDay(curDayIdx,false); initSliderTouch();
+  rPlanDots();goToDay(curDayIdx,false);initSliderTouch();
 }
 
 function rPlanDots(){
-  const el=document.getElementById('planDots'); if(!el) return;
+  const el=document.getElementById('planDots');if(!el) return;
   let html='';
   for(let i=0;i<7;i++){
-    const active=i===curDayIdx;
-    html+=`<button class="pdot ${active?'active':''}" style="background:${active?COLORS[curDayIdx]:'var(--border)'};" onclick="goToDay(${i})"></button>`;
+    html+=`<button class="pdot ${i===curDayIdx?'active':''}" style="background:${i===curDayIdx?COLORS[curDayIdx]:'var(--border)'};" onclick="goToDay(${i})"></button>`;
   }
   el.innerHTML=html;
 }
 function goToDay(idx,animate=true){
   curDayIdx=idx;
-  const sl=document.getElementById('planSlider'); if(!sl) return;
+  const sl=document.getElementById('planSlider');if(!sl) return;
   sl.style.transition=animate?'transform .32s cubic-bezier(.4,0,.2,1)':'none';
   sl.style.transform=`translateX(-${idx*100}vw)`;
   rPlanDots();
 }
 function initSliderTouch(){
-  const wrap=document.querySelector('.plan-slider-wrap'); if(!wrap||wrap._init) return;
-  wrap._init=true; let ts=0,tx=0;
+  const wrap=document.querySelector('.plan-slider-wrap');if(!wrap||wrap._init) return;
+  wrap._init=true;let ts=0,tx=0;
   wrap.addEventListener('touchstart',e=>{ts=e.touches[0].clientX;tx=0;},{passive:true});
   wrap.addEventListener('touchmove',e=>{tx=e.touches[0].clientX-ts;},{passive:true});
-  wrap.addEventListener('touchend',()=>{ if(Math.abs(tx)>40){ if(tx<0&&curDayIdx<6) goToDay(curDayIdx+1); else if(tx>0&&curDayIdx>0) goToDay(curDayIdx-1); } });
+  wrap.addEventListener('touchend',()=>{if(Math.abs(tx)>40){if(tx<0&&curDayIdx<6)goToDay(curDayIdx+1);else if(tx>0&&curDayIdx>0)goToDay(curDayIdx-1);}});
 }
-function prevWeek(){ wOff--; rPlanner(); }
-function nextWeek(){ wOff++; rPlanner(); }
+function prevWeek(){wOff--;rPlanner();}
+function nextWeek(){wOff++;rPlanner();}
 
 /* ── HABITS ── */
 function rHabits(){
-  const el=document.getElementById('habList'); if(!el) return;
-  if(!(S.habits||[]).length){
-    el.innerHTML='<div class="card-body" style="color:var(--sub);text-align:center;padding:20px;">Нет привычек. Нажми +</div>'; return;
-  }
-  const wd=getWD(0);
-  let html='';
+  const el=document.getElementById('habList');if(!el) return;
+  if(!(S.habits||[]).length){el.innerHTML='<div class="card-body" style="color:var(--sub);text-align:center;padding:20px;">Нет привычек. Нажми +</div>';return;}
+  const wd=getWD(0);let html='';
   S.habits.forEach((h,hi)=>{
     const days=h.days||[0,1,2,3,4,5,6];
     const wdh=(wd.habits||{})[h.id]||{};
@@ -897,7 +1198,7 @@ function rHabits(){
     const linkedGoal=h.goalId?(S.goals||[]).find(g=>g.id===h.goalId):null;
     let chips='';
     DN.forEach((dn,di)=>{
-      const active=days.includes(di); const done=!!wdh[di];
+      const active=days.includes(di);const done=!!wdh[di];
       let cls='hd-chip',sty=`border-color:${col}44;color:${col};`;
       if(!active){cls+=' off';sty='opacity:.3;cursor:default;';}
       else if(done){cls+=' done';sty=`background:${col};`;}
@@ -908,7 +1209,7 @@ function rHabits(){
         <div>
           <div class="hab-name">${h.name}</div>
           ${linkedGoal?`<div class="hab-goal-link">🎯 ${linkedGoal.name}</div>`:''}
-          <div style="font-size:.68rem;color:var(--sub);margin-top:2px;">${days.length} дн/нед · ${doneCnt}/${days.length} на этой неделе</div>
+          <div style="font-size:.68rem;color:var(--sub);margin-top:2px;">${days.length} дн/нед · ${doneCnt}/${days.length}</div>
         </div>
         <button class="del-btn" onclick="delHab('${h.id}')">🗑</button>
       </div>
@@ -922,55 +1223,41 @@ function rHabits(){
 
 /* ── GOALS ── */
 function rGoals(){
-  const el=document.getElementById('goalsList'); if(!el) return;
-  if(!(S.goals||[]).length){
-    el.innerHTML='<div class="card-body" style="color:var(--sub);text-align:center;padding:20px;">Нет целей. Нажми +</div>'; return;
-  }
+  const el=document.getElementById('goalsList');if(!el) return;
+  if(!(S.goals||[]).length){el.innerHTML='<div class="card-body" style="color:var(--sub);text-align:center;padding:20px;">Нет целей. Нажми +</div>';return;}
   let html='';
   S.goals.forEach((g,gi)=>{
     const col=COLORS[gi%COLORS.length];
-    const pct=calcGoalPct(g);
-    const {fact,total,weeks}=getGoalFact(g);
+    const pct=calcGoalPct(g);const{fact,total,weeks}=getGoalFact(g);
     const linkedHab=g.habitId?(S.habits||[]).find(h=>h.id===g.habitId):null;
     let dlBadge='';
     if(g.endDate){
-      const daysLeft=Math.ceil((new Date(g.endDate)-new Date())/(864e5));
+      const daysLeft=Math.ceil((new Date(g.endDate)-new Date())/864e5);
       if(pct>=100) dlBadge=`<span class="goal-badge" style="background:#e3f5ec;color:#2d6e57;">✓ Выполнено</span>`;
       else if(daysLeft<0) dlBadge=`<span class="goal-badge" style="background:#fde3e3;color:var(--red);">Просрочено</span>`;
       else if(daysLeft<=7) dlBadge=`<span class="goal-badge" style="background:#fdf3e3;color:#7a5200;">⚠ ${daysLeft}д осталось</span>`;
     }
     let habBlock='';
     if(linkedHab){
-      const wd=getWD(0); const wdh=(wd.habits||{})[linkedHab.id]||{};
-      const days=linkedHab.days||[0,1,2,3,4,5,6];
-      let miniChips='';
+      const wd=getWD(0);const wdh=(wd.habits||{})[linkedHab.id]||{};
+      const days=linkedHab.days||[0,1,2,3,4,5,6];let mc='';
       DN.forEach((dn,di)=>{
-        const active=days.includes(di); const done=!!wdh[di];
-        miniChips+=`<div class="gwg-chip ${done&&active?'done':''}" style="background:${col};">${dn}</div>`;
+        const active=days.includes(di);const done=!!wdh[di];
+        mc+=`<div class="gwg-chip ${done&&active?'done':''}" style="background:${col};">${dn}</div>`;
       });
       habBlock=`<div class="goal-linked-hab">
         <div class="glh-dot" style="background:${col};"></div>
-        <div class="glh-info">
-          <div class="glh-name">${linkedHab.name}</div>
-          <div class="glh-sub">${g.targetPerWeek}×/нед · ${fact} из ${total} выполнений</div>
-        </div>
-      </div>
-      <div class="gwg-row">${miniChips}</div>`;
+        <div class="glh-info"><div class="glh-name">${linkedHab.name}</div><div class="glh-sub">${g.targetPerWeek}×/нед · ${fact} из ${total}</div></div>
+      </div><div class="gwg-row">${mc}</div>`;
     }
     const progSection=linkedHab?`
       <div class="goal-prog-bg"><div class="goal-prog-fill" style="width:${pct}%;background:${col};"></div></div>
-      <div class="goal-pct-row">
-        <span class="goal-pct">${fact} из ${total} (${weeks} нед × ${g.targetPerWeek}/нед)</span>
-        <strong style="font-size:.78rem;color:${col};">${pct}%</strong>
-      </div>`:`<div style="font-size:.75rem;color:var(--sub);margin-top:6px;">Привяжи привычку для отслеживания прогресса</div>`;
+      <div class="goal-pct-row"><span class="goal-pct">${fact} из ${total} (${weeks} нед × ${g.targetPerWeek}/нед)</span><strong style="font-size:.78rem;color:${col};">${pct}%</strong></div>`:
+      `<div style="font-size:.75rem;color:var(--sub);margin-top:6px;">Привяжи привычку для отслеживания</div>`;
     html+=`<div class="goal-card">
       <div class="goal-top">
-        <div style="flex:1">
-          <div class="goal-name">${g.name}</div>
-          <div class="goal-meta">
-            ${g.startDate?`<span>📅 ${g.startDate}${g.endDate?' → '+g.endDate:''}</span>`:''}
-            ${dlBadge}
-          </div>
+        <div style="flex:1"><div class="goal-name">${g.name}</div>
+          <div class="goal-meta">${g.startDate?`<span>📅 ${g.startDate}${g.endDate?' → '+g.endDate:''}</span>`:''}${dlBadge}</div>
         </div>
         <button class="del-btn" onclick="delGoal('${g.id}')">🗑</button>
       </div>
@@ -980,47 +1267,36 @@ function rGoals(){
   el.innerHTML=html;
 }
 
-/* ── BOOKS — НОВЫЙ РЕНДЕР ── */
+/* ── BOOKS ── */
 function rBooks(){
-  /* Статистика */
   const allBooks=S.books||[];
   const doneThisYear=allBooks.filter(b=>b.status==='done'&&b.doneYear===curYear()).length;
   const totalPages=allBooks.reduce((s,b)=>s+(b.current||0),0);
-  const streak=calcReadingStreak();
   document.getElementById('bkStatRead').textContent=doneThisYear;
   document.getElementById('bkStatPages').textContent=totalPages.toLocaleString('ru');
-  document.getElementById('bkStatStreak').textContent=streak;
+  document.getElementById('bkStatStreak').textContent=calcReadingStreak();
 
-  /* Сетка */
   const filtered=allBooks.filter(b=>(b.status||'want')===bkFilter);
   const grid=document.getElementById('bkGrid');
   if(!filtered.length){
     grid.innerHTML=`<div class="bk-empty" style="grid-column:1/-1;">
       <div class="bk-empty-icon">${bkFilter==='reading'?'📖':bkFilter==='done'?'🏆':'📋'}</div>
-      <div class="bk-empty-txt">${bkFilter==='reading'?'Нет книг в процессе чтения':bkFilter==='done'?'Нет прочитанных книг':'Список пуст'}</div>
-      <div class="bk-empty-sub">Нажми + чтобы добавить книгу</div>
-    </div>`; return;
+      <div class="bk-empty-txt">${bkFilter==='reading'?'Нет книг в процессе':bkFilter==='done'?'Нет прочитанных книг':'Список пуст'}</div>
+      <div class="bk-empty-sub">Нажми + чтобы добавить</div>
+    </div>`;return;
   }
-
-  const CIRC=138.23; // 2πr, r=22
-  let html='';
+  const CIRC=138.23;let html='';
   filtered.forEach(b=>{
     const pct=b.total>0?Math.min(100,Math.round(b.current/b.total*100)):0;
     const off=CIRC-(CIRC*pct/100);
     const dotCol=STATUS_DOT_COLORS[b.status||'want'];
     const isDone=pct>=100;
-    const coverInner=b.cover
-      ?`<img src="${b.cover}" class="bk-grid-cover" loading="lazy">`
-      :`<div class="bk-grid-ph">
-          <div class="bk-grid-ph-icon">📖</div>
-          <div class="bk-grid-ph-title">${b.title}</div>
-        </div>`;
+    const coverInner=b.cover?`<img src="${b.cover}" class="bk-grid-cover" loading="lazy">`:
+      `<div class="bk-grid-ph"><div class="bk-grid-ph-icon">📖</div><div class="bk-grid-ph-title">${b.title}</div></div>`;
     html+=`<div class="bk-grid-item" onclick="openNotes('${b.id}')">
       ${coverInner}
       <div class="bk-grid-overlay"></div>
-      <!-- Статус точка -->
       <div class="bk-status-dot" style="background:${dotCol};"></div>
-      <!-- Круговой прогресс -->
       <div class="bk-circ-wrap">
         <svg viewBox="0 0 48 48">
           <circle class="bk-circ-bg" cx="24" cy="24" r="22"/>
@@ -1030,7 +1306,6 @@ function rBooks(){
         </svg>
         <div class="bk-circ-pct">${pct}%</div>
       </div>
-      <!-- Нижняя подпись -->
       <div class="bk-grid-info">
         <div class="bk-grid-title">${b.title}</div>
         ${b.author?`<div class="bk-grid-author">${b.author}</div>`:''}
@@ -1040,205 +1315,254 @@ function rBooks(){
   grid.innerHTML=html;
 }
 
-/* ══════════════════════════════════════════════
-   TASK ACTIONS
-══════════════════════════════════════════════ */
-function togTask(tid,val,el){
-  const wd=getWD(); const t=(wd.tasks||[]).find(x=>x.id===tid); if(!t) return;
-  t.done=val; if(val) addXp(10,el); else subXp(10);
-  sv(); rPlanner(); if(curPg==='dash') rDash();
-}
-function editTask(tid,val){
-  const wd=getWD(); const t=(wd.tasks||[]).find(x=>x.id===tid); if(t){t.text=val;sv();}
-}
-function delTask(tid){
-  const wd=getWD(); const t=(wd.tasks||[]).find(x=>x.id===tid);
-  if(t&&t.done) subXp(10);
-  wd.tasks=(wd.tasks||[]).filter(x=>x.id!==tid); sv(); rPlanner();
+/* ═══════════════════════════════════════
+   VITAMIN ACTIONS
+═══════════════════════════════════════ */
+// Переключить одно время приёма
+function togVitTime(vitId, time, el){
+  const td=todayStr();
+  const log=getVitLog(td);
+  if(!log[vitId]) log[vitId]={};
+  const prev=!!log[vitId][time];
+  log[vitId][time]=!prev;
+  if(!prev) addXp(5,el); else subXp(5);
+  sv();rVit();if(curPg==='dash')rDash();
 }
 
-/* ══════════════════════════════════════════════
-   HABIT ACTIONS
-══════════════════════════════════════════════ */
+// Быстрый переключатель: отметить все времена сразу
+function togVitAll(vitId){
+  const td=todayStr();
+  const vit=(S.vitamins||[]).find(v=>v.id===vitId);if(!vit) return;
+  const times=vit.times||['Утро'];
+  const fully=isVitFullyTaken(vitId,td);
+  const log=getVitLog(td);
+  if(!log[vitId]) log[vitId]={};
+  times.forEach(t=>{
+    log[vitId][t]=!fully;
+  });
+  if(!fully){ addXp(10,document.getElementById('vitHero')); if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success'); }
+  else subXp(10);
+  sv();rVit();if(curPg==='dash')rDash();
+}
+
+// Быстрый переключатель на главной
+function quickToggleVit(vitId){
+  togVitAll(vitId);
+}
+
+function delVit(vid){
+  S.vitamins=(S.vitamins||[]).filter(v=>v.id!==vid);sv();rVit();
+}
+
+/* ═══════════════════════════════════════
+   TASK / HABIT / GOAL ACTIONS
+═══════════════════════════════════════ */
+function togTask(tid,val,el){
+  const wd=getWD();const t=(wd.tasks||[]).find(x=>x.id===tid);if(!t) return;
+  t.done=val;if(val) addXp(10,el);else subXp(10);
+  sv();rPlanner();if(curPg==='dash') rDash();
+}
+function editTask(tid,val){
+  const wd=getWD();const t=(wd.tasks||[]).find(x=>x.id===tid);if(t){t.text=val;sv();}
+}
+function delTask(tid){
+  const wd=getWD();const t=(wd.tasks||[]).find(x=>x.id===tid);
+  if(t&&t.done) subXp(10);
+  wd.tasks=(wd.tasks||[]).filter(x=>x.id!==tid);sv();rPlanner();
+}
 function togHab(hid,di,val,el){
   const wd=getWD(0);
   if(!wd.habits[hid]) wd.habits[hid]={};
   wd.habits[hid][di]=val;
-  if(val) addXp(15,el); else subXp(15);
-  sv(); rHabits(); if(curPg==='dash') rDash(); if(curPg==='goals') rGoals();
+  if(val) addXp(15,el);else subXp(15);
+  sv();rHabits();if(curPg==='dash') rDash();if(curPg==='goals') rGoals();
 }
-function togHabToday(hid,el){ togHab(hid,todayIdx(),el.checked,el); }
-function delHab(hid){ S.habits=(S.habits||[]).filter(h=>h.id!==hid); sv(); rHabits(); }
+function togHabToday(hid,el){togHab(hid,todayIdx(),el.checked,el);}
+function delHab(hid){S.habits=(S.habits||[]).filter(h=>h.id!==hid);sv();rHabits();}
+function delGoal(gid){S.goals=(S.goals||[]).filter(g=>g.id!==gid);sv();rGoals();}
 
-/* ══════════════════════════════════════════════
-   GOAL ACTIONS
-══════════════════════════════════════════════ */
-function delGoal(gid){ S.goals=(S.goals||[]).filter(g=>g.id!==gid); sv(); rGoals(); }
-
-/* ══════════════════════════════════════════════
+/* ═══════════════════════════════════════
    BOOK ACTIONS
-══════════════════════════════════════════════ */
-function openBookCoverUpload(bid){ pendingBookId=bid; document.getElementById('bookCoverFile').click(); }
-function handleBookCoverUpload(e){
-  const file=e.target.files[0]; if(!file||!pendingBookId) return;
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    const b=(S.books||[]).find(x=>x.id===pendingBookId);
-    if(b){ b.cover=ev.target.result; sv(); rBooks(); updateNotesHero(); }
-    pendingBookId=null;
-  };
-  reader.readAsDataURL(file); e.target.value='';
-}
-
-function setRating(id,r){
-  const b=(S.books||[]).find(x=>x.id===id); if(!b) return;
-  b.rating=r; sv(); updateNotesHero(); rBooks();
-}
-
+═══════════════════════════════════════ */
+function setRating(id,r){const b=(S.books||[]).find(x=>x.id===id);if(!b) return;b.rating=r;sv();updateNotesHero();rBooks();}
 function setStatus(id,st){
-  const b=(S.books||[]).find(x=>x.id===id); if(!b) return;
-  b.status=st;
-  if(st==='done'){ b.doneYear=curYear(); if(b.total>0) b.current=b.total; }
-  sv(); updateNotesHero(); rBooks();
+  const b=(S.books||[]).find(x=>x.id===id);if(!b) return;
+  b.status=st;if(st==='done'){b.doneYear=curYear();if(b.total>0) b.current=b.total;}
+  sv();updateNotesHero();rBooks();
 }
-
 function savePageFromNotes(){
-  const b=(S.books||[]).find(x=>x.id===curBookId); if(!b) return;
+  const b=(S.books||[]).find(x=>x.id===curBookId);if(!b) return;
   const inp=document.getElementById('noPageInp');
   const nv=Math.max(0,Math.min(parseInt(inp.value)||0,b.total||99999));
   const diff=nv-b.current;
-  if(diff>0){
-    addXp(Math.max(1,Math.floor(diff/10)),inp);
-    // Фиксируем дату чтения
-    const td=todayStr();
-    if(!S.readingDays) S.readingDays=[];
-    if(!S.readingDays.includes(td)) S.readingDays.push(td);
-  } else if(diff<0) subXp(Math.max(0,Math.floor(Math.abs(diff)/10)));
+  if(diff>0){addXp(Math.max(1,Math.floor(diff/10)),inp);const td=todayStr();if(!S.readingDays) S.readingDays=[];if(!S.readingDays.includes(td)) S.readingDays.push(td);}
+  else if(diff<0) subXp(Math.max(0,Math.floor(Math.abs(diff)/10)));
   b.current=nv;
-  if(nv>=b.total&&b.total>0){ b.status='done'; b.doneYear=curYear(); }
+  if(nv>=b.total&&b.total>0){b.status='done';b.doneYear=curYear();}
   else if(nv>0&&b.status==='want') b.status='reading';
-  sv(); updateNotesHero(); rBooks();
+  sv();updateNotesHero();rBooks();
   if(tg?.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
 }
-
+function openBookCoverUpload(bid){pendingBookId=bid;document.getElementById('bookCoverFile').click();}
+function handleBookCoverUpload(e){
+  const file=e.target.files[0];if(!file||!pendingBookId) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{const b=(S.books||[]).find(x=>x.id===pendingBookId);if(b){b.cover=ev.target.result;sv();rBooks();updateNotesHero();}pendingBookId=null;};
+  reader.readAsDataURL(file);e.target.value='';
+}
 function openNotes(id){
-  curBookId=id;
-  const b=(S.books||[]).find(x=>x.id===id); if(!b) return;
+  curBookId=id;const b=(S.books||[]).find(x=>x.id===id);if(!b) return;
   document.getElementById('noTitle').textContent=b.title;
   updateNotesHero();
   document.getElementById('notesOver').classList.add('on');
-  rNotes();
-  if(tg) tg.BackButton.show();
+  rNotes();if(tg) tg.BackButton.show();
 }
-
 function updateNotesHero(){
-  const b=(S.books||[]).find(x=>x.id===curBookId); if(!b) return;
+  const b=(S.books||[]).find(x=>x.id===curBookId);if(!b) return;
   const pct=b.total>0?Math.min(100,Math.round(b.current/b.total*100)):0;
-
-  // Обложка
-  document.getElementById('noBkCover').innerHTML=b.cover
-    ?`<img src="${b.cover}" class="no-bk-cover" onclick="openBookCoverUpload('${b.id}')">`
-    :`<div class="no-bk-cover-ph" onclick="openBookCoverUpload('${b.id}')">📖</div>`;
+  document.getElementById('noBkCover').innerHTML=b.cover?
+    `<img src="${b.cover}" class="no-bk-cover" onclick="openBookCoverUpload('${b.id}')">`:
+    `<div class="no-bk-cover-ph" onclick="openBookCoverUpload('${b.id}')">📖</div>`;
   document.getElementById('noBkTitle').textContent=b.title;
   document.getElementById('noBkAuthor').textContent=b.author||'';
-
-  // Звёзды
-  let stars='';
-  for(let i=1;i<=5;i++) stars+=`<span class="no-star ${i<=(b.rating||0)?'on':''}" onclick="setRating('${b.id}',${i})">★</span>`;
+  let stars='';for(let i=1;i<=5;i++) stars+=`<span class="no-star ${i<=(b.rating||0)?'on':''}" onclick="setRating('${b.id}',${i})">★</span>`;
   document.getElementById('noStars').innerHTML=stars;
-
-  // Прогресс
   document.getElementById('noPagesLbl').textContent=`${b.current||0} / ${b.total||0} стр.`;
   document.getElementById('noPct').textContent=pct+'%';
   document.getElementById('noProgFill').style.width=pct+'%';
   document.getElementById('noPageInp').value=b.current||0;
   document.getElementById('noPageTotal').textContent=b.total||0;
-
-  // Статус
   const stMap={want:'Хочу читать',reading:'Читаю',done:'Прочитано'};
   const stColMap={want:'var(--c4)',reading:'var(--primary)',done:'var(--c2)'};
-  const stTextMap={want:'#333',reading:'white',done:'white'};
   let stHtml='';
   ['want','reading','done'].forEach(st=>{
     const active=(b.status||'want')===st;
-    stHtml+=`<button class="no-st-btn ${active?'active':''}" style="${active?`background:${stColMap[st]};border-color:${stColMap[st]};color:${stTextMap[st]};`:''}"
-      onclick="setStatus('${b.id}','${st}')">${stMap[st]}</button>`;
+    stHtml+=`<button class="no-st-btn ${active?'active':''}" style="${active?`background:${stColMap[st]};border-color:${stColMap[st]};color:white;`:''}" onclick="setStatus('${b.id}','${st}')">${stMap[st]}</button>`;
   });
   document.getElementById('noStatusRow').innerHTML=stHtml;
 }
-
 function rNotes(){
-  const b=(S.books||[]).find(x=>x.id===curBookId); if(!b) return;
+  const b=(S.books||[]).find(x=>x.id===curBookId);if(!b) return;
   const el=document.getElementById('nList');
-  if(!(b.notes||[]).length){
-    el.innerHTML='<div style="text-align:center;color:var(--sub);padding:24px;font-size:.85rem;">Нет заметок. Добавь первую!</div>'; return;
-  }
-  let html='';
-  (b.notes||[]).forEach((n,i)=>{
-    html+=`<div class="quote-item">
-      <button class="quote-del" onclick="delQuote(${i})">×</button>
-      ${n}
-    </div>`;
+  if(!(b.notes||[]).length){el.innerHTML='<div style="text-align:center;color:var(--sub);padding:24px;font-size:.85rem;">Нет заметок. Добавь первую!</div>';return;}
+  let html='';(b.notes||[]).forEach((n,i)=>{
+    html+=`<div class="quote-item"><button class="quote-del" onclick="delQuote(${i})">×</button>${n}</div>`;
   });
   el.innerHTML=html;
 }
-
 function addQuote(){
-  const inp=document.getElementById('nInp'); if(!inp.value.trim()) return;
-  const b=(S.books||[]).find(x=>x.id===curBookId); if(!b) return;
-  if(!b.notes) b.notes=[];
-  b.notes.push(inp.value.trim()); inp.value='';
-  addXp(5,inp); sv(); rNotes();
+  const inp=document.getElementById('nInp');if(!inp.value.trim()) return;
+  const b=(S.books||[]).find(x=>x.id===curBookId);if(!b) return;
+  if(!b.notes) b.notes=[];b.notes.push(inp.value.trim());inp.value='';
+  addXp(5,inp);sv();rNotes();
 }
-function delQuote(i){
-  const b=(S.books||[]).find(x=>x.id===curBookId); if(!b) return;
-  b.notes.splice(i,1); sv(); rNotes();
-}
-function closeNotes(){ document.getElementById('notesOver').classList.remove('on'); curBookId=null; if(tg) tg.BackButton.hide(); }
+function delQuote(i){const b=(S.books||[]).find(x=>x.id===curBookId);if(!b) return;b.notes.splice(i,1);sv();rNotes();}
+function closeNotes(){document.getElementById('notesOver').classList.remove('on');curBookId=null;if(tg) tg.BackButton.hide();}
 function delCurBook(){
-  const doIt=()=>{ S.books=(S.books||[]).filter(x=>x.id!==curBookId); sv(); closeNotes(); rBooks(); };
-  if(tg) tg.showConfirm('Удалить эту книгу?',ok=>{if(ok)doIt();}); else if(confirm('Удалить книгу?')) doIt();
+  const doIt=()=>{S.books=(S.books||[]).filter(x=>x.id!==curBookId);sv();closeNotes();rBooks();};
+  if(tg) tg.showConfirm('Удалить эту книгу?',ok=>{if(ok) doIt();}); else if(confirm('Удалить книгу?')) doIt();
 }
 
-/* ══════════════════════════════════════════════
+/* ═══════════════════════════════════════
    FAB
-══════════════════════════════════════════════ */
+═══════════════════════════════════════ */
 function fabAct(){
   if(curPg==='plan')   return openTaskM(curDayIdx);
   if(curPg==='habits') return openHabM();
   if(curPg==='goals')  return openGoalM();
   if(curPg==='books')  return openBookM();
+  if(curPg==='vit')    return openVitM();
   showModal('Добавить',`
     <button class="btn-main" style="margin-bottom:6px;" onclick="closeOv();setTimeout(()=>{go('habits',document.querySelectorAll('.nb')[2]);openHabM();},50)">+ Привычка</button>
     <button class="btn-main" style="background:var(--c1);margin-bottom:6px;" onclick="closeOv();setTimeout(()=>{go('goals',document.querySelectorAll('.nb')[3]);openGoalM();},50)">+ Цель</button>
-    <button class="btn-main" style="background:var(--c2);margin-bottom:6px;" onclick="closeOv();setTimeout(()=>{go('books',document.querySelectorAll('.nb')[4]);openBookM();},50)">+ Книга</button>
+    <button class="btn-main" style="background:var(--c2);margin-bottom:6px;" onclick="closeOv();setTimeout(()=>{go('vit',document.querySelectorAll('.nb')[4]);openVitM();},50)">+ Витамин</button>
+    <button class="btn-main" style="background:var(--c5);margin-bottom:6px;" onclick="closeOv();setTimeout(()=>{go('books',document.querySelectorAll('.nb')[5]);openBookM();},50)">+ Книга</button>
     <button class="btn-main" style="background:var(--c3);" onclick="closeOv();setTimeout(()=>{go('plan',document.querySelectorAll('.nb')[1]);openTaskM(curDayIdx);},50)">+ Задача</button>
   `);
 }
 
-/* ══════════════════════════════════════════════
+/* ═══════════════════════════════════════
    MODALS
-══════════════════════════════════════════════ */
+═══════════════════════════════════════ */
 function showModal(title,bodyHtml){
   document.getElementById('mTtl').textContent=title;
   document.getElementById('mBod').innerHTML=bodyHtml;
-  const btn=document.getElementById('mSaveBtn');
-  btn.disabled=false; btn.style.opacity='1';
+  const btn=document.getElementById('mSaveBtn');btn.disabled=false;btn.style.opacity='1';
   document.getElementById('ov').classList.add('on');
   if(tg) tg.BackButton.show();
 }
-function closeOv(){ document.getElementById('ov').classList.remove('on'); mCtx=null; if(tg) tg.BackButton.hide(); }
+function closeOv(){document.getElementById('ov').classList.remove('on');mCtx=null;if(tg) tg.BackButton.hide();}
 
 function validateModal(){
   const title=(document.getElementById('mIn')?.value||'').trim();
   let ok=!!title;
-  if(mCtx?.type==='book'){ ok=ok&&parseInt(document.getElementById('mTot')?.value||'0')>0; }
-  if(mCtx?.type==='goal'){ ok=ok&&!!(document.getElementById('mEndDate')?.value||''); }
+  if(mCtx?.type==='book'){ok=ok&&parseInt(document.getElementById('mTot')?.value||'0')>0;}
+  if(mCtx?.type==='goal'){ok=ok&&!!(document.getElementById('mEndDate')?.value||'');}
   const btn=document.getElementById('mSaveBtn');
-  if(btn){ btn.disabled=!ok; btn.style.opacity=ok?'1':'0.4'; }
+  if(btn){btn.disabled=!ok;btn.style.opacity=ok?'1':'0.4';}
 }
 
-/* Task */
+/* VITAMIN MODAL */
+function openVitM(){
+  if(!checkPrem('vitamins')) return;
+  mCtx={type:'vit'};
+  _selEmoji='💊';_selTimes=['Утро'];_selVitDays=[0,1,2,3,4,5,6];
+  showModal('Новый витамин',`
+    <input class="finp" id="mIn" placeholder="Название (например: Витамин D3) *" oninput="validateModal()">
+    <input class="finp" id="mDose" placeholder="Дозировка (например: 2000 МЕ)">
+
+    <div style="font-size:.75rem;color:var(--sub);margin:8px 0 4px;">Иконка:</div>
+    <div class="emoji-grid" id="emojiGrid">
+      ${VIT_EMOJIS.map(e=>`<button class="emoji-opt ${e==='💊'?'sel':''}" onclick="selEmoji(this,'${e}')">${e}</button>`).join('')}
+    </div>
+
+    <div style="font-size:.75rem;color:var(--sub);margin:8px 0 4px;">Время приёма:</div>
+    <div class="time-sel">
+      ${VIT_TIMES.map(t=>`<button class="time-chip sel" data-t="${t}" onclick="togTimeChip(this,'${t}')"
+        style="background:${VIT_TIME_COLORS[t]};color:white;border-color:${VIT_TIME_COLORS[t]};">${t}</button>`).join('')}
+    </div>
+
+    <div style="font-size:.75rem;color:var(--sub);margin:8px 0 4px;">Дни приёма:</div>
+    <div class="day-sel" id="vitDaySelWrap">
+      ${DN.map((d,i)=>`<button class="day-chip sel" style="background:${COLORS[i]};color:white;border-color:${COLORS[i]};" data-di="${i}" onclick="togVitDayChip(this,${i})">${d}</button>`).join('')}
+    </div>
+
+    <div style="font-size:.75rem;color:var(--sub);margin:8px 0 2px;">Конец курса (необязательно):</div>
+    <input class="finp" type="date" id="mCourseEnd">
+  `);
+  // Кнопку сохранить включить только если введено название
+  const btn=document.getElementById('mSaveBtn');btn.disabled=true;btn.style.opacity='0.4';
+}
+
+function selEmoji(btn, em){
+  _selEmoji=em;
+  document.querySelectorAll('.emoji-opt').forEach(b=>{b.classList.remove('sel');});
+  btn.classList.add('sel');
+}
+
+function togTimeChip(btn,t){
+  btn.classList.toggle('sel');
+  if(btn.classList.contains('sel')){
+    btn.style.background=VIT_TIME_COLORS[t];btn.style.color='white';btn.style.borderColor=VIT_TIME_COLORS[t];
+    if(!_selTimes.includes(t)) _selTimes.push(t);
+  } else {
+    btn.style.background='';btn.style.color='';btn.style.borderColor='';
+    _selTimes=_selTimes.filter(x=>x!==t);
+  }
+}
+
+function togVitDayChip(btn,i){
+  btn.classList.toggle('sel');
+  if(btn.classList.contains('sel')){
+    btn.style.background=COLORS[i];btn.style.color='white';btn.style.borderColor=COLORS[i];
+    if(!_selVitDays.includes(i)) _selVitDays.push(i);
+  } else {
+    btn.style.background='';btn.style.color='';btn.style.borderColor='';
+    _selVitDays=_selVitDays.filter(x=>x!==i);
+  }
+}
+
+/* Task modal */
 function openTaskM(di){
   mCtx={type:'task',di};
   const goalOpts=(S.goals||[]).map(g=>`<option value="${g.id}">${g.name}</option>`).join('');
@@ -1250,7 +1574,7 @@ function openTaskM(di){
   setTimeout(()=>document.getElementById('mIn')?.focus(),200);
 }
 
-/* Habit */
+/* Habit modal */
 function openHabM(){
   if(!checkPrem('habits')) return;
   mCtx={type:'habit'};
@@ -1267,41 +1591,35 @@ function openHabM(){
 }
 function togDayChip(btn,i){
   btn.classList.toggle('sel');
-  if(btn.classList.contains('sel')){ btn.style.background=COLORS[i];btn.style.color='white';btn.style.borderColor=COLORS[i]; }
-  else { btn.style.background='';btn.style.color='';btn.style.borderColor=''; }
+  if(btn.classList.contains('sel')){btn.style.background=COLORS[i];btn.style.color='white';btn.style.borderColor=COLORS[i];}
+  else{btn.style.background='';btn.style.color='';btn.style.borderColor='';}
 }
 
-/* Goal */
+/* Goal modal */
 function openGoalM(){
   if(!checkPrem('goals')) return;
   mCtx={type:'goal'};
   const habOpts=(S.habits||[]).map(h=>`<option value="${h.id}">${h.name}</option>`).join('');
-  const todayVal=todayStr();
   showModal('Новая цель',`
     <input class="finp" id="mIn" placeholder="Название цели *" oninput="validateModal()">
     <div style="font-size:.75rem;color:var(--sub);margin:6px 0 2px;">Дата начала:</div>
-    <input class="finp" type="date" id="mStartDate" value="${todayVal}">
+    <input class="finp" type="date" id="mStartDate" value="${todayStr()}">
     <div style="font-size:.75rem;color:var(--sub);margin:6px 0 2px;">Дата завершения *:</div>
     <input class="finp" type="date" id="mEndDate" oninput="validateModal()">
     ${habOpts?`<div style="font-size:.75rem;color:var(--sub);margin:8px 0 2px;">Привязать к привычке:</div>
-    <select class="finp" id="mHabit" onchange="toggleTargetField(this.value)">
-      <option value="">Без привычки</option>${habOpts}
-    </select>
+    <select class="finp" id="mHabit" onchange="toggleTargetField(this.value)"><option value="">Без привычки</option>${habOpts}</select>
     <div id="targetWrap" style="display:none;">
       <div style="font-size:.75rem;color:var(--sub);margin:6px 0 2px;">Цель в неделю (раз):</div>
       <input class="finp" type="number" id="mTarget" placeholder="Например: 3" min="1" max="7" value="3">
-    </div>`:
-    '<div style="font-size:.78rem;color:var(--sub);padding:10px 0;">💡 Сначала добавь привычки, чтобы привязать их к цели</div>'}
+    </div>`:''}
   `);
 }
-function toggleTargetField(val){
-  const tw=document.getElementById('targetWrap'); if(tw) tw.style.display=val?'block':'none';
-}
+function toggleTargetField(val){const tw=document.getElementById('targetWrap');if(tw) tw.style.display=val?'block':'none';}
 
-/* Book */
+/* Book modal */
 function openBookM(){
   if(!checkPrem('books')) return;
-  mCtx={type:'book'}; _tmpBookCover=null;
+  mCtx={type:'book'};_tmpBookCover=null;
   showModal('Новая книга',`
     <input class="finp" id="mIn" placeholder="Название книги *" oninput="validateModal()">
     <input class="finp" id="mAuthor" placeholder="Автор (необязательно)">
@@ -1312,24 +1630,19 @@ function openBookM(){
       <button class="st-btn" data-st="reading" onclick="selStatus(this,'reading')">Читаю</button>
       <button class="st-btn" data-st="done" onclick="selStatus(this,'done')">Прочитано</button>
     </div>
-    <label class="file-lbl" for="bookCoverModalFile">
-      📷 <span id="coverLbl">Загрузить обложку (необязательно)</span>
-    </label>
+    <label class="file-lbl" for="bookCoverModalFile">📷 <span id="coverLbl">Загрузить обложку (необязательно)</span></label>
     <input type="file" id="bookCoverModalFile" accept="image/*" style="display:none" onchange="previewBookCover(event)">
     <div id="coverPreview"></div>
   `);
-  // Кнопка save изначально disabled (нет заголовка и страниц)
-  const btn=document.getElementById('mSaveBtn');
-  btn.disabled=true; btn.style.opacity='0.4';
+  const btn=document.getElementById('mSaveBtn');btn.disabled=true;btn.style.opacity='0.4';
 }
 function selStatus(btn,st){
   document.querySelectorAll('.st-btn').forEach(b=>{b.classList.remove('sel');b.style.background='';b.style.color='';});
-  btn.classList.add('sel');
-  const map={want:'var(--c4)',reading:'var(--primary)',done:'var(--c2)'};
-  btn.style.background=map[st]||'var(--primary)'; btn.style.color=st==='want'?'#333':'white';
+  btn.classList.add('sel');const map={want:'var(--c4)',reading:'var(--primary)',done:'var(--c2)'};
+  btn.style.background=map[st]||'var(--primary)';btn.style.color=st==='want'?'#333':'white';
 }
 function previewBookCover(e){
-  const file=e.target.files[0]; if(!file) return;
+  const file=e.target.files[0];if(!file) return;
   const reader=new FileReader();
   reader.onload=ev=>{
     _tmpBookCover=ev.target.result;
@@ -1342,54 +1655,73 @@ function previewBookCover(e){
 /* ── CONFIRM ── */
 function confirmM(){
   const title=(document.getElementById('mIn')?.value||'').trim();
-  if(mCtx?.type==='task'){
+
+  if(mCtx?.type==='vit'){
     if(!title) return;
-    const wd=getWD(); if(!wd.tasks) wd.tasks=[];
+    const days=[...(document.querySelectorAll('#vitDaySelWrap .day-chip.sel')||[])].map(c=>parseInt(c.dataset.di));
+    const times=[...document.querySelectorAll('.time-chip.sel')].map(c=>c.dataset.t);
+    const courseEnd=document.getElementById('mCourseEnd')?.value||null;
+    const dose=(document.getElementById('mDose')?.value||'').trim();
+    const vi=(S.vitamins||[]).length;
+    S.vitamins.push({
+      id:uid(),name:title,emoji:_selEmoji,dose,
+      times:times.length?times:['Утро'],
+      days:days.length?days:[0,1,2,3,4,5,6],
+      color:VIT_COLORS[vi%VIT_COLORS.length],
+      courseEnd:courseEnd||null
+    });
+    sv();closeOv();rVit();
+  }
+  else if(mCtx?.type==='task'){
+    if(!title) return;
+    const wd=getWD();if(!wd.tasks) wd.tasks=[];
     const gid=document.getElementById('mGoal')?.value||null;
     wd.tasks.push({id:uid(),dayIdx:mCtx.di,text:title,done:false,goalId:gid||null});
-    sv(); closeOv(); rPlanner();
-  } else if(mCtx?.type==='habit'){
+    sv();closeOv();rPlanner();
+  }
+  else if(mCtx?.type==='habit'){
     if(!title) return;
     const chips=[...document.querySelectorAll('.day-chip.sel')];
     const days=chips.map(c=>parseInt(c.dataset.di));
     const gid=document.getElementById('mGoal')?.value||null;
     S.habits.push({id:uid(),name:title,days:days.length?days:[0,1,2,3,4,5,6],goalId:gid||null});
-    sv(); closeOv(); rHabits(); rDash();
-  } else if(mCtx?.type==='goal'){
+    sv();closeOv();rHabits();rDash();
+  }
+  else if(mCtx?.type==='goal'){
     if(!title) return;
     const startDate=document.getElementById('mStartDate')?.value||todayStr();
-    const endDate=document.getElementById('mEndDate')?.value||''; if(!endDate) return;
+    const endDate=document.getElementById('mEndDate')?.value||'';if(!endDate) return;
     const habitId=document.getElementById('mHabit')?.value||null;
     const targetPerWeek=habitId?parseInt(document.getElementById('mTarget')?.value||'3'):0;
     S.goals.push({id:uid(),name:title,startDate,endDate,habitId:habitId||null,targetPerWeek});
-    sv(); closeOv(); rGoals();
-  } else if(mCtx?.type==='book'){
+    sv();closeOv();rGoals();
+  }
+  else if(mCtx?.type==='book'){
     const tot=parseInt(document.getElementById('mTot')?.value||'0');
     if(!title||!tot) return;
     const author=(document.getElementById('mAuthor')?.value||'').trim();
     const stBtn=document.querySelector('.st-btn.sel');
     const status=stBtn?.dataset?.st||'want';
-    S.books.push({id:uid(),title,author,total:tot,current:0,rating:0,status,
-      cover:_tmpBookCover||null,notes:[],doneYear:null});
+    S.books.push({id:uid(),title,author,total:tot,current:0,rating:0,status,cover:_tmpBookCover||null,notes:[],doneYear:null});
     _tmpBookCover=null;
-    sv(); closeOv(); rBooks();
-    // Автопереключение на нужный таб
+    sv();closeOv();rBooks();
     const tabMap={want:0,reading:1,done:2};
     const tabBtns=document.querySelectorAll('.bk-tab');
     if(tabBtns[tabMap[status]]) setBkFilter(status,tabBtns[tabMap[status]]);
-  } else if(mCtx?.type==='avatar'){
+  }
+  else if(mCtx?.type==='avatar'){
     const nm=(document.getElementById('mIn')?.value||'').trim();
-    if(nm) S.name=nm; sv(); closeOv(); rHeader(); rDash();
+    if(nm) S.name=nm;sv();closeOv();rHeader();rDash();
   }
 }
 
 /* Paywall */
-function openSubModal(){ document.getElementById('subOv').classList.add('on'); }
+function openSubModal(){document.getElementById('subOv').classList.add('on');}
 function buySub(){
-  S.isSubscribed=true; sv();
+  S.isSubscribed=true;sv();
   document.getElementById('subOv').classList.remove('on');
   document.getElementById('btnPrem').style.display='none';
-  if(tg) tg.showAlert('🎉 Premium активирован!'); else alert('🎉 Premium активирован!');
+  if(tg) tg.showAlert('🎉 Premium активирован!');else alert('🎉 Premium активирован!');
 }
 
 /* Avatar */
@@ -1402,41 +1734,41 @@ function openAvatarModal(){
   `);
 }
 function handleAvatarUpload(e){
-  const file=e.target.files[0]; if(!file) return;
+  const file=e.target.files[0];if(!file) return;
   const reader=new FileReader();
-  reader.onload=ev=>{ S.avatar=ev.target.result; sv(); rHeader(); document.getElementById('hdrAv').innerHTML=`<img src="${S.avatar}">`; };
-  reader.readAsDataURL(file); e.target.value='';
+  reader.onload=ev=>{S.avatar=ev.target.result;sv();rHeader();document.getElementById('hdrAv').innerHTML=`<img src="${S.avatar}">`;};
+  reader.readAsDataURL(file);e.target.value='';
 }
 
-/* ══════════════════════════════════════════════
+/* ═══════════════════════════════════════
    TELEGRAM BACK BUTTON
-══════════════════════════════════════════════ */
+═══════════════════════════════════════ */
 if(tg){
   tg.BackButton.onClick(()=>{
-    if(document.getElementById('notesOver').classList.contains('on')){ closeNotes(); return; }
-    if(document.getElementById('ov').classList.contains('on')){ closeOv(); return; }
-    if(document.getElementById('subOv').classList.contains('on')){ document.getElementById('subOv').classList.remove('on'); tg.BackButton.hide(); return; }
+    if(document.getElementById('notesOver').classList.contains('on')){closeNotes();return;}
+    if(document.getElementById('ov').classList.contains('on')){closeOv();return;}
+    if(document.getElementById('subOv').classList.contains('on')){document.getElementById('subOv').classList.remove('on');tg.BackButton.hide();return;}
     tg.BackButton.hide();
   });
 }
 
-/* ══════════════════════════════════════════════
+/* ═══════════════════════════════════════
    KEYBOARD
-══════════════════════════════════════════════ */
+═══════════════════════════════════════ */
 document.addEventListener('keydown',e=>{
   if(e.key==='Enter'){
-    if(document.getElementById('notesOver').classList.contains('on')){ addQuote(); return; }
-    if(document.getElementById('ov').classList.contains('on')){ confirmM(); return; }
+    if(document.getElementById('notesOver').classList.contains('on')){addQuote();return;}
+    if(document.getElementById('ov').classList.contains('on')){confirmM();return;}
   }
   if(e.key==='Escape') closeOv();
 });
 
-/* ══════════════════════════════════════════════
+/* ═══════════════════════════════════════
    INIT
-══════════════════════════════════════════════ */
+═══════════════════════════════════════ */
 function init(){
   checkAchs();
-  if(IS_TG&&!S.name){ S.name=tg?.initDataUnsafe?.user?.first_name||'Искатель'; sv(); }
+  if(IS_TG&&!S.name){S.name=tg?.initDataUnsafe?.user?.first_name||'Искатель';sv();}
   if(S.isSubscribed) document.getElementById('btnPrem').style.display='none';
   rAll();
 }
