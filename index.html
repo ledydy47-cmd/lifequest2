@@ -6,7 +6,6 @@
 <title>ЛайфКвест + Книги</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
-/* Сохраняем все ваши исходные стили */
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 :root {
   --bg:#f2f6f3; --card:#fff; --text:#1a2e25; --sub:#7a9e8e; --border:#ddeee6;
@@ -21,8 +20,6 @@ html,body{height:100%;overflow:hidden;}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);}
 #shell{display:flex;flex-direction:column;height:100vh;height:100dvh;}
 #content{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:calc(var(--nav-h)+12px+env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch;}
-#content::-webkit-scrollbar{width:3px;}
-#content::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
 
 /* HEADER */
 .hdr{background:var(--card);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 8px rgba(0,0,0,0.05);}
@@ -31,11 +28,10 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .av-btn img{width:100%;height:100%;object-fit:cover;}
 .hdr-name{font-size:.95rem;font-weight:700;color:var(--text);}
 .hdr-sub{font-size:.63rem;color:var(--sub);margin-top:1px;}
-.btn-prem{background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;color:white;padding:6px 13px;border-radius:20px;font-size:.72rem;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(245,166,35,.35);display:none;}
 
 /* BOTTOM NAV */
 #nav{position:fixed;bottom:0;left:0;right:0;height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:var(--card);border-top:1px solid var(--border);display:flex;z-index:200;box-shadow:0 -3px 16px rgba(0,0,0,.06);}
-.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;cursor:pointer;color:var(--sub);font-size:.52rem;font-weight:600;text-transform:uppercase;letter-spacing:.3px;transition:color .2s;padding:8px 2px;position:relative;}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;cursor:pointer;color:var(--sub);font-size:.52rem;font-weight:600;text-transform:uppercase;letter-spacing:.3px;padding:8px 2px;position:relative;}
 .nb.active{color:var(--primary);}
 .nb.active::after{content:'';position:absolute;bottom:6px;width:18px;height:3px;border-radius:2px;background:var(--primary);}
 
@@ -44,404 +40,245 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .page.active{display:block;}
 .sec{font-size:.72rem;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;margin:14px 16px 8px;}
 
-/* CARD */
+/* CARD & XP HERO */
 .card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);margin:0 14px 12px;border:1px solid var(--border);overflow:hidden;}
 .card-body{padding:12px 14px;}
+.xp-card{margin:14px 14px 12px;border-radius:var(--r);padding:16px;position:relative;background:linear-gradient(135deg,#2d6e57,#3d8b6e,#5bbf95);color:white;}
+.xp-top{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.lv-ring{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;}
+.lv-n{font-size:1.1rem;font-weight:900;color:var(--gold2);}
+.xp-fill{height:7px;background:var(--gold2);border-radius:4px;transition:width 0.5s;}
 
-/* XP HERO */
-.xp-card{margin:14px 14px 12px;border-radius:var(--r);padding:16px;position:relative;overflow:hidden;background:linear-gradient(135deg,#2d6e57,#3d8b6e,#5bbf95);}
-.xp-card::before{content:'';position:absolute;inset:0;pointer-events:none;background:url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='25' cy='25' r='20' fill='none' stroke='%23fff' stroke-opacity='0.04' stroke-width='1'/%3E%3C/svg%3E");}
-.xp-top{display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative;z-index:1;}
-.lv-ring{width:54px;height:54px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .5s;box-shadow:0 2px 8px rgba(0,0,0,.2);}
-.lv-inner{width:44px;height:44px;border-radius:50%;background:rgba(0,0,0,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;}
-.lv-n{font-size:1.1rem;font-weight:900;color:var(--gold2);line-height:1;}
-.lv-t{font-size:.4rem;color:rgba(255,255,255,.7);text-transform:uppercase;}
-.xp-info{flex:1;}
-.xp-name{font-size:1rem;font-weight:800;color:white;}
-.xp-badge{display:inline-block;background:rgba(247,201,72,.2);border:1px solid rgba(247,201,72,.5);color:var(--gold2);border-radius:8px;padding:2px 8px;font-size:.6rem;font-weight:700;margin:3px 0 6px;}
-.xp-nums{font-size:.63rem;color:rgba(255,255,255,.8);display:flex;justify-content:space-between;margin-bottom:4px;}
-.xp-bar{height:7px;background:rgba(0,0,0,.2);border-radius:4px;overflow:hidden;}
-.xp-fill{height:100%;border-radius:4px;background:linear-gradient(to right,var(--gold2),var(--gold));transition:width .7s;box-shadow:0 0 6px rgba(247,201,72,.5);}
-.xp-stats{display:flex;gap:8px;position:relative;z-index:1;}
-.xs{flex:1;background:rgba(255,255,255,.12);border-radius:10px;padding:6px;text-align:center;}
-.xs .v{font-size:.9rem;font-weight:800;color:white;}
-.xs .l{font-size:.56rem;color:rgba(255,255,255,.7);text-transform:uppercase;}
-
-/* КНИЖНЫЙ ТРЕКЕР: КАРТОЧКА */
-.book-item { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
-.book-item:last-child { border-bottom: none; }
-.b-cover { width: 60px; height: 85px; border-radius: 6px; object-fit: cover; background: var(--bg); flex-shrink: 0; }
-.b-info { flex: 1; }
-.b-title { font-size: 0.9rem; font-weight: 700; color: var(--primary); cursor: pointer; }
-.b-author { font-size: 0.75rem; color: var(--sub); }
-.b-stars { display: flex; gap: 2px; margin: 4px 0; font-size: 16px; cursor: pointer; }
-.b-star { color: #ddd; }
+/* BOOKS STYLES */
+.book-item { display: flex; gap: 12px; padding: 12px; border-bottom: 1px solid var(--border); }
+.b-cover { width: 60px; height: 85px; border-radius: 6px; object-fit: cover; background: #eee; }
+.b-title { font-size: 0.95rem; font-weight: 700; color: var(--primary); cursor: pointer; }
+.b-stars { color: #ddd; font-size: 18px; margin: 4px 0; }
 .b-star.on { color: var(--tg-star); }
+.b-cur-inp { width: 45px; border: 1px solid var(--border); border-radius: 4px; padding: 2px; text-align: center; }
 
-.b-prog-row { margin-top: 6px; }
-.b-pb-wrap { height: 5px; background: var(--bg); border-radius: 3px; overflow: hidden; margin-bottom: 4px; }
-.b-pf { height: 100%; background: var(--c1); transition: width 0.3s; }
-.b-inp-row { display: flex; align-items: center; font-size: 0.7rem; color: var(--sub); font-weight: 600; }
-.b-cur-inp { width: 40px; border: 1px solid var(--border); border-radius: 4px; padding: 1px 4px; font-size: 0.75rem; text-align: center; margin-right: 4px; color: var(--text); }
-
-/* OVERLAY NOTES */
+/* FAB & MODALS */
+.fab{position:fixed;right:16px;bottom:80px;width:56px;height:56px;border-radius:50%;background:var(--primary);color:white;border:none;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 12px rgba(0,0,0,0.2);z-index:100;}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:flex-end;}
+.overlay.on{display:flex;}
+.modal{background:white;width:100%;padding:20px;border-radius:20px 20px 0 0;}
+.finp{width:100%;padding:12px;margin:8px 0;border:1px solid var(--border);border-radius:10px;}
 .notes-over { position: fixed; inset: 0; background: var(--bg); z-index: 2000; display: none; flex-direction: column; }
 .notes-over.on { display: flex; }
-.n-hdr { background: var(--card); padding: 14px 16px; display: flex; align-items: center; border-bottom: 1px solid var(--border); }
-.n-list { flex: 1; padding: 16px; overflow-y: auto; }
-.n-item { background: var(--card); padding: 10px; border-radius: 10px; margin-bottom: 10px; font-size: 0.85rem; border-left: 3px solid var(--accent); box-shadow: var(--sh); }
-.n-add { padding: 12px 16px; background: var(--card); border-top: 1px solid var(--border); display: flex; gap: 8px; }
-
-/* Остальные стили из вашего кода (Планер, Привычки, Цели и т.д.) сохраняются без изменений */
-/* ... (здесь все те стили, что были в вашем сообщении) ... */
-/* Добавим только фикс для FAB, чтобы он не перекрывал меню */
-.fab{position:fixed;right:16px;bottom:calc(var(--nav-h) + 14px + env(safe-area-inset-bottom));width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--primary));color:white;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(61,139,110,.4);display:flex;align-items:center;justify-content:center;transition:transform .2s;z-index:90;}
 </style>
 </head>
 <body>
+
 <div id="shell">
-
-<!-- HEADER -->
-<header class="hdr">
-  <div class="hdr-l">
-    <div class="av-btn" id="hdrAv" onclick="openAvatarModal()">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-    </div>
-    <div>
-      <div class="hdr-name" id="hdrName">Привет!</div>
-      <div class="hdr-sub"  id="hdrSub">Ученик · 0 XP</div>
-    </div>
-  </div>
-  <button class="btn-prem" id="btnP" onclick="openSubModal()">👑 Premium</button>
-</header>
-
-<div id="content">
-
-  <!-- DASHBOARD -->
-  <div class="page active" id="page-dash">
-    <!-- Ваш оригинальный XP HERO -->
-    <div class="xp-card">
-      <div class="xp-top">
-        <div class="lv-ring" id="lvRing">
-          <div class="lv-inner"><div class="lv-n" id="lvN">1</div><div class="lv-t">ур.</div></div>
-        </div>
-        <div class="xp-info">
-          <div class="xp-name" id="xpName">Искатель</div>
-          <div class="xp-badge" id="xpBadge">Ученик</div>
-          <div class="xp-nums"><span id="xpNums">0 / 100 XP</span></div>
-          <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
-        </div>
-      </div>
-      <div class="xp-stats">
-        <div class="xs"><div class="v" id="stX">0</div><div class="l">XP</div></div>
-        <div class="xs"><div class="v" id="stH">0</div><div class="l">Привычек</div></div>
-        <div class="xs"><div class="v" id="stG">0</div><div class="l">Целей</div></div>
-        <div class="xs"><div class="v" id="stS">0</div><div class="l">Дней</div></div>
+  <header class="hdr">
+    <div class="hdr-l">
+      <div class="av-btn" onclick="openAvatarModal()"><div id="hdrAv">👤</div></div>
+      <div>
+        <div class="hdr-name" id="hdrName">Герой</div>
+        <div class="hdr-sub" id="hdrSub">Уровень 1</div>
       </div>
     </div>
+  </header>
 
-    <!-- Оригинальные Задачи/Привычки круги -->
-    <div class="today-row">
-        <div class="tm">
-          <div class="mc">
-            <svg width="52" height="52" viewBox="0 0 52 52"><circle fill="none" stroke="var(--border)" stroke-width="5" cx="26" cy="26" r="20"/><circle id="tCirc" fill="none" stroke="var(--c2)" stroke-width="5" stroke-linecap="round" cx="26" cy="26" r="20" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
-            <div class="ct" id="tPct" style="color:var(--c2)">0%</div>
-          </div>
-          <div><div class="mi-t">Задачи</div><div class="mi-s" id="tStat">0 из 0</div></div>
-        </div>
-        <div class="tm">
-          <div class="mc">
-            <svg width="52" height="52" viewBox="0 0 52 52"><circle fill="none" stroke="var(--border)" stroke-width="5" cx="26" cy="26" r="20"/><circle id="hCirc" fill="none" stroke="var(--c0)" stroke-width="5" stroke-linecap="round" cx="26" cy="26" r="20" stroke-dasharray="125.66" stroke-dashoffset="125.66"/></svg>
-            <div class="ct" id="hPct" style="color:var(--c0)">0%</div>
-          </div>
-          <div><div class="mi-t">Привычки</div><div class="mi-s" id="hStat">0 из 0</div></div>
-        </div>
-      </div>
-
-    <div class="sec">Привычки на сегодня</div>
-    <div class="card"><div class="card-body" id="todH" style="padding:8px 14px;"></div></div>
-    <div class="sec">Достижения</div>
-    <div class="card"><div class="card-body" style="padding:10px 12px;"><div class="ach-row" id="achR"></div></div></div>
-  </div>
-
-  <!-- КНИГИ (НОВАЯ ВКЛАДКА) -->
-  <div class="page" id="page-books">
-    <div class="sec">Список чтения</div>
-    <div class="card"><div class="card-body" id="booksList"></div></div>
-  </div>
-
-  <!-- PLANNER -->
-  <div class="page" id="page-plan">
-    <div class="plan-nav">
-      <button onclick="prevWeek()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
-      <span class="wl" id="wkL">—</span>
-      <button onclick="nextWeek()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></button>
-      <button class="wt" onclick="goNow()">Сегодня</button>
-    </div>
-    <div class="plan-slider-wrap" id="sliderWrap"><div class="plan-slider" id="planSlider"></div></div>
-    <div class="plan-dots" id="planDots"></div>
-  </div>
-
-  <!-- HABITS -->
-  <div class="page" id="page-habits">
-    <div class="sec" style="margin-top:16px;">Мои привычки</div>
-    <div class="card"><div class="card-body" id="habList"></div></div>
-  </div>
-
-  <!-- GOALS -->
-  <div class="page" id="page-goals">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin:16px 14px 8px;">
-      <div class="sec" style="margin:0;">Мои цели</div>
-      <button onclick="openGoalModal()" style="background:var(--primary);color:white;border:none;border-radius:12px;padding:7px 14px;font-size:.78rem;font-weight:700;cursor:pointer;">+ Цель</button>
-    </div>
-    <div style="padding:0 14px;" id="goalsList"></div>
-  </div>
-
-</div>
-
-<!-- NAV -->
-<nav id="nav">
-  <button class="nb active" onclick="go('dash',this)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Главная</span></button>
-  <button class="nb" onclick="go('plan',this)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>Планер</span></button>
-  <button class="nb" onclick="go('books',this)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>Книги</span></button>
-  <button class="nb" onclick="go('habits',this)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span>Привычки</span></button>
-  <button class="nb" onclick="go('goals',this)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><span>Цели</span></button>
-</nav>
-
-<button class="fab" id="fab" onclick="fabAct()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
-
-<!-- ОКНО ЦИТАТ (NOTES) -->
-<div class="notes-over" id="notesOver">
-  <div class="n-hdr">
-    <button onclick="closeNotes()" style="background:none; border:none; font-size:20px; margin-right:12px;">←</button>
-    <div id="nTitle" style="font-weight:800; font-size:1rem; flex:1;">Книга</div>
-    <button onclick="delCurBook()" style="color:var(--red); background:none; border:none; font-weight:700;">Удалить</button>
-  </div>
-  <div class="n-list" id="nList"></div>
-  <div class="n-add">
-    <input type="text" id="nInp" class="finp" placeholder="Новая цитата...">
-    <button onclick="addQuote()" style="background:var(--primary); color:white; border:none; padding:10px 14px; border-radius:12px;">▲</button>
-  </div>
-</div>
-
-<!-- Модальные окна остаются прежними -->
-<div class="overlay" id="subOv">... (Содержимое Paywall) ...</div>
-<div class="overlay" id="ov">
-  <div class="modal">
-    <div class="mh"></div>
-    <h3 id="mTtl">—</h3>
-    <div id="mBod"></div>
-    <div class="mbtns">
-      <button class="bcn" onclick="closeOv('ov')">Отмена</button>
-      <button class="bok" onclick="confirmM()">Сохранить</button>
-    </div>
-  </div>
-</div>
-
-<input type="file" id="fileInp" accept="image/*" style="display:none" onchange="handlePhoto(event)">
-
-<script>
-// Все ваши константы и функции (tg, COLORS, ld, sv, uid и т.д.)
-const tg=window.Telegram?.WebApp||null;
-const IS_TG=!!(tg?.initData?.length>0);
-if(tg){tg.ready();tg.expand();tg.setHeaderColor('#2d6e57');tg.setBackgroundColor('#f2f6f3');}
-
-const COLORS=['#5bbf95','#5b9bbf','#a07cc5','#e07a5f','#f2b705','#e05c8a','#3d8b6e'];
-const DN=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
-const DN_FULL=['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота','Воскресенье'];
-const LEVELS=['Новичок','Ученик','Искатель','Воин','Мастер','Герой','Легенда','Бог'];
-const ACHS=[{id:'first_task',name:'Первый шаг'},{id:'streak3',name:'3 дня'},{id:'lvl5',name:'Ур. 5'},{id:'hab5',name:'5 привычек'},{id:'goal1',name:'Первая цель'},{id:'xp500',name:'500 XP'}];
-const ASVG={ /* Ваши иконки достижений */
-  first_task:`<svg class="ach-svg" viewBox="0 0 24 24" fill="none" stroke="#5bbf95" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>`,
-  streak3:`<svg class="ach-svg" viewBox="0 0 24 24" fill="none" stroke="#f2b705" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
-  lvl5:`<svg class="ach-svg" viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
-  hab5:`<svg class="ach-svg" viewBox="0 0 24 24" fill="none" stroke="#a07cc5" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`,
-  goal1:`<svg class="ach-svg" viewBox="0 0 24 24" fill="none" stroke="#5b9bbf" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`,
-  xp500:`<svg class="ach-svg" viewBox="0 0 24 24" fill="none" stroke="#e05c8a" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
-};
-
-let S=ld();
-let wOff=0, curDayIdx=0, mCtx=null, curPg='dash', curBookId=null;
-
-function ld(){
-  try{const s=localStorage.getItem('lq5');if(s)return JSON.parse(s);}catch(e){}
-  return{sub:false,name:'Искатель',avatar:null,xp:0,habits:[],weeks:{},goals:[],achs:[],streak:0,books:[]};
-}
-if(!S.books) S.books = []; // защита если старая версия данных
-
-function sv(){localStorage.setItem('lq5',JSON.stringify(S));}
-function uid(){return Math.random().toString(36).slice(2,9);}
-
-// ══ ФУНКЦИИ КНИГ ══
-function rBooks(){
-  const el = document.getElementById('booksList');
-  if(!S.books.length){ el.innerHTML='<div class="empty"><p>Нет книг. Нажми + чтобы добавить!</p></div>'; return; }
-  
-  el.innerHTML = S.books.map(b => {
-    const pct = Math.round((b.current / b.total) * 100) || 0;
-    let stars = '';
-    for(let i=1; i<=5; i++){
-      stars += `<span class="b-star ${i<=b.rating?'on':''}" onclick="setBookRating('${b.id}', ${i})">★</span>`;
-    }
-    return `
-      <div class="book-item">
-        <img src="${b.cover || 'https://via.placeholder.com/60x85'}" class="b-cover">
-        <div class="b-info">
-          <div class="b-title" onclick="openNotes('${b.id}')">${b.title}</div>
-          <div class="b-author">${b.author}</div>
-          <div class="b-stars">${stars}</div>
-          <div class="b-prog-row">
-            <div class="b-pb-wrap"><div class="b-pf" style="width:${pct}%"></div></div>
-            <div class="b-inp-row">
-              <input type="number" class="b-cur-inp" value="${b.current}" onchange="setBookPage('${b.id}', this.value)">
-              <span> / ${b.total} стр. (${pct}%)</span>
+  <div id="content">
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dash">
+      <div class="xp-card">
+        <div class="xp-top">
+          <div class="lv-ring"><div class="lv-n" id="lvN">1</div></div>
+          <div style="flex:1">
+            <div id="xpName" style="font-weight:800">Искатель</div>
+            <div id="xpNums" style="font-size:12px">0 / 100 XP</div>
+            <div style="height:7px; background:rgba(0,0,0,0.2); border-radius:4px; margin-top:5px;">
+              <div id="xpFill" class="xp-fill" style="width:0%"></div>
             </div>
           </div>
         </div>
       </div>
-    `;
-  }).join('');
+      <div class="sec">Привычки на сегодня</div>
+      <div class="card"><div class="card-body" id="todH"></div></div>
+    </div>
+
+    <!-- BOOKS -->
+    <div class="page" id="page-books">
+      <div class="sec">Список для чтения</div>
+      <div class="card"><div id="booksList"></div></div>
+    </div>
+
+    <!-- PLANNER, HABITS, GOALS (Упрощенно для примера) -->
+    <div class="page" id="page-plan"><div class="sec">Планер</div><div id="planSlider"></div></div>
+    <div class="page" id="page-habits"><div class="sec">Мои привычки</div><div id="habList"></div></div>
+    <div class="page" id="page-goals"><div class="sec">Мои цели</div><div id="goalsList"></div></div>
+  </div>
+
+  <nav id="nav">
+    <button class="nb active" onclick="go('dash', this)"><span>🏠</span><span>Главная</span></button>
+    <button class="nb" onclick="go('plan', this)"><span>📅</span><span>Планер</span></button>
+    <button class="nb" onclick="go('books', this)"><span>📚</span><span>Книги</span></button>
+    <button class="nb" onclick="go('habits', this)"><span>✅</span><span>Привычки</span></button>
+    <button class="nb" onclick="go('goals', this)"><span>🎯</span><span>Цели</span></button>
+  </nav>
+</div>
+
+<button class="fab" onclick="fabAct()">+</button>
+
+<!-- MODALS -->
+<div class="overlay" id="ov">
+  <div class="modal">
+    <h3 id="mTtl">Добавить</h3>
+    <div id="mBod"></div>
+    <button class="finp" style="background:var(--primary); color:white; font-weight:bold;" onclick="confirmM()">Сохранить</button>
+    <button class="finp" onclick="closeOv('ov')">Отмена</button>
+  </div>
+</div>
+
+<div class="notes-over" id="notesOver">
+    <div style="padding:15px; background:white; display:flex; align-items:center; border-bottom:1px solid #ddd;">
+        <button onclick="closeNotes()" style="margin-right:15px; background:none; border:none; font-size:20px;">←</button>
+        <h3 id="nTitle" style="flex:1">Заметки</h3>
+        <button onclick="delCurBook()" style="color:red; background:none; border:none;">Удалить</button>
+    </div>
+    <div id="nList" style="flex:1; padding:15px; overflow-y:auto;"></div>
+    <div style="padding:15px; background:white; border-top:1px solid #ddd; display:flex;">
+        <input type="text" id="nInp" class="finp" style="margin:0; flex:1;" placeholder="Цитата...">
+        <button onclick="addQuote()" style="margin-left:10px; padding:0 15px; background:var(--primary); color:white; border:none; border-radius:10px;">▲</button>
+    </div>
+</div>
+
+<script>
+let S = { name: 'Искатель', xp: 0, habits: [], books: [], goals: [] };
+let curPg = 'dash';
+let curBookId = null;
+let mCtx = null;
+
+// Загрузка
+try {
+    const saved = localStorage.getItem('lq_data');
+    if (saved) S = JSON.parse(saved);
+} catch(e) {}
+
+function sv() { 
+    localStorage.setItem('lq_data', JSON.stringify(S)); 
+    renderAll();
 }
 
-function setBookRating(id, r){
-    const b = S.books.find(x=>x.id===id);
-    if(b){ b.rating = r; sv(); rBooks(); }
+function go(id, btn) {
+    curPg = id;
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    if (btn) btn.classList.add('active');
+    renderAll();
 }
 
-function setBookPage(id, val){
-    const b = S.books.find(x=>x.id===id);
-    if(b){
-        const old = b.current;
-        b.current = Math.min(parseInt(val)||0, b.total);
-        if(b.current > old) addXp((b.current - old) * 2); // 2 XP за каждую страницу
-        sv(); rAll(); 
+function renderAll() {
+    // XP Hero
+    const lv = Math.floor(S.xp / 100) + 1;
+    document.getElementById('lvN').innerText = lv;
+    document.getElementById('xpNums').innerText = `${S.xp % 100} / 100 XP`;
+    document.getElementById('xpFill').style.width = (S.xp % 100) + '%';
+    document.getElementById('hdrName').innerText = S.name;
+
+    // Books
+    const bList = document.getElementById('booksList');
+    if (bList) {
+        if (S.books.length === 0) bList.innerHTML = '<div style="padding:20px; color:#999; text-align:center;">Нет книг</div>';
+        else {
+            bList.innerHTML = S.books.map(b => {
+                const pct = Math.round((b.current / b.total) * 100) || 0;
+                let stars = '';
+                for(let i=1; i<=5; i++) {
+                    stars += `<span class="b-star ${i<=b.rating?'on':''}" onclick="setRating('${b.id}',${i})">★</span>`;
+                }
+                return `
+                <div class="book-item">
+                    <img src="${b.cover || 'https://via.placeholder.com/60'}" class="b-cover">
+                    <div style="flex:1">
+                        <div class="b-title" onclick="openNotes('${b.id}')">${b.title}</div>
+                        <div class="b-stars">${stars}</div>
+                        <div style="font-size:11px; color:#888;">Прогресс: ${pct}%</div>
+                        <div style="display:flex; align-items:center; margin-top:5px;">
+                            <input type="number" class="b-cur-inp" value="${b.current}" onchange="setPage('${b.id}', this.value)">
+                            <span style="font-size:12px; margin-left:5px;"> / ${b.total}</span>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
     }
 }
 
-function openNotes(id){
+function fabAct() {
+    if (curPg === 'books') {
+        mCtx = { type: 'book' };
+        document.getElementById('mTtl').innerText = "Новая книга";
+        document.getElementById('mBod').innerHTML = `
+            <input type="text" id="mIn" class="finp" placeholder="Название">
+            <input type="number" id="mTot" class="finp" placeholder="Всего страниц">
+        `;
+        document.getElementById('ov').classList.add('on');
+    } else {
+        alert("Добавление для этой вкладки в разработке");
+    }
+}
+
+function confirmM() {
+    const val = document.getElementById('mIn').value;
+    if (mCtx.type === 'book') {
+        const total = document.getElementById('mTot').value;
+        if (!val || !total) return;
+        S.books.push({ id: Date.now().toString(), title: val, total: parseInt(total), current: 0, rating: 0, notes: [] });
+        S.xp += 50;
+    }
+    closeOv('ov');
+    sv();
+}
+
+function setRating(id, r) {
+    const b = S.books.find(x => x.id === id);
+    if (b) { b.rating = r; sv(); }
+}
+
+function setPage(id, v) {
+    const b = S.books.find(x => x.id === id);
+    if (b) {
+        const diff = parseInt(v) - b.current;
+        if (diff > 0) S.xp += diff;
+        b.current = Math.min(parseInt(v), b.total);
+        sv();
+    }
+}
+
+function openNotes(id) {
     curBookId = id;
-    const b = S.books.find(x=>x.id===id);
+    const b = S.books.find(x => x.id === id);
     document.getElementById('nTitle').innerText = b.title;
     document.getElementById('notesOver').classList.add('on');
-    rNotes();
+    renderNotes();
 }
 
-function closeNotes(){ document.getElementById('notesOver').classList.remove('on'); }
-
-function rNotes(){
-    const b = S.books.find(x=>x.id===curBookId);
-    const el = document.getElementById('nList');
-    el.innerHTML = (b.notes||[]).map(n => `<div class="n-item">${n}</div>`).join('');
+function renderNotes() {
+    const b = S.books.find(x => x.id === curBookId);
+    document.getElementById('nList').innerHTML = b.notes.map(n => `<div style="background:#fff; padding:10px; border-radius:10px; margin-bottom:10px; border-left:4px solid var(--primary);">${n}</div>`).join('');
 }
 
-function addQuote(){
+function addQuote() {
     const inp = document.getElementById('nInp');
-    if(!inp.value) return;
-    const b = S.books.find(x=>x.id===curBookId);
-    if(!b.notes) b.notes = [];
+    if (!inp.value) return;
+    const b = S.books.find(x => x.id === curBookId);
     b.notes.push(inp.value);
     inp.value = '';
-    addXp(10); sv(); rNotes();
+    S.xp += 10;
+    sv();
+    renderNotes();
 }
 
-function delCurBook(){
-    if(confirm('Удалить книгу?')){
-        S.books = S.books.filter(x=>x.id !== curBookId);
-        sv(); rAll(); closeNotes();
-    }
-}
+function closeNotes() { document.getElementById('notesOver').classList.remove('on'); }
+function closeOv(id) { document.getElementById(id).classList.remove('on'); }
+function delCurBook() { S.books = S.books.filter(x => x.id !== curBookId); closeNotes(); sv(); }
 
-// ══ ОБНОВЛЕННЫЕ ФУНКЦИИ МОДАЛОК ══
-function fabAct(){
-  if(curPg==='dash' || curPg==='plan') openTaskM(curPg==='dash'?todayIdx():curDayIdx);
-  else if(curPg==='habits') openHabM();
-  else if(curPg==='books') openBookM();
-}
-
-function openBookM(){
-    mCtx={type:'book'};
-    openM('Новая книга', `
-        <div class="frow"><label class="flbl">Название</label><input class="finp" id="mIn" placeholder="Название книги"></div>
-        <div class="frow"><label class="flbl">Автор</label><input class="finp" id="mAuth" placeholder="Автор"></div>
-        <div class="frow"><label class="flbl">Всего страниц</label><input class="finp" id="mTot" type="number" placeholder="Напр: 300"></div>
-        <div class="frow"><label class="flbl">Обложка</label><input type="file" id="mFile" accept="image/*"></div>
-    `);
-}
-
-function confirmM(){
-  const val=document.getElementById('mIn')?.value.trim();
-  const ctx=mCtx;
-  if(ctx.type==='book'){
-    if(!val) return;
-    const auth = document.getElementById('mAuth').value;
-    const tot = document.getElementById('mTot').value;
-    const file = document.getElementById('mFile').files[0];
-    
-    const finish = (img) => {
-        S.books.push({id:uid(), title:val, author:auth, total:tot, current:0, rating:0, notes:[], cover:img});
-        addXp(50); sv(); rAll(); closeOv('ov');
-    };
-
-    if(file){
-        const r = new FileReader(); r.onload=(e)=>finish(e.target.result); r.readAsDataURL(file);
-    } else finish('');
-    return;
-  }
-  
-  // Оригинальная логика confirmM для задач/привычек/целей
-  if(ctx.type==='task'){
-    if(!val)return;
-    const gid=document.getElementById('mG')?.value||'';
-    getWD().tasks.push({id:uid(),text:val,done:false,dayIdx:ctx.di,goalId:gid});
-  }else if(ctx.type==='habit'){
-    if(!val)return;
-    const days=[...document.querySelectorAll('.dpb.sel')].map(b=>parseInt(b.dataset.d));
-    const gid=document.getElementById('mG')?.value||'';
-    S.habits.push({id:uid(),name:val,days,goalId:gid});
-  }else if(ctx.type==='goal'){
-    if(!val)return;
-    const dl=document.getElementById('mDl')?.value||'';
-    S.goals.push({id:uid(),title:val,deadline:dl});
-  }else if(ctx.type==='avatar'){
-    if(val)S.name=val;
-  }
-  sv(); rAll(); closeOv('ov');
-}
-
-// ══ ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ══
-function go(id,btn){
-  curPg=id;
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  if(btn)btn.classList.add('active');
-  document.getElementById('fab').style.display=id==='goals'?'none':'flex';
-  rAll();
-}
-
-function rAll(){
-  rDash();
-  if(curPg==='plan')rPlanner();
-  if(curPg==='habits')rHabits();
-  if(curPg==='goals')rGoals();
-  if(curPg==='books')rBooks();
-}
-
-/* Здесь все остальные функции вашего кода (rDash, rHero, rPlanner, rHabits, rGoals, и т.д.) */
-/* Скопируйте их из своего исходного файла */
-
-// ══ ИНИЦИАЛИЗАЦИЯ ══
-function init(){
-  if(IS_TG&&(!S.name||S.name==='Искатель')){const u=tg?.initDataUnsafe?.user;if(u?.first_name)S.name=u.first_name;}
-  if(!S.sub)document.getElementById('btnP').style.display='none'; // или inline-block
-  curDayIdx=todayIdx();
-  rAll();
-}
-
-// Вставьте сюда остальные функции (getMon, wKey, getWD, todayIdx, lvD, addXp, subXp, checkAchs, chkSub, openSubModal, buySub, closeOv, handlePhoto, updAv, rHero, rAchs, rDash, rPlanner, goToDay, initSliderTouch, togTask, delTask, prevWeek, nextWeek, goNow, rHabits, togHab, delHab, rGoals, delGoal, openM, goalOpts, openTaskM, openHabM, openGoalModal, openAvatarModal)
-// Все они должны остаться такими же, как были в вашем коде.
-
-init();
+// Старт
+renderAll();
 </script>
 </body>
 </html>
