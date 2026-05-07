@@ -830,10 +830,12 @@ function rPlan(){
   el.innerHTML=
     '<div class="ring-carousel-wrap"><div class="ring-carousel"></div></div>'
     +'<div class="plan-quote">'
-    +'<span class="plan-quote-mark">❝</span>'
-    +'<div class="plan-quote-text">'+esc(todayQuote())+'</div>'
-    +'<span class="plan-quote-mark" style="transform:rotate(180deg);">❝</span>'
-    +'</div>'
++'<div style="position:relative;padding:8px 16px;">'
++'<span class="plan-quote-mark" style="position:absolute;top:0;left:0;">❝</span>'
++'<div class="plan-quote-text">'+esc(todayQuote())+'</div>'
++'<span class="plan-quote-mark" style="position:absolute;bottom:0;right:0;transform:rotate(180deg);">❝</span>'
++'</div>'
++'</div>'
     +'<div class="plan-body" id="plan-body"></div>';
   buildCarousel();
   renderSchedule();
