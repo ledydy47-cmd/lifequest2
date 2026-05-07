@@ -23,6 +23,7 @@
   --pri-hi:#FF5A5A;
   --pri-md:#FFB830;
   --pri-lo:#4CD78A;
+  --page-bg:linear-gradient(180deg,#F8FAFC 0%,#F1F5F9 50%,#EFF6FF 100%);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
@@ -32,7 +33,7 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 /* ── HEADER ── */
 #hdr{
   background:var(--grad-hdr);
-  padding:10px 16px 10px;
+  padding:10px 16px;
   display:flex;
   align-items:center;
   gap:12px;
@@ -41,15 +42,7 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
   z-index:10;
   box-shadow:0 2px 16px rgba(155,109,255,.25);
 }
-.hdr-ava{
-  width:44px;height:44px;
-  border-radius:50%;
-  border:2px solid rgba(255,255,255,.5);
-  overflow:hidden;
-  background:rgba(255,255,255,.2);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;flex-shrink:0;
-}
+.hdr-ava{width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.5);overflow:hidden;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
 .hdr-ava img{width:100%;height:100%;object-fit:cover;}
 .hdr-ava svg{width:24px;height:24px;fill:rgba(255,255,255,.85);}
 .hdr-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;}
@@ -59,13 +52,7 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 .hdr-xp-bar{flex:1;height:5px;background:rgba(255,255,255,.25);border-radius:5px;overflow:hidden;}
 .hdr-xp-fill{height:100%;background:linear-gradient(90deg,#3aaf5c,#27c96a);border-radius:5px;transition:width .6s ease;}
 .hdr-xp-text{font-size:10px;font-weight:700;color:rgba(255,255,255,.85);white-space:nowrap;flex-shrink:0;}
-.hdr-premium{
-  background:linear-gradient(135deg,#FF9500,#FFBC00);
-  border:none;color:#fff;font-size:12px;font-weight:800;
-  padding:8px 14px;border-radius:20px;cursor:pointer;
-  display:flex;align-items:center;gap:5px;flex-shrink:0;
-  box-shadow:0 2px 10px rgba(255,149,0,.35);font-family:inherit;
-}
+.hdr-premium{background:linear-gradient(135deg,#FF9500,#FFBC00);border:none;color:#fff;font-size:12px;font-weight:800;padding:8px 14px;border-radius:20px;cursor:pointer;display:flex;align-items:center;gap:5px;flex-shrink:0;box-shadow:0 2px 10px rgba(255,149,0,.35);font-family:inherit;}
 .hdr-premium svg{width:13px;height:13px;fill:#fff;}
 
 /* ── NAV ── */
@@ -76,62 +63,54 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 .nav-btn.active svg{stroke:var(--accent);}
 .nav-btn.active span{color:var(--accent);}
 
-/* ── PAGES ── */
-#pages{flex:1;overflow:hidden;position:relative;}
-.page{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;display:none;padding-bottom:80px;}
+/* ── PAGES — ИСПРАВЛЕНИЕ ПРОКРУТКИ ── */
+#pages{flex:1;overflow:hidden;position:relative;min-height:0;}
+.page{
+  position:absolute;inset:0;
+  overflow-y:auto;   /* ← ключевое: разрешаем скролл */
+  overflow-x:hidden;
+  display:none;
+  padding-bottom:90px;
+  -webkit-overflow-scrolling:touch; /* плавный скролл iOS */
+}
 .page.active{display:block;}
 .page::-webkit-scrollbar{display:none;}
 
-/* ── PLANNER ── */
-#p-plan{
-  padding:0;
-  background:linear-gradient(180deg,#F8FAFC 0%,#F1F5F9 50%,#EFF6FF 100%);
+/* ── ЕДИНЫЙ ФОН ВСЕХ СТРАНИЦ ── */
+#p-plan,#p-hab,#p-goals,#p-vit,#p-books,#p-dash{
+  background:var(--page-bg);
   min-height:100%;
-  position:relative;
 }
 
-/* ── FAB кнопка + (правый нижний угол) ── */
+/* ── FAB ── */
 .fab-add-task{
-  position:fixed;
-  right:20px;
-  bottom:calc(var(--nav-h) + 16px);
-  width:52px;height:52px;
-  border-radius:50%;
-  background:var(--grad-hdr);
-  border:none;
-  cursor:pointer;
-  display:none;
-  align-items:center;justify-content:center;
-  box-shadow:0 4px 18px rgba(155,109,255,.45);
-  z-index:50;
-  transition:transform .2s, box-shadow .2s;
+  position:fixed;right:20px;bottom:calc(var(--nav-h) + 16px);
+  width:52px;height:52px;border-radius:50%;
+  background:var(--grad-hdr);border:none;cursor:pointer;
+  display:none;align-items:center;justify-content:center;
+  box-shadow:0 4px 18px rgba(155,109,255,.45);z-index:50;
+  transition:transform .2s,box-shadow .2s;
 }
 .fab-add-task.visible{display:flex;}
 .fab-add-task:active{transform:scale(.93);}
 .fab-add-task svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;}
 
+/* ── RING CAROUSEL ── */
 .ring-carousel-wrap{padding:24px 0 8px;overflow:hidden;position:relative;}
 .ring-carousel{display:flex;align-items:center;justify-content:center;width:100%;position:relative;height:220px;touch-action:pan-y;user-select:none;-webkit-user-select:none;}
-
-.ring-item{
-  flex-shrink:0;display:flex;flex-direction:column;align-items:center;
-  cursor:pointer;position:absolute;top:50%;
-  transition:left .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1),opacity .45s cubic-bezier(.4,0,.2,1);
-  will-change:transform,left,opacity;
-}
+.ring-item{flex-shrink:0;display:flex;flex-direction:column;align-items:center;cursor:pointer;position:absolute;top:50%;transition:left .45s cubic-bezier(.4,0,.2,1),transform .45s cubic-bezier(.4,0,.2,1),opacity .45s cubic-bezier(.4,0,.2,1);will-change:transform,left,opacity;}
 .ring-item.pos-center{left:50%;transform:translate(-50%,-50%) scale(1);opacity:1;z-index:3;}
 .ring-item.pos-left{left:calc(50% - 120px);transform:translate(-50%,-50%) scale(0.66);opacity:0.75;z-index:2;}
 .ring-item.pos-right{left:calc(50% + 120px);transform:translate(-50%,-50%) scale(0.66);opacity:0.75;z-index:2;}
 .ring-item.pos-hidden-left{left:calc(50% - 220px);transform:translate(-50%,-50%) scale(0.4);opacity:0;z-index:1;pointer-events:none;}
 .ring-item.pos-hidden-right{left:calc(50% + 220px);transform:translate(-50%,-50%) scale(0.4);opacity:0;z-index:1;pointer-events:none;}
-
 .ring-svg-wrap{position:relative;display:flex;align-items:center;justify-content:center;}
 .ring-inner{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;width:80%;}
 .ring-day-name{font-size:11px;font-weight:700;color:#9B8FC4;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
 .ring-day-num{font-size:38px;font-weight:700;color:#1A1035;line-height:1;margin-bottom:1px;}
 .ring-month-name{font-size:11px;font-weight:600;color:#9B8FC4;margin-top:1px;}
 .ring-pct-label{margin-top:6px;font-size:13px;font-weight:800;text-align:center;min-height:18px;}
-.ring-pct-label.past{color:#9B7FE8;}
+.ring-pct-label.past{color:#BB62FF;}
 .ring-pct-label.sel{color:#3DDC84;}
 .ring-pct-label.future{color:#B0A8CC;}
 
@@ -168,47 +147,128 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 .tl-task-name.done-text{text-decoration:line-through;color:var(--sub);}
 .tl-task-time{font-size:11px;color:var(--sub);margin-top:3px;display:flex;align-items:center;gap:3px;font-weight:600;}
 .tl-task-time svg{width:11px;height:11px;stroke:var(--sub);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;}
-
-/* Блок кнопок задачи: галочка + удаление */
 .tl-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;}
 .tl-check{width:32px;height:32px;border-radius:10px;border:2px solid rgba(155,109,255,.3);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .25s;}
 .tl-check.done{background:var(--grad-hdr);border-color:transparent;box-shadow:0 2px 8px rgba(155,109,255,.35);}
 .tl-check svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;display:none;}
 .tl-check.done svg{display:block;}
-/* Кнопка удаления задачи */
 .tl-delete{width:28px;height:28px;border-radius:8px;border:none;background:rgba(255,90,90,.1);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s;}
 .tl-delete:active{background:rgba(255,90,90,.25);}
 .tl-delete svg{width:13px;height:13px;stroke:#FF5A5A;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
-
 .tl-empty{text-align:center;padding:32px 16px;color:var(--sub);}
 .tl-empty svg{width:40px;height:40px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;margin-bottom:8px;opacity:.4;display:block;margin-left:auto;margin-right:auto;}
 .tl-empty p{font-size:14px;font-weight:600;}
 
-/* ── HABITS ── */
+/* ══════════════════════════════
+   HABITS — полный редизайн
+══════════════════════════════ */
+
+/* Заголовок вкладки привычек */
 .hab-head{padding:16px 16px 8px;display:flex;align-items:center;justify-content:space-between;}
 .hab-head h2{font-size:18px;font-weight:800;}
 .sec-add{width:36px;height:36px;border-radius:50%;background:var(--grad-hdr);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(155,109,255,.3);}
 .sec-add svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;}
+
+/* Слайдер недели */
+.hab-week-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 16px 12px;gap:8px;
+}
+.hab-week-arrow{
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(255,255,255,.7);border:1.5px solid rgba(155,109,255,.2);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:background .2s;
+}
+.hab-week-arrow:active{background:rgba(155,109,255,.15);}
+.hab-week-arrow svg{width:14px;height:14px;stroke:var(--accent);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+.hab-week-label{font-size:13px;font-weight:700;color:var(--sub);text-align:center;flex:1;}
+
+/* Общий прогресс-блок */
+.hab-summary{
+  margin:0 16px 14px;
+  background:rgba(255,255,255,.7);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border-radius:20px;padding:16px;
+  box-shadow:0 4px 20px rgba(155,109,255,.1);
+}
+.hab-summary-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.hab-summary-pct{font-size:36px;font-weight:900;background:var(--grad-hdr);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+.hab-summary-info{text-align:right;}
+.hab-summary-done{font-size:14px;font-weight:800;color:var(--text);}
+.hab-summary-sub{font-size:11px;color:var(--sub);margin-top:2px;}
+
+/* Столбчатая диаграмма */
+.hab-chart{display:flex;align-items:flex-end;justify-content:space-between;gap:4px;height:60px;margin-top:4px;}
+.hab-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.hab-bar-track{
+  width:100%;flex:1;
+  background:rgba(155,109,255,.1);
+  border-radius:6px;overflow:hidden;
+  display:flex;align-items:flex-end;
+  min-height:8px;
+}
+.hab-bar-fill{
+  width:100%;
+  background:var(--grad-hdr);
+  border-radius:6px;
+  transition:height .5s cubic-bezier(.4,0,.2,1);
+  min-height:0;
+}
+.hab-bar-fill.today{background:linear-gradient(135deg,#3DDC84,#00C2FF);}
+.hab-bar-day{font-size:9px;font-weight:700;color:var(--sub);text-transform:uppercase;}
+.hab-bar-day.today{color:var(--accent);}
+
+/* Список привычек */
 .hab-list{padding:0 16px;display:flex;flex-direction:column;gap:10px;}
-.hab-card{background:var(--card);border-radius:var(--r);padding:14px;box-shadow:var(--sha);}
-.hab-card-top{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.hab-card{background:rgba(255,255,255,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:var(--r);padding:14px;box-shadow:var(--sha);}
+.hab-card-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
 .hab-icon{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
 .hab-info{flex:1;min-width:0;}
 .hab-name{font-size:14px;font-weight:700;}
-.hab-streak{font-size:11px;color:var(--sub);}
+.hab-meta{font-size:11px;color:var(--sub);margin-top:2px;}
+/* Дни недели на карточке */
+.hab-days-row{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap;}
+.hab-day-chip{
+  width:28px;height:28px;border-radius:50%;
+  font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(155,109,255,.08);color:var(--sub);
+  flex-shrink:0;
+}
+.hab-day-chip.active{background:var(--grad-hdr);color:#fff;}
+.hab-day-chip.done{background:linear-gradient(135deg,#3DDC84,#00C2FF);color:#fff;}
+/* Прогресс бар привычки */
+.hab-prog-wrap{margin-bottom:4px;}
 .hab-prog-bar{height:6px;background:rgba(155,109,255,.12);border-radius:6px;overflow:hidden;}
 .hab-prog-fill{height:100%;background:var(--grad-hdr);border-radius:6px;transition:width .4s;}
-.hab-prog-label{font-size:10px;color:var(--sub);margin-top:4px;text-align:right;}
-.hab-check{width:30px;height:30px;border-radius:10px;border:2px solid rgba(155,109,255,.3);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.hab-prog-label{font-size:10px;color:var(--sub);margin-top:4px;display:flex;justify-content:space-between;}
+/* Нижняя строка карточки: галочка + удалить */
+.hab-card-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:8px;}
+.hab-check{
+  width:30px;height:30px;border-radius:10px;
+  border:2px solid rgba(155,109,255,.3);background:transparent;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all .2s;
+}
 .hab-check.done{background:var(--grad-hdr);border-color:transparent;}
 .hab-check svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;display:none;}
 .hab-check.done svg{display:block;}
+.hab-check.inactive{opacity:.3;cursor:default;pointer-events:none;}
+.hab-delete{
+  width:26px;height:26px;border-radius:8px;border:none;
+  background:rgba(255,90,90,.1);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.hab-delete:active{background:rgba(255,90,90,.25);}
+.hab-delete svg{width:12px;height:12px;stroke:#FF5A5A;fill:none;stroke-width:2.2;stroke-linecap:round;}
 
 /* ── GOALS ── */
 .goals-head{padding:16px 16px 8px;display:flex;align-items:center;justify-content:space-between;}
 .goals-head h2{font-size:18px;font-weight:800;}
 .goals-list{padding:0 16px;display:flex;flex-direction:column;gap:12px;}
-.goal-card{background:var(--card);border-radius:var(--r);padding:16px;box-shadow:var(--sha);}
+.goal-card{background:rgba(255,255,255,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:var(--r);padding:16px;box-shadow:var(--sha);}
 .goal-card-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
 .goal-icon{width:44px;height:44px;border-radius:14px;background:var(--grad-hdr);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
 .goal-info{flex:1;min-width:0;}
@@ -222,7 +282,7 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 .books-head{padding:16px 16px 8px;display:flex;align-items:center;justify-content:space-between;}
 .books-head h2{font-size:18px;font-weight:800;}
 .books-list{padding:0 16px;display:flex;flex-direction:column;gap:12px;}
-.book-card{background:var(--card);border-radius:var(--r);padding:14px;box-shadow:var(--sha);display:flex;gap:12px;align-items:center;}
+.book-card{background:rgba(255,255,255,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:var(--r);padding:14px;box-shadow:var(--sha);display:flex;gap:12px;align-items:center;}
 .book-cover{width:52px;height:70px;border-radius:10px;background:var(--grad-hdr);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px;overflow:hidden;}
 .book-cover img{width:100%;height:100%;object-fit:cover;}
 .book-info{flex:1;min-width:0;}
@@ -236,7 +296,7 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 .vit-head{padding:16px 16px 8px;display:flex;align-items:center;justify-content:space-between;}
 .vit-head h2{font-size:18px;font-weight:800;}
 .vit-list{padding:0 16px;display:flex;flex-direction:column;gap:10px;}
-.vit-card{background:var(--card);border-radius:var(--r);padding:14px;box-shadow:var(--sha);display:flex;align-items:center;gap:12px;}
+.vit-card{background:rgba(255,255,255,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:var(--r);padding:14px;box-shadow:var(--sha);display:flex;align-items:center;gap:12px;}
 .vit-icon{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#FF8FAB,#FF5A5A);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
 .vit-info{flex:1;min-width:0;}
 .vit-name{font-size:14px;font-weight:700;}
@@ -259,7 +319,7 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 .dash-xp-fill{height:100%;background:#fff;border-radius:8px;transition:width .5s;}
 .dash-xp-label{font-size:11px;opacity:.75;margin-top:5px;text-align:right;}
 .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
-.stat-tile{background:var(--card);border-radius:var(--r);padding:14px;text-align:center;box-shadow:var(--sha);}
+.stat-tile{background:rgba(255,255,255,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:var(--r);padding:14px;text-align:center;box-shadow:var(--sha);}
 .stat-val{font-size:22px;font-weight:800;color:var(--accent);}
 .stat-lbl{font-size:10px;color:var(--sub);margin-top:2px;}
 
@@ -273,55 +333,37 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 .mo-title{font-size:17px;font-weight:800;margin-bottom:16px;text-align:center;}
 .f{margin-bottom:12px;}
 .f label{display:block;font-size:12px;color:var(--sub);margin-bottom:4px;font-weight:700;}
-.f input,.f select,.f textarea{
-  width:100%;
-  border:1.5px solid rgba(155,109,255,.2);
-  border-radius:12px;
-  padding:10px 12px;
-  font-size:14px;
-  outline:none;
-  background:#F8F5FF;
-  color:var(--text);
-  transition:border .2s;
-  font-family:inherit;
-  box-sizing:border-box;
-  max-width:100%;
-  min-width:0;
-}
+.f input,.f select,.f textarea{width:100%;border:1.5px solid rgba(155,109,255,.2);border-radius:12px;padding:10px 12px;font-size:14px;outline:none;background:#F8F5FF;color:var(--text);transition:border .2s;font-family:inherit;box-sizing:border-box;max-width:100%;min-width:0;}
 .f input:focus,.f select:focus,.f textarea:focus{border-color:var(--accent);}
-.dates-row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px;
-  margin-bottom:12px;
-  width:100%;
-}
+.dates-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;width:100%;}
 .dates-row .f{margin-bottom:0;}
 .save-btn{width:100%;padding:14px;background:var(--grad-hdr);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px;box-shadow:0 4px 14px rgba(155,109,255,.35);font-family:inherit;}
 .save-btn:disabled{opacity:.4;cursor:not-allowed;}
 
+/* Выбор дней в модалке привычки */
+.day-picker{display:flex;gap:6px;justify-content:space-between;margin-bottom:4px;}
+.day-pick-btn{
+  flex:1;height:36px;border-radius:10px;
+  border:1.5px solid rgba(155,109,255,.2);
+  background:#F8F5FF;color:var(--sub);
+  font-size:11px;font-weight:700;cursor:pointer;
+  transition:all .2s;font-family:inherit;
+}
+.day-pick-btn.sel{background:var(--grad-hdr);color:#fff;border-color:transparent;}
+.day-all-btn{
+  width:100%;padding:9px;border-radius:10px;
+  border:1.5px solid rgba(155,109,255,.2);
+  background:#F8F5FF;color:var(--accent);
+  font-size:12px;font-weight:700;cursor:pointer;
+  margin-top:6px;font-family:inherit;transition:all .2s;
+}
+.day-all-btn:active{background:rgba(155,109,255,.1);}
+
 /* ── LANDING ── */
 #landing{position:fixed;inset:0;background:var(--grad-hdr);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:200;padding:32px;}
 .land-logo{font-size:52px;margin-bottom:12px;}
-
-/* ── ПРАВКА 1: название «ЛайфКвестум» белым на лендинге ── */
-.land-title{
-  font-size:28px;
-  font-weight:800;
-  color:#fff;
-  margin-bottom:8px;
-  letter-spacing:-.3px;
-}
-/* Подзаголовок «мини‑приложение» тоже белый, чуть прозрачнее */
-.land-subtitle{
-  font-size:13px;
-  font-weight:600;
-  color:rgba(255,255,255,.7);
-  margin-bottom:4px;
-  letter-spacing:.5px;
-  text-transform:uppercase;
-}
-
+.land-subtitle{font-size:13px;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:4px;letter-spacing:.5px;text-transform:uppercase;}
+.land-title{font-size:28px;font-weight:800;color:#fff;margin-bottom:8px;}
 .land-sub{font-size:15px;color:rgba(255,255,255,.75);text-align:center;margin-bottom:32px;}
 .land-form{width:100%;max-width:340px;display:flex;flex-direction:column;gap:12px;}
 .land-input{padding:14px 16px;border-radius:14px;border:none;font-size:15px;background:rgba(255,255,255,.18);color:#fff;outline:none;font-family:inherit;}
@@ -344,7 +386,6 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 
 <div id="landing">
   <div class="land-logo">🏆</div>
-  <!-- ПРАВКА 1: название + подпись «мини‑приложение» -->
   <div class="land-subtitle">мини‑приложение</div>
   <div class="land-title">ЛайфКвестум</div>
   <div class="land-sub">Прокачай свою жизнь каждый день</div>
@@ -377,9 +418,25 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
     <div class="page" id="p-dash"></div>
     <div class="page" id="p-plan"></div>
     <div class="page" id="p-hab">
-      <div class="hab-head"><h2>Привычки</h2>
-        <button class="sec-add" data-action="open-modal" data-modal="m-hab"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+      <div class="hab-head">
+        <h2>Привычки</h2>
+        <button class="sec-add" data-action="open-modal" data-modal="m-hab">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
       </div>
+      <!-- Навигация по неделям -->
+      <div class="hab-week-nav">
+        <button class="hab-week-arrow" id="hab-prev-week">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="hab-week-label" id="hab-week-label">Эта неделя</div>
+        <button class="hab-week-arrow" id="hab-next-week">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+      <!-- Общий прогресс + диаграмма -->
+      <div class="hab-summary" id="hab-summary"></div>
+      <!-- Список привычек -->
       <div class="hab-list" id="hab-list"></div>
     </div>
     <div class="page" id="p-goals">
@@ -412,7 +469,7 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
   </nav>
 </div>
 
-<!-- ПРАВКА 3: FAB кнопка «+» — правый нижний угол, видна только на планере -->
+<!-- FAB -->
 <button class="fab-add-task" id="fab-task" data-action="open-task-modal">
   <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
 </button>
@@ -433,7 +490,33 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
     <button class="save-btn" id="sb-task">Сохранить</button>
   </div>
 </div>
-<div class="mo" id="m-hab"><div class="mo-box"><div class="mo-handle"></div><div class="mo-title">Новая привычка</div><div class="f"><label>Название</label><input id="h-text" placeholder="Например: Медитация"></div><div class="f"><label>Иконка</label><input id="h-icon" placeholder="🧘" maxlength="2"></div><div class="f"><label>Цель (дней)</label><input id="h-goal" type="number" min="1" max="365" placeholder="30"></div><button class="save-btn" id="sb-hab">Сохранить</button></div></div>
+
+<!-- Модал привычки — обновлённый -->
+<div class="mo" id="m-hab">
+  <div class="mo-box">
+    <div class="mo-handle"></div>
+    <div class="mo-title">Новая привычка</div>
+    <div class="f"><label>Название</label><input id="h-text" placeholder="Например: Медитация"></div>
+    <div class="f"><label>Иконка (эмодзи)</label><input id="h-icon" placeholder="Например: 🧘" maxlength="2"></div>
+    <div class="f">
+      <label>Дни выполнения</label>
+      <div class="day-picker" id="h-day-picker">
+        <button type="button" class="day-pick-btn" data-day="1">Пн</button>
+        <button type="button" class="day-pick-btn" data-day="2">Вт</button>
+        <button type="button" class="day-pick-btn" data-day="3">Ср</button>
+        <button type="button" class="day-pick-btn" data-day="4">Чт</button>
+        <button type="button" class="day-pick-btn" data-day="5">Пт</button>
+        <button type="button" class="day-pick-btn" data-day="6">Сб</button>
+        <button type="button" class="day-pick-btn" data-day="0">Вс</button>
+      </div>
+      <button type="button" class="day-all-btn" id="h-day-all">Каждый день</button>
+    </div>
+    <div class="f"><label>Цель (дней)</label><input id="h-goal" type="number" min="1" max="365" placeholder="30"></div>
+    <div class="f"><label>Связать с целью</label><select id="h-goal-link"></select></div>
+    <button class="save-btn" id="sb-hab">Сохранить</button>
+  </div>
+</div>
+
 <div class="mo" id="m-goal"><div class="mo-box"><div class="mo-handle"></div><div class="mo-title">Новая цель</div><div class="f"><label>Название</label><input id="g-text" placeholder="Моя цель"></div><div class="f"><label>Иконка</label><input id="g-icon" placeholder="🎯" maxlength="2"></div><div class="f"><label>Дедлайн</label><input id="g-deadline" type="date"></div><div class="f"><label>Описание</label><textarea id="g-desc" rows="2" placeholder="Подробности..."></textarea></div><button class="save-btn" id="sb-goal">Сохранить</button></div></div>
 <div class="mo" id="m-book"><div class="mo-box"><div class="mo-handle"></div><div class="mo-title">Новая книга</div><div class="f"><label>Название</label><input id="b-title" placeholder="Название книги"></div><div class="f"><label>Автор</label><input id="b-author" placeholder="Автор"></div><div class="f"><label>Всего страниц</label><input id="b-total" type="number" min="1" placeholder="300"></div><div class="f"><label>Прочитано страниц</label><input id="b-read" type="number" min="0" placeholder="0"></div><button class="save-btn" id="sb-book">Сохранить</button></div></div>
 <div class="mo" id="m-vit"><div class="mo-box"><div class="mo-handle"></div><div class="mo-title">Новый витамин</div><div class="f"><label>Название</label><input id="v-name" placeholder="Витамин D3"></div><div class="f"><label>Дозировка</label><input id="v-dose" placeholder="1000 МЕ"></div><div class="f"><label>Иконка</label><input id="v-icon" placeholder="💊" maxlength="2"></div><button class="save-btn" id="sb-vit">Сохранить</button></div></div>
@@ -456,8 +539,16 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 <script>
 (function(){'use strict';
 
-var KEY='lq_v9',XP_PER_LVL=200,S,curP='plan',planCenterIdx=0,carouselAnimating=false;
+/* ══ КОНСТАНТЫ ══ */
+var KEY='lq_v10',XP_PER_LVL=200,S,curP='plan',planCenterIdx=0,carouselAnimating=false;
+/* habWeekOffset: 0 = текущая неделя, -1 = прошлая, +1 = будущая */
+var habWeekOffset=0;
+
 var DAY_NAMES=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+var DAY_SHORT=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+/* Порядок отображения: Пн=1..Вс=0 */
+var WEEK_ORDER=[1,2,3,4,5,6,0];
+var WEEK_LABELS=['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
 var MONTH_SHORT=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
 var QUOTES=[
   'Небольшой прогресс каждый день ведёт к большим результатам.',
@@ -472,11 +563,9 @@ var QUOTES=[
   'Верь в процесс — результат придёт сам.'
 ];
 
-var RING_CENTER_SIZE=160;
-var RING_CENTER_SW=15;
-var RING_SIDE_SIZE=108;
-var RING_SIDE_SW=9;
+var RING_CENTER_SIZE=160,RING_CENTER_SW=15,RING_SIDE_SIZE=108,RING_SIDE_SW=9;
 
+/* ══ УТИЛИТЫ ══ */
 function getRank(l){if(l<=2)return'Новичок';if(l<=5)return'Искатель';if(l<=10)return'Герой';if(l<=20)return'Мастер';return'Легенда';}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
 function today(){var d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
@@ -491,12 +580,28 @@ function idxToDate(idx){return addDays(today(),idx);}
 function todayQuote(){var d=new Date();var seed=d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();return QUOTES[seed%QUOTES.length];}
 function timeDiff(s,e){try{var sp=s.split(':'),ep=e.split(':');return parseInt(ep[0])*60+parseInt(ep[1])-(parseInt(sp[0])*60+parseInt(sp[1]));}catch(x){return null;}}
 
+/* Получить строку-ключ понедельника для произвольной недели с offset */
+function getWeekMonday(offset){
+  var d=new Date();
+  var day=d.getDay(); /* 0=вс */
+  var diff=d.getDate()-(day===0?6:day-1);
+  d.setDate(diff + offset*7);
+  return strFromDate(d);
+}
+/* Массив из 7 строк-дат для недели начиная с mondayStr */
+function weekDates(mondayStr){
+  var res=[];
+  for(var i=0;i<7;i++)res.push(addDays(mondayStr,i));
+  return res;
+}
+
+/* ══ ХРАНИЛИЩЕ ══ */
 function defS(){return{name:'',ava:'🦊',xp:0,weeks:{},habits:[],goals:[],books:[],vitamins:[],vitDone:{},premium:false};}
 function loadS(){
   try{
     var raw=localStorage.getItem(KEY);if(raw)return JSON.parse(raw);
-    var ok=['lq5','lq_v4','lq_v5','lq_v6','lq_v7','lq_v8'];
-    for(var i=0;i<ok.length;i++){var o=localStorage.getItem(ok[i]);if(o){var d=JSON.parse(o);localStorage.removeItem(ok[i]);return Object.assign(defS(),d);}}
+    var ok=['lq5','lq_v4','lq_v5','lq_v6','lq_v7','lq_v8','lq_v9'];
+    for(var i=0;i<ok.length;i++){var o=localStorage.getItem(ok[i]);if(o){var dd=JSON.parse(o);localStorage.removeItem(ok[i]);return Object.assign(defS(),dd);}}
   }catch(e){}
   return defS();
 }
@@ -505,14 +610,13 @@ function sv(){localStorage.setItem(KEY,JSON.stringify(S));}
 function lvl(){return Math.floor(S.xp/XP_PER_LVL)+1;}
 function xpInLvl(){return S.xp%XP_PER_LVL;}
 function xpPct(){return Math.round(xpInLvl()/XP_PER_LVL*100);}
-
-/* ПРАВКА 2: addXP принимает отрицательные числа (вычитание XP) */
 function addXP(n){S.xp=Math.max(0,S.xp+n);sv();}
 
 function ensW(wk){if(!S.weeks[wk])S.weeks[wk]={tasks:[]};return S.weeks[wk];}
 function tasksForDate(ds){var wk=wkKey(ds);return(S.weeks[wk]?S.weeks[wk].tasks:[]).filter(function(t){return t.date===ds;});}
 function taskPct(ds){var t=tasksForDate(ds);return t.length===0?0:Math.round(t.filter(function(x){return x.done;}).length/t.length*100);}
 
+/* ══ RING SVG ══ */
 function buildRingSVG(opts){
   var sz=opts.size,sw=opts.stroke,pct=opts.pct,type=opts.type,gid=opts.uid;
   var r=(sz-sw)/2,cx=sz/2,cy=sz/2;
@@ -524,8 +628,9 @@ function buildRingSVG(opts){
     strokeAttr='#C8C0E0';
   } else {
     var gradId='g-'+gid;
+    /* прошедшие дни — градиент хедера, выбранный — бирюзовый */
     var c1=type==='past'?'#BB62FF':'#3DDC84';
-    var c2=type==='past'?'#9B7FE8':'#00C2FF';
+    var c2=type==='past'?'#2FA6FF':'#00C2FF';
     defsHtml='<defs>'
       +'<linearGradient id="'+gradId+'" x1="0%" y1="0%" x2="100%" y2="100%">'
       +'<stop offset="0%" stop-color="'+c1+'"/>'
@@ -544,66 +649,46 @@ function buildRingSVG(opts){
       +' stroke="'+strokeAttr+'" stroke-width="'+sw+'"'
       +' stroke-dasharray="'+dash+' '+gap+'"'
       +' stroke-dashoffset="'+offStart+'"'
-      +' stroke-linecap="round"'
-      +filterAttr+'/>';
+      +' stroke-linecap="round"'+filterAttr+'/>';
   }
   return '<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 '+sz+' '+sz+'" xmlns="http://www.w3.org/2000/svg">'
     +defsHtml
     +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="#E8E2F4" stroke-width="'+sw+'"/>'
-    +progressArc
-    +'</svg>';
+    +progressArc+'</svg>';
 }
 
 /* ══ CAROUSEL ══ */
 function buildCarousel(){
-  var wrap=document.querySelector('.ring-carousel');
-  if(!wrap)return;
-  renderCarouselItems(wrap);
-  attachCarouselEvents(wrap);
+  var wrap=document.querySelector('.ring-carousel');if(!wrap)return;
+  renderCarouselItems(wrap);attachCarouselEvents(wrap);
 }
-
 function ringTypeForOffset(off){
   var abs=planCenterIdx+off;
-  if(abs<0)return'past';
-  if(abs===0)return'sel';
-  return'future';
+  if(abs<0)return'past';if(abs===0)return'sel';return'future';
 }
-
 function renderCarouselItems(wrap){
   var POS=['pos-hidden-left','pos-left','pos-center','pos-right','pos-hidden-right'];
-  var OFFS=[-2,-1,0,1,2];
-  var html='';
+  var OFFS=[-2,-1,0,1,2];var html='';
   OFFS.forEach(function(off,i){
-    var abs=planCenterIdx+off;
-    var ds=idxToDate(abs);
-    var d=dateFromStr(ds);
-    var pct=taskPct(ds);
-    var isCenter=off===0;
-    var rtype=ringTypeForOffset(off);
-    var sz=isCenter?RING_CENTER_SIZE:RING_SIDE_SIZE;
-    var sw=isCenter?RING_CENTER_SW:RING_SIDE_SW;
+    var abs=planCenterIdx+off;var ds=idxToDate(abs);var d=dateFromStr(ds);
+    var pct=taskPct(ds);var isCenter=off===0;var rtype=ringTypeForOffset(off);
+    var sz=isCenter?RING_CENTER_SIZE:RING_SIDE_SIZE;var sw=isCenter?RING_CENTER_SW:RING_SIDE_SW;
     var ruid='r'+abs+'_'+Date.now();
     html+='<div class="ring-item '+POS[i]+'" data-offset="'+off+'" data-abs="'+abs+'">'
-      +'<div class="ring-svg-wrap">'
-      +buildRingSVG({size:sz,stroke:sw,pct:pct,type:rtype,uid:ruid})
+      +'<div class="ring-svg-wrap">'+buildRingSVG({size:sz,stroke:sw,pct:pct,type:rtype,uid:ruid})
       +'<div class="ring-inner">'
       +'<div class="ring-day-name">'+esc(DAY_NAMES[d.getDay()])+'</div>'
       +'<div class="ring-day-num">'+d.getDate()+'</div>'
       +'<div class="ring-month-name">'+esc(MONTH_SHORT[d.getMonth()])+'</div>'
-      +'</div>'
-      +'</div>'
-      +'<div class="ring-pct-label '+rtype+'">'+pct+'%</div>'
-      +'</div>';
+      +'</div></div>'
+      +'<div class="ring-pct-label '+rtype+'">'+pct+'%</div></div>';
   });
   wrap.innerHTML=html;
 }
-
 function attachCarouselEvents(wrap){
   wrap.addEventListener('click',function(e){
-    var item=e.target.closest('.ring-item');
-    if(!item||carouselAnimating)return;
-    var off=parseInt(item.dataset.offset||'0');
-    if(off===0)return;
+    var item=e.target.closest('.ring-item');if(!item||carouselAnimating)return;
+    var off=parseInt(item.dataset.offset||'0');if(off===0)return;
     shiftCarousel(off>0?1:-1);
   });
   var sx=0,sy=0;
@@ -617,51 +702,30 @@ function attachCarouselEvents(wrap){
   wrap.addEventListener('mousedown',function(e){mx=e.clientX;dragging=true;});
   wrap.addEventListener('mouseup',function(e){
     if(!dragging||carouselAnimating){dragging=false;return;}
-    dragging=false;
-    if(Math.abs(e.clientX-mx)>28)shiftCarousel(e.clientX-mx<0?1:-1);
+    dragging=false;if(Math.abs(e.clientX-mx)>28)shiftCarousel(e.clientX-mx<0?1:-1);
   });
   wrap.addEventListener('mouseleave',function(){dragging=false;});
 }
-
 function shiftCarousel(dir){
-  if(carouselAnimating)return;
-  carouselAnimating=true;
-  planCenterIdx+=dir;
-  var wrap=document.querySelector('.ring-carousel');
-  if(!wrap){carouselAnimating=false;return;}
+  if(carouselAnimating)return;carouselAnimating=true;planCenterIdx+=dir;
+  var wrap=document.querySelector('.ring-carousel');if(!wrap){carouselAnimating=false;return;}
   var POS=['pos-hidden-left','pos-left','pos-center','pos-right','pos-hidden-right'];
   wrap.querySelectorAll('.ring-item').forEach(function(item){
-    var newOff=parseInt(item.dataset.offset||'0')-dir;
-    var posIdx=newOff+2;
-    item.dataset.offset=newOff;
-    POS.forEach(function(p){item.classList.remove(p);});
-    if(posIdx>=0&&posIdx<5){
-      item.classList.add(POS[posIdx]);
-      refreshRingItem(item,newOff);
-    } else {
-      item.style.opacity='0';item.style.pointerEvents='none';
-    }
+    var newOff=parseInt(item.dataset.offset||'0')-dir;var posIdx=newOff+2;
+    item.dataset.offset=newOff;POS.forEach(function(p){item.classList.remove(p);});
+    if(posIdx>=0&&posIdx<5){item.classList.add(POS[posIdx]);refreshRingItem(item,newOff);}
+    else{item.style.opacity='0';item.style.pointerEvents='none';}
   });
   setTimeout(function(){
-    carouselAnimating=false;
-    renderCarouselItems(wrap);
-    attachCarouselEvents(wrap);
-    renderSchedule();
+    carouselAnimating=false;renderCarouselItems(wrap);attachCarouselEvents(wrap);renderSchedule();
   },460);
 }
-
 function refreshRingItem(item,off){
-  var abs=planCenterIdx+off;
-  var ds=idxToDate(abs);
-  var d=dateFromStr(ds);
-  var pct=taskPct(ds);
-  var isCenter=off===0;
-  var rtype=ringTypeForOffset(off);
-  var sz=isCenter?RING_CENTER_SIZE:RING_SIDE_SIZE;
-  var sw=isCenter?RING_CENTER_SW:RING_SIDE_SW;
+  var abs=planCenterIdx+off;var ds=idxToDate(abs);var d=dateFromStr(ds);
+  var pct=taskPct(ds);var isCenter=off===0;var rtype=ringTypeForOffset(off);
+  var sz=isCenter?RING_CENTER_SIZE:RING_SIDE_SIZE;var sw=isCenter?RING_CENTER_SW:RING_SIDE_SW;
   var ruid='r'+abs+'_r'+Date.now();
-  item.innerHTML='<div class="ring-svg-wrap">'
-    +buildRingSVG({size:sz,stroke:sw,pct:pct,type:rtype,uid:ruid})
+  item.innerHTML='<div class="ring-svg-wrap">'+buildRingSVG({size:sz,stroke:sw,pct:pct,type:rtype,uid:ruid})
     +'<div class="ring-inner">'
     +'<div class="ring-day-name">'+esc(DAY_NAMES[d.getDay()])+'</div>'
     +'<div class="ring-day-num">'+d.getDate()+'</div>'
@@ -675,36 +739,24 @@ function rPlan(){
   var el=document.getElementById('p-plan');if(!el)return;
   el.innerHTML=
     '<div class="ring-carousel-wrap"><div class="ring-carousel"></div></div>'
-    +'<div class="plan-quote">'
-    +'<div style="position:relative;padding:8px 16px;">'
+    +'<div class="plan-quote"><div style="position:relative;padding:8px 16px;">'
     +'<span class="plan-quote-mark" style="position:absolute;top:0;left:0;">❝</span>'
     +'<div class="plan-quote-text">'+esc(todayQuote())+'</div>'
     +'<span class="plan-quote-mark" style="position:absolute;bottom:0;right:0;transform:rotate(180deg);">❝</span>'
     +'</div></div>'
     +'<div class="plan-body" id="plan-body"></div>';
-  buildCarousel();
-  renderSchedule();
-}
-
-/* ПРАВКА 3: FAB управляется через updateFab() */
-function updateFab(){
-  var fab=document.getElementById('fab-task');
-  if(!fab)return;
-  if(curP==='plan')fab.classList.add('visible');
-  else fab.classList.remove('visible');
+  buildCarousel();renderSchedule();
 }
 
 function renderSchedule(){
   var body=document.getElementById('plan-body');if(!body)return;
   var ds=idxToDate(planCenterIdx);
   var tasks=tasksForDate(ds).slice().sort(function(a,b){return(a.timeStart||a.time||'').localeCompare(b.timeStart||b.time||'');});
-  /* шапка расписания — без кнопки + (она теперь FAB) */
   var html='<div class="sched-card"><div class="sched-hdr">'
     +'<div class="sched-hdr-left">'
     +'<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'
     +'<span class="sched-title">Расписание</span><span class="sched-date"> · '+fmtDate(ds)+'</span>'
-    +'</div>'
-    +'</div><div class="timeline">';
+    +'</div></div><div class="timeline">';
   if(!tasks.length){
     html+='<div class="tl-empty"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><p>Нет задач на этот день</p></div>';
   } else {
@@ -724,20 +776,161 @@ function renderSchedule(){
         +'<div class="tl-task-name'+(t.done?' done-text':'')+'">'+esc(t.text)+'</div>'
         +(timeDisplay?'<div class="tl-task-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'+esc(timeDisplay)+'</div>':'')
         +'</div>'
-        /* ПРАВКА 2: обёртка .tl-actions содержит галочку И кнопку удаления */
         +'<div class="tl-actions">'
         +'<div class="tl-check'+(t.done?' done':'')+'" data-action="tog" data-tid="'+t.id+'" data-date="'+ds+'">'
-        +'<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>'
-        +'</div>'
-        +'<button class="tl-delete" data-action="del-task" data-tid="'+t.id+'" data-date="'+ds+'" title="Удалить задачу">'
+        +'<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>'
+        +'<button class="tl-delete" data-action="del-task" data-tid="'+t.id+'" data-date="'+ds+'">'
         +'<svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>'
-        +'</button>'
-        +'</div>'
-        +'</div></div>';
+        +'</button></div></div></div>';
     });
   }
   html+='</div></div>';
   body.innerHTML=html;
+}
+
+/* ══ HABITS — вспомогательные функции ══ */
+
+/* Возвращает true если привычка запланирована на этот день недели */
+function habScheduledOnDay(h,dayOfWeek){
+  var days=h.days||[0,1,2,3,4,5,6];
+  return days.indexOf(dayOfWeek)>=0;
+}
+
+/* Ключ для хранения выполнений привычки: habDone[dateStr] = true/false */
+/* Уже хранится в h.doneDs = ['2025-01-01',...] */
+
+/* Считает статистику привычки за неделю (массив 7 дат от пн до вс) */
+function habWeekStats(h,dates){
+  /* dates — массив 7 строк дат [пн,вт,...,вс] */
+  var scheduled=0,done=0;
+  dates.forEach(function(ds){
+    var d=dateFromStr(ds);
+    var dow=d.getDay(); /* 0=вс,1=пн... */
+    if(habScheduledOnDay(h,dow)){
+      scheduled++;
+      if((h.doneDs||[]).indexOf(ds)>=0)done++;
+    }
+  });
+  return{scheduled:scheduled,done:done,pct:scheduled>0?Math.round(done/scheduled*100):0};
+}
+
+/* Сколько привычек запланировано на конкретный день */
+function habsForDay(ds){
+  var d=dateFromStr(ds);var dow=d.getDay();
+  return S.habits.filter(function(h){return habScheduledOnDay(h,dow);});
+}
+
+/* Сколько привычек выполнено за конкретный день */
+function habsDoneForDay(ds){
+  return habsForDay(ds).filter(function(h){return(h.doneDs||[]).indexOf(ds)>=0;});
+}
+
+/* ══ RENDER HABITS ══ */
+function rHab(){
+  var mondayStr=getWeekMonday(habWeekOffset);
+  var dates=weekDates(mondayStr);
+  var todayStr=today();
+
+  /* Обновить лейбл недели */
+  var lbl=document.getElementById('hab-week-label');
+  if(lbl){
+    if(habWeekOffset===0)lbl.textContent='Эта неделя';
+    else if(habWeekOffset===-1)lbl.textContent='Прошлая неделя';
+    else if(habWeekOffset===1)lbl.textContent='Следующая неделя';
+    else{
+      var d1=dateFromStr(dates[0]),d2=dateFromStr(dates[6]);
+      lbl.textContent=d1.getDate()+' '+MONTH_SHORT[d1.getMonth()]+' – '+d2.getDate()+' '+MONTH_SHORT[d2.getMonth()];
+    }
+  }
+
+  /* ── Общий прогресс за неделю ── */
+  var sumEl=document.getElementById('hab-summary');
+  if(sumEl){
+    /* Считаем суммарно по всем привычкам за 7 дней */
+    var totalSched=0,totalDone=0;
+    S.habits.forEach(function(h){
+      var st=habWeekStats(h,dates);
+      totalSched+=st.scheduled;totalDone+=st.done;
+    });
+    var weekPct=totalSched>0?Math.round(totalDone/totalSched*100):0;
+
+    /* Столбчатая диаграмма: по 7 дням */
+    var chartHtml='<div class="hab-chart">';
+    WEEK_ORDER.forEach(function(dow,i){
+      var ds=dates[i]; /* dates[0]=пн, dates[6]=вс */
+      var dayHabs=habsForDay(ds);
+      var dayDone=habsDoneForDay(ds).length;
+      var dayPct=dayHabs.length>0?Math.round(dayDone/dayHabs.length*100):0;
+      var isToday=ds===todayStr;
+      chartHtml+='<div class="hab-bar-wrap">'
+        +'<div class="hab-bar-track">'
+        +'<div class="hab-bar-fill'+(isToday?' today':'')+'" style="height:'+dayPct+'%"></div>'
+        +'</div>'
+        +'<div class="hab-bar-day'+(isToday?' today':'')+'">'+WEEK_LABELS[i]+'</div>'
+        +'</div>';
+    });
+    chartHtml+='</div>';
+
+    sumEl.innerHTML=
+      '<div class="hab-summary-top">'
+      +'<div class="hab-summary-pct">'+weekPct+'%</div>'
+      +'<div class="hab-summary-info">'
+      +'<div class="hab-summary-done">'+totalDone+' из '+totalSched+'</div>'
+      +'<div class="hab-summary-sub">привычек выполнено</div>'
+      +'</div></div>'
+      +chartHtml;
+  }
+
+  /* ── Список привычек ── */
+  var el=document.getElementById('hab-list');if(!el)return;
+  if(!S.habits.length){
+    el.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><p>Нет привычек. Добавь первую!</p></div>';
+    return;
+  }
+
+  el.innerHTML=S.habits.map(function(h){
+    var st=habWeekStats(h,dates);
+    /* Связанная цель */
+    var goalName='';
+    if(h.goalId){var g=S.goals.find(function(x){return x.id===h.goalId;});if(g)goalName=g.name;}
+
+    /* Строка дней-чипов */
+    var daysHtml='<div class="hab-days-row">';
+    WEEK_ORDER.forEach(function(dow,i){
+      var ds=dates[i];
+      var scheduled=habScheduledOnDay(h,dow);
+      var done=(h.doneDs||[]).indexOf(ds)>=0;
+      var cls=done?'hab-day-chip done':(scheduled?'hab-day-chip active':'hab-day-chip');
+      daysHtml+='<div class="'+cls+'">'+WEEK_LABELS[i]+'</div>';
+    });
+    daysHtml+='</div>';
+
+    /* Галочка: активна только если привычка запланирована сегодня (или в день просматриваемой недели = сегодня) */
+    var todayDow=dateFromStr(todayStr).getDay();
+    var scheduledToday=habScheduledOnDay(h,todayDow);
+    var doneToday=(h.doneDs||[]).indexOf(todayStr)>=0;
+    var checkCls='hab-check'+(doneToday?' done':'')+((!scheduledToday&&habWeekOffset===0)?' inactive':'');
+
+    return '<div class="hab-card">'
+      +'<div class="hab-card-top">'
+      +'<div class="hab-icon">'+esc(h.icon||'⭐')+'</div>'
+      +'<div class="hab-info">'
+      +'<div class="hab-name">'+esc(h.name)+'</div>'
+      +'<div class="hab-meta">🔥 '+（h.streak||0)+'д. подряд'+(goalName?' · 🎯 '+esc(goalName):'')+'</div>'
+      +'</div></div>'
+      +daysHtml
+      +'<div class="hab-prog-wrap">'
+      +'<div class="hab-prog-bar"><div class="hab-prog-fill" style="width:'+st.pct+'%"></div></div>'
+      +'<div class="hab-prog-label"><span>Неделя: '+st.done+'/'+st.scheduled+'</span><span>'+st.pct+'%</span></div>'
+      +'</div>'
+      +'<div class="hab-card-bottom">'
+      +'<div class="'+checkCls+'" data-action="hab-tog" data-hid="'+h.id+'">'
+      +'<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>'
+      +'<button class="hab-delete" data-action="del-hab" data-hid="'+h.id+'">'
+      +'<svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>'
+      +'</button></div>'
+      +'</div>';
+  }).join('');
 }
 
 /* ══ DASHBOARD ══ */
@@ -760,23 +953,6 @@ function rDash(){
     +'<div class="stat-tile"><div class="stat-val">'+habDone+'</div><div class="stat-lbl">Привычек</div></div>'
     +'<div class="stat-tile"><div class="stat-val">'+lvl()+'</div><div class="stat-lbl">Уровень</div></div>'
     +'</div></div>';
-}
-
-function rHab(){
-  var el=document.getElementById('hab-list');if(!el)return;
-  if(!S.habits.length){el.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><p>Нет привычек. Добавь первую!</p></div>';return;}
-  var tod=today();
-  el.innerHTML=S.habits.map(function(h){
-    var done=(h.doneDs||[]).indexOf(tod)>=0;
-    var streak=h.streak||0,goal=h.goalDays||30;
-    var pct=Math.min(100,Math.round(streak/goal*100));
-    return '<div class="hab-card"><div class="hab-card-top">'
-      +'<div class="hab-icon">'+esc(h.icon||'⭐')+'</div>'
-      +'<div class="hab-info"><div class="hab-name">'+esc(h.name)+'</div><div class="hab-streak">🔥 '+streak+' дней подряд</div></div>'
-      +'<div class="hab-check'+(done?' done':'')+'" data-action="hab-tog" data-hid="'+h.id+'"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>'
-      +'</div><div class="hab-prog-bar"><div class="hab-prog-fill" style="width:'+pct+'%"></div></div>'
-      +'<div class="hab-prog-label">'+streak+' / '+goal+' дней</div></div>';
-  }).join('');
 }
 
 function rGoals(){
@@ -812,8 +988,7 @@ function rVit(){
     var done=(S.vitDone[tod]||[]).indexOf(v.id)>=0;
     return '<div class="vit-card"><div class="vit-icon">'+esc(v.icon||'💊')+'</div>'
       +'<div class="vit-info"><div class="vit-name">'+esc(v.name)+'</div><div class="vit-dose">'+esc(v.dose||'')+'</div></div>'
-      +'<div class="vit-check'+(done?' done':'')+'" data-action="vit-tog" data-vid="'+v.id+'"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>'
-      +'</div>';
+      +'<div class="vit-check'+(done?' done':'')+'" data-action="vit-tog" data-vid="'+v.id+'"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div></div>';
   }).join('');
 }
 
@@ -833,6 +1008,11 @@ function updateHdr(){
 
 function rAll(){updateHdr();rDash();rHab();rGoals();rBooks();rVit();}
 
+function updateFab(){
+  var fab=document.getElementById('fab-task');if(!fab)return;
+  if(curP==='plan')fab.classList.add('visible');else fab.classList.remove('visible');
+}
+
 function goPage(p){
   curP=p;
   document.querySelectorAll('.page').forEach(function(el){el.classList.remove('active');});
@@ -841,14 +1021,14 @@ function goPage(p){
   var nb=document.querySelector('.nav-btn[data-page="'+p+'"]');if(nb)nb.classList.add('active');
   if(p==='plan')rPlan();
   else if(p==='dash')rDash();
-  else if(p==='hab')rHab();
+  else if(p==='hab'){habWeekOffset=0;rHab();}
   else if(p==='goals')rGoals();
   else if(p==='books')rBooks();
   else if(p==='vit')rVit();
-  /* ПРАВКА 3: показываем/скрываем FAB */
   updateFab();
 }
 
+/* ══ MODALS ══ */
 function openModal(id){
   if(id==='m-task'){
     ['t-text','t-time-start','t-time-end'].forEach(function(i){var e=document.getElementById(i);if(e)e.value='';});
@@ -856,7 +1036,14 @@ function openModal(id){
     var tp=document.getElementById('t-pri');if(tp)tp.value='md';
     fillGoalSel('t-goal');vld('m-task');
   }
-  if(id==='m-hab'){['h-text','h-icon'].forEach(function(i){var e=document.getElementById(i);if(e)e.value='';});var hg=document.getElementById('h-goal');if(hg)hg.value='30';}
+  if(id==='m-hab'){
+    var ht=document.getElementById('h-text');if(ht)ht.value='';
+    var hi=document.getElementById('h-icon');if(hi)hi.value='';
+    var hg=document.getElementById('h-goal');if(hg)hg.value='30';
+    /* Сбросить выбор дней */
+    document.querySelectorAll('.day-pick-btn').forEach(function(b){b.classList.remove('sel');});
+    fillGoalSel('h-goal-link');
+  }
   if(id==='m-goal'){['g-text','g-icon','g-deadline','g-desc'].forEach(function(i){var e=document.getElementById(i);if(e)e.value='';});}
   if(id==='m-vit'){['v-name','v-dose','v-icon'].forEach(function(i){var e=document.getElementById(i);if(e)e.value='';});}
   if(id==='m-book'){var br=document.getElementById('b-read');if(br)br.value='0';['b-title','b-author','b-total'].forEach(function(i){var e=document.getElementById(i);if(e)e.value='';});}
@@ -871,6 +1058,7 @@ function fillGoalSel(elId){
   S.goals.forEach(function(g){sel.innerHTML+='<option value="'+g.id+'">'+esc(g.name)+'</option>';});
 }
 
+/* ══ SAVE ══ */
 function saveTask(){
   var txt=document.getElementById('t-text').value.trim();if(!txt)return;
   var date=document.getElementById('t-date').value||idxToDate(planCenterIdx);
@@ -884,38 +1072,48 @@ function saveTask(){
   if(curP==='plan'){var w=document.querySelector('.ring-carousel');if(w){renderCarouselItems(w);attachCarouselEvents(w);}renderSchedule();}
   if(curP==='dash')rDash();
 }
-function saveHabit(){var txt=document.getElementById('h-text').value.trim();if(!txt)return;S.habits.push({id:uid(),name:txt,icon:document.getElementById('h-icon').value||'⭐',goalDays:parseInt(document.getElementById('h-goal').value)||30,streak:0,doneDs:[]});sv();closeAllModals();rHab();}
+
+function saveHabit(){
+  var txt=document.getElementById('h-text').value.trim();if(!txt)return;
+  /* Собираем выбранные дни */
+  var days=[];
+  document.querySelectorAll('.day-pick-btn.sel').forEach(function(b){days.push(parseInt(b.dataset.day));});
+  /* Если ни одного дня не выбрано — берём все */
+  if(!days.length)days=[0,1,2,3,4,5,6];
+  var goalLink=document.getElementById('h-goal-link').value||'';
+  S.habits.push({
+    id:uid(),name:txt,
+    icon:document.getElementById('h-icon').value||'',
+    goalDays:parseInt(document.getElementById('h-goal').value)||30,
+    days:days,
+    goalId:goalLink,
+    streak:0,doneDs:[]
+  });
+  sv();closeAllModals();rHab();
+}
+
 function saveGoal(){var txt=document.getElementById('g-text').value.trim();if(!txt)return;S.goals.push({id:uid(),name:txt,icon:document.getElementById('g-icon').value||'🎯',deadline:document.getElementById('g-deadline').value||'',desc:document.getElementById('g-desc').value||'',pct:0});sv();closeAllModals();rGoals();}
 function saveBook(){var title=document.getElementById('b-title').value.trim();if(!title)return;S.books.push({id:uid(),title:title,author:document.getElementById('b-author').value||'',total:parseInt(document.getElementById('b-total').value)||100,read:parseInt(document.getElementById('b-read').value)||0,emoji:'📖'});sv();closeAllModals();rBooks();}
 function saveVit(){var name=document.getElementById('v-name').value.trim();if(!name)return;S.vitamins.push({id:uid(),name:name,dose:document.getElementById('v-dose').value||'',icon:document.getElementById('v-icon').value||'💊'});sv();closeAllModals();rVit();}
 function saveAva(){var sel=document.querySelector('.ava-opt.sel');if(sel)S.ava=sel.dataset.ava;sv();closeAllModals();updateHdr();rDash();}
 
-/* ПРАВКА 2: toggleTask — снимает XP при отжатии, xp не уходит в минус */
+/* ══ ACTIONS ══ */
 function toggleTask(tid,ds){
   var wk=wkKey(ds);if(!S.weeks[wk])return;
   var tasks=S.weeks[wk].tasks;
   for(var i=0;i<tasks.length;i++){
-    if(tasks[i].id===tid){
-      tasks[i].done=!tasks[i].done;
-      addXP(tasks[i].done?10:-10);  /* +10 при выполнении, -10 при снятии */
-      break;
-    }
+    if(tasks[i].id===tid){tasks[i].done=!tasks[i].done;addXP(tasks[i].done?10:-10);break;}
   }
   sv();
   var w=document.querySelector('.ring-carousel');if(w){renderCarouselItems(w);attachCarouselEvents(w);}
   renderSchedule();updateHdr();if(curP==='dash')rDash();
 }
 
-/* ПРАВКА 2: deleteTask — удаляет задачу и снимает XP если она была выполнена */
 function deleteTask(tid,ds){
   var wk=wkKey(ds);if(!S.weeks[wk])return;
   var tasks=S.weeks[wk].tasks;
   for(var i=0;i<tasks.length;i++){
-    if(tasks[i].id===tid){
-      if(tasks[i].done)addXP(-10); /* снимаем XP только если была отмечена */
-      tasks.splice(i,1);
-      break;
-    }
+    if(tasks[i].id===tid){if(tasks[i].done)addXP(-10);tasks.splice(i,1);break;}
   }
   sv();
   var w=document.querySelector('.ring-carousel');if(w){renderCarouselItems(w);attachCarouselEvents(w);}
@@ -924,16 +1122,34 @@ function deleteTask(tid,ds){
 
 function toggleHabit(hid){
   var tod=today();
+  /* Проверяем запланирована ли привычка сегодня */
   for(var i=0;i<S.habits.length;i++){
     var h=S.habits[i];if(h.id!==hid)continue;
+    var dow=dateFromStr(tod).getDay();
+    if(!habScheduledOnDay(h,dow))break; /* не запланирована — ничего не делаем */
     if(!h.doneDs)h.doneDs=[];
     var idx=h.doneDs.indexOf(tod);
-    if(idx>=0){h.doneDs.splice(idx,1);h.streak=Math.max(0,(h.streak||1)-1);}
-    else{h.doneDs.push(tod);h.streak=(h.streak||0)+1;addXP(15);}
+    if(idx>=0){
+      h.doneDs.splice(idx,1);
+      h.streak=Math.max(0,(h.streak||1)-1);
+      addXP(-15); /* снимаем XP */
+    } else {
+      h.doneDs.push(tod);
+      h.streak=(h.streak||0)+1;
+      addXP(15);
+    }
     break;
   }
-  sv();rHab();rDash();
+  sv();rHab();updateHdr();rDash();
 }
+
+function deleteHabit(hid){
+  for(var i=0;i<S.habits.length;i++){
+    if(S.habits[i].id===hid){S.habits.splice(i,1);break;}
+  }
+  sv();rHab();
+}
+
 function toggleVit(vid){
   var tod=today();if(!S.vitDone[tod])S.vitDone[tod]=[];
   var idx=S.vitDone[tod].indexOf(vid);
@@ -941,10 +1157,10 @@ function toggleVit(vid){
   sv();rVit();
 }
 
+/* ══ EVENTS ══ */
 document.addEventListener('click',function(e){
   var nb=e.target.closest('.nav-btn[data-page]');if(nb){goPage(nb.dataset.page);return;}
   var om=e.target.closest('[data-action="open-modal"]');if(om){openModal(om.dataset.modal);return;}
-  /* ПРАВКА 3: FAB и любая кнопка с data-action="open-task-modal" */
   var otm=e.target.closest('[data-action="open-task-modal"]');if(otm){openModal('m-task');return;}
   if(e.target.classList.contains('mo')){closeAllModals();return;}
   var ab=e.target.closest('#hdr-ava-btn');if(ab){openModal('m-ava');return;}
@@ -956,12 +1172,46 @@ document.addEventListener('click',function(e){
   if(e.target.id==='sb-vit'){saveVit();return;}
   if(e.target.id==='sb-ava'){saveAva();return;}
   var tog=e.target.closest('[data-action="tog"]');if(tog){toggleTask(tog.dataset.tid,tog.dataset.date);return;}
-  /* ПРАВКА 2: обработка нажатия на кнопку удаления */
   var del=e.target.closest('[data-action="del-task"]');if(del){deleteTask(del.dataset.tid,del.dataset.date);return;}
   var htog=e.target.closest('[data-action="hab-tog"]');if(htog){toggleHabit(htog.dataset.hid);return;}
+  var hdel=e.target.closest('[data-action="del-hab"]');if(hdel){deleteHabit(hdel.dataset.hid);return;}
   var vtog=e.target.closest('[data-action="vit-tog"]');if(vtog){toggleVit(vtog.dataset.vid);return;}
   if(e.target.id==='hdr-premium-btn'){alert('Premium — скоро!');return;}
+
+  /* Выбор дня в модалке привычки */
+  var dpb=e.target.closest('.day-pick-btn');
+  if(dpb){dpb.classList.toggle('sel');return;}
+
+  /* Кнопка «Каждый день» */
+  if(e.target.id==='h-day-all'){
+    var btns=document.querySelectorAll('.day-pick-btn');
+    var allSel=true;
+    btns.forEach(function(b){if(!b.classList.contains('sel'))allSel=false;});
+    btns.forEach(function(b){if(allSel)b.classList.remove('sel');else b.classList.add('sel');});
+    return;
+  }
 });
+
+/* Навигация по неделям */
+var prevW=document.getElementById('hab-prev-week');
+var nextW=document.getElementById('hab-next-week');
+if(prevW)prevW.addEventListener('click',function(){habWeekOffset--;rHab();});
+if(nextW)nextW.addEventListener('click',function(){habWeekOffset++;rHab();});
+
+/* Свайп по вкладке привычек */
+(function(){
+  var sx=0,sy=0;
+  var habPage=document.getElementById('p-hab');
+  if(!habPage)return;
+  habPage.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+  habPage.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>50){
+      habWeekOffset+=(dx<0?1:-1);rHab();
+    }
+  },{passive:true});
+})();
+
 document.addEventListener('input',function(e){if(e.target.id==='t-text')vld('m-task');});
 
 var avaFile=document.getElementById('ava-file');
