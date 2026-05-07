@@ -6,6 +6,8 @@
 <title>ЛайфКвест</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
 :root{
   --bg:#F4F0FF;
   --card:#FFFFFF;
@@ -21,9 +23,12 @@
   --pri-hi:#FF5A5A;
   --pri-md:#FFB830;
   --pri-lo:#4CD78A;
+  --ring-past:url(#grad-past);
+  --ring-sel:url(#grad-sel);
+  --ring-future:#C8C0E0;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
 
 /* ── SHELL ── */
 #shell{display:flex;flex-direction:column;height:100vh;overflow:hidden;}
@@ -34,7 +39,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
   padding:12px 16px 10px;
   display:flex;align-items:center;gap:10px;
   flex-shrink:0;
-  transition:background .4s ease;
   position:relative;z-index:10;
 }
 .hdr-ava{width:40px;height:40px;border-radius:50%;border:2px solid rgba(255,255,255,.6);overflow:hidden;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
@@ -65,141 +69,236 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 #pages{flex:1;overflow:hidden;position:relative;}
 .page{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;display:none;padding-bottom:16px;}
 .page.active{display:block;}
-/* Hide scrollbar */
 .page::-webkit-scrollbar{display:none;}
 
-/* ── PLANNER ── */
-#p-plan{padding:0;}
+/* ══════════════════════════════════════
+   PLANNER PAGE
+══════════════════════════════════════ */
+#p-plan{
+  padding:0;
+  background:linear-gradient(160deg,#e8e0ff 0%,#d8e8ff 50%,#d0eaff 100%);
+  min-height:100%;
+}
 
-/* Ring Carousel */
+/* ── CAROUSEL WRAPPER ── */
 .ring-carousel-wrap{
-  background:var(--grad-hdr);
-  padding:16px 0 20px;
+  padding:24px 0 8px;
   overflow:hidden;
   position:relative;
 }
+
+/* ── CAROUSEL TRACK ── */
 .ring-carousel{
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:0;
   width:100%;
   position:relative;
-  height:130px;
+  height:220px;
   touch-action:pan-y;
   user-select:none;
+  -webkit-user-select:none;
 }
+
+/* ── RING ITEMS ── */
 .ring-item{
   flex-shrink:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  transition:transform .35s cubic-bezier(.4,0,.2,1), opacity .35s;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
   cursor:pointer;
   position:absolute;
   top:50%;
+  transition:
+    left .45s cubic-bezier(.4,0,.2,1),
+    transform .45s cubic-bezier(.4,0,.2,1),
+    opacity .45s cubic-bezier(.4,0,.2,1);
+  will-change:transform,left,opacity;
 }
+
+/* Position classes */
 .ring-item.pos-center{
+  left:50%;
   transform:translate(-50%,-50%) scale(1);
   opacity:1;
   z-index:3;
-  left:50%;
 }
 .ring-item.pos-left{
-  transform:translate(-50%,-50%) scale(0.65);
-  opacity:0.7;
+  left:calc(50% - 120px);
+  transform:translate(-50%,-50%) scale(0.66);
+  opacity:0.75;
   z-index:2;
-  left:calc(50% - 105px);
 }
 .ring-item.pos-right{
-  transform:translate(-50%,-50%) scale(0.65);
-  opacity:0.7;
+  left:calc(50% + 120px);
+  transform:translate(-50%,-50%) scale(0.66);
+  opacity:0.75;
   z-index:2;
-  left:calc(50% + 105px);
 }
 .ring-item.pos-hidden-left{
+  left:calc(50% - 220px);
   transform:translate(-50%,-50%) scale(0.4);
   opacity:0;
   z-index:1;
-  left:calc(50% - 180px);
   pointer-events:none;
 }
 .ring-item.pos-hidden-right{
+  left:calc(50% + 220px);
   transform:translate(-50%,-50%) scale(0.4);
   opacity:0;
   z-index:1;
-  left:calc(50% + 180px);
   pointer-events:none;
 }
 
-.ring-svg-wrap{position:relative;display:flex;align-items:center;justify-content:center;}
-.ring-label{margin-top:6px;text-align:center;}
-.ring-label .r-day-name{font-size:11px;color:rgba(255,255,255,.75);font-weight:500;}
-.ring-label .r-day-num{font-size:13px;color:#fff;font-weight:700;}
-.ring-item.pos-center .ring-label .r-day-name{font-size:13px;}
-.ring-item.pos-center .ring-label .r-day-num{font-size:15px;}
+/* ── RING SVG WRAPPER ── */
+.ring-svg-wrap{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
-.ring-center-text{
+/* ── RING INNER CARD ── */
+.ring-inner{
   position:absolute;
   top:50%;left:50%;
   transform:translate(-50%,-50%);
-  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:0;
   pointer-events:none;
+  width:85%;
 }
-.ring-pct{font-size:14px;font-weight:800;color:#fff;line-height:1;}
-.ring-cnt{font-size:9px;color:rgba(255,255,255,.7);margin-top:1px;}
-.ring-item.pos-center .ring-pct{font-size:18px;}
-.ring-item.pos-center .ring-cnt{font-size:11px;}
+.ring-day-name{
+  font-size:11px;
+  font-weight:700;
+  color:#9B8FC4;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+  margin-bottom:2px;
+}
+.ring-day-num{
+  font-size:38px;
+  font-weight:900;
+  color:#1A1035;
+  line-height:1;
+  margin-bottom:1px;
+}
+.ring-month-name{
+  font-size:11px;
+  font-weight:600;
+  color:#9B8FC4;
+  margin-top:1px;
+}
 
-/* Schedule card */
-.plan-body{padding:16px;}
-.sched-card{background:var(--card);border-radius:var(--r);box-shadow:var(--sha);overflow:hidden;}
-.sched-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;}
+/* ── RING PROGRESS LABEL ── */
+.ring-pct-label{
+  margin-top:6px;
+  font-size:13px;
+  font-weight:800;
+  text-align:center;
+  min-height:18px;
+}
+.ring-pct-label.past{ color:#9B7FE8; }
+.ring-pct-label.sel{  color:#3DDC84; }
+.ring-pct-label.future{ color:#B0A8CC; }
+
+/* ── QUOTE BLOCK ── */
+.plan-quote{
+  margin:0 16px 14px;
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  border-radius:16px;
+  padding:14px 18px;
+  text-align:center;
+  box-shadow:0 2px 12px rgba(155,109,255,.1);
+}
+.plan-quote-mark{
+  font-size:22px;
+  color:#3DDC84;
+  line-height:1;
+  display:block;
+  margin-bottom:4px;
+}
+.plan-quote-text{
+  font-size:13px;
+  font-weight:600;
+  color:#3D3658;
+  line-height:1.55;
+}
+
+/* ── SCHEDULE CARD ── */
+.plan-body{padding:0 16px 16px;}
+.sched-card{
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  border-radius:20px;
+  box-shadow:0 4px 20px rgba(155,109,255,.12);
+  overflow:hidden;
+}
+.sched-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px 10px;
+}
 .sched-hdr-left{display:flex;align-items:center;gap:8px;}
 .sched-hdr-left svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-.sched-title{font-size:15px;font-weight:700;color:var(--text);}
-.sched-date{font-size:13px;color:var(--sub);font-weight:500;}
-.add-task-btn{width:36px;height:36px;border-radius:50%;background:var(--grad-hdr);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(155,109,255,.35);flex-shrink:0;}
+.sched-title{font-size:15px;font-weight:800;color:var(--text);}
+.sched-date{font-size:13px;color:var(--sub);font-weight:600;}
+.add-task-btn{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--grad-hdr);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 10px rgba(155,109,255,.4);
+  flex-shrink:0;
+}
 .add-task-btn svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;}
 
-/* Timeline */
+/* ── TIMELINE ── */
 .timeline{padding:0 16px 16px;}
-.tl-item{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start;}
-.tl-time{font-size:11px;color:var(--sub);width:42px;flex-shrink:0;padding-top:12px;text-align:right;line-height:1.3;}
+.tl-item{display:flex;gap:10px;margin-bottom:14px;align-items:flex-start;}
+.tl-time{
+  font-size:11px;font-weight:700;color:var(--sub);
+  width:44px;flex-shrink:0;padding-top:12px;text-align:right;line-height:1.3;
+}
 .tl-dot-col{display:flex;flex-direction:column;align-items:center;padding-top:14px;flex-shrink:0;}
-.tl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.tl-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
 .tl-dot.pri-hi{background:var(--pri-hi);}
 .tl-dot.pri-md{background:var(--pri-md);}
 .tl-dot.pri-lo{background:var(--pri-lo);}
-.tl-line{width:2px;flex:1;min-height:24px;background:rgba(155,109,255,.1);margin-top:3px;}
+.tl-line{width:2px;flex:1;min-height:24px;background:rgba(155,109,255,.12);margin-top:4px;border-radius:2px;}
 .tl-card{
   flex:1;
-  background:linear-gradient(135deg,rgba(255,184,48,.08),rgba(255,184,48,.03));
-  border:1.5px solid rgba(255,184,48,.2);
   border-radius:14px;
   padding:10px 12px;
   display:flex;align-items:center;gap:10px;
   min-width:0;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
 }
-.tl-card.pri-hi{background:linear-gradient(135deg,rgba(255,90,90,.08),rgba(255,90,90,.03));border-color:rgba(255,90,90,.2);}
-.tl-card.pri-lo{background:linear-gradient(135deg,rgba(76,215,138,.08),rgba(76,215,138,.03));border-color:rgba(76,215,138,.2);}
+.tl-card.pri-md{background:linear-gradient(135deg,rgba(255,184,48,.1),rgba(255,184,48,.04));border:1.5px solid rgba(255,184,48,.25);}
+.tl-card.pri-hi{background:linear-gradient(135deg,rgba(255,90,90,.1),rgba(255,90,90,.04));border:1.5px solid rgba(255,90,90,.25);}
+.tl-card.pri-lo{background:linear-gradient(135deg,rgba(76,215,138,.1),rgba(76,215,138,.04));border:1.5px solid rgba(76,215,138,.25);}
 .tl-card-body{flex:1;min-width:0;}
-.tl-task-name{font-size:14px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tl-task-name{font-size:14px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .tl-task-name.done-text{text-decoration:line-through;color:var(--sub);}
-.tl-task-time{font-size:11px;color:var(--sub);margin-top:2px;display:flex;align-items:center;gap:3px;}
+.tl-task-time{font-size:11px;color:var(--sub);margin-top:3px;display:flex;align-items:center;gap:3px;font-weight:600;}
 .tl-task-time svg{width:11px;height:11px;stroke:var(--sub);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;}
 .tl-check{
-  width:30px;height:30px;border-radius:10px;
+  width:32px;height:32px;border-radius:10px;
   border:2px solid rgba(155,109,255,.3);
-  background:transparent;
-  cursor:pointer;
+  background:transparent;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-  transition:all .2s;
+  flex-shrink:0;transition:all .25s;
 }
-.tl-check.done{background:var(--grad-hdr);border-color:transparent;}
+.tl-check.done{background:var(--grad-hdr);border-color:transparent;box-shadow:0 2px 8px rgba(155,109,255,.35);}
 .tl-check svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;display:none;}
 .tl-check.done svg{display:block;}
-.tl-empty{text-align:center;padding:32px 16px;color:var(--sub);font-size:14px;}
-.tl-empty svg{width:40px;height:40px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px;opacity:.5;}
+.tl-empty{text-align:center;padding:32px 16px;color:var(--sub);}
+.tl-empty svg{width:40px;height:40px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;margin-bottom:8px;opacity:.4;display:block;margin-left:auto;margin-right:auto;}
+.tl-empty p{font-size:14px;font-weight:600;}
 
 /* ── HABITS ── */
 .hab-head{padding:16px 16px 8px;display:flex;align-items:center;justify-content:space-between;}
@@ -279,7 +378,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .stat-tile{background:var(--card);border-radius:var(--r);padding:14px;text-align:center;box-shadow:var(--sha);}
 .stat-val{font-size:22px;font-weight:800;color:var(--accent);}
 .stat-lbl{font-size:10px;color:var(--sub);margin-top:2px;}
-.section-title{font-size:15px;font-weight:700;margin-bottom:10px;}
 
 /* ── MODALS ── */
 .mo{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:100;backdrop-filter:blur(3px);}
@@ -290,13 +388,12 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .mo-handle{width:40px;height:4px;background:#E0D9F5;border-radius:4px;margin:0 auto 14px;}
 .mo-title{font-size:17px;font-weight:800;margin-bottom:16px;text-align:center;}
 .f{margin-bottom:12px;}
-.f label{display:block;font-size:12px;color:var(--sub);margin-bottom:4px;font-weight:600;}
-.f input,.f select,.f textarea{width:100%;border:1.5px solid rgba(155,109,255,.2);border-radius:12px;padding:10px 12px;font-size:14px;outline:none;background:#F8F5FF;color:var(--text);transition:border .2s;}
+.f label{display:block;font-size:12px;color:var(--sub);margin-bottom:4px;font-weight:700;}
+.f input,.f select,.f textarea{width:100%;border:1.5px solid rgba(155,109,255,.2);border-radius:12px;padding:10px 12px;font-size:14px;outline:none;background:#F8F5FF;color:var(--text);transition:border .2s;font-family:inherit;}
 .f input:focus,.f select:focus,.f textarea:focus{border-color:var(--accent);}
 .dates-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
-.save-btn{width:100%;padding:14px;background:var(--grad-hdr);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px;box-shadow:0 4px 14px rgba(155,109,255,.35);}
+.save-btn{width:100%;padding:14px;background:var(--grad-hdr);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px;box-shadow:0 4px 14px rgba(155,109,255,.35);font-family:inherit;}
 .save-btn:disabled{opacity:.4;cursor:not-allowed;}
-.mo-close{position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;background:#F0EBF8;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;}
 
 /* ── LANDING ── */
 #landing{position:fixed;inset:0;background:var(--grad-hdr);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:200;padding:32px;}
@@ -304,9 +401,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .land-title{font-size:28px;font-weight:800;color:#fff;margin-bottom:8px;}
 .land-sub{font-size:15px;color:rgba(255,255,255,.75);text-align:center;margin-bottom:32px;}
 .land-form{width:100%;max-width:340px;display:flex;flex-direction:column;gap:12px;}
-.land-input{padding:14px 16px;border-radius:14px;border:none;font-size:15px;background:rgba(255,255,255,.18);color:#fff;outline:none;}
+.land-input{padding:14px 16px;border-radius:14px;border:none;font-size:15px;background:rgba(255,255,255,.18);color:#fff;outline:none;font-family:inherit;}
 .land-input::placeholder{color:rgba(255,255,255,.6);}
-.land-btn{padding:15px;border-radius:14px;border:none;background:#fff;color:var(--accent);font-size:16px;font-weight:800;cursor:pointer;}
+.land-btn{padding:15px;border-radius:14px;border:none;background:#fff;color:var(--accent);font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;}
 
 /* ── AVATAR MODAL ── */
 .ava-opts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:16px;}
@@ -316,8 +413,18 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 
 /* ── EMPTY STATE ── */
 .empty-state{text-align:center;padding:40px 20px;color:var(--sub);}
-.empty-state svg{width:48px;height:48px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:12px;opacity:.5;}
-.empty-state p{font-size:14px;}
+.empty-state svg{width:48px;height:48px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:12px;opacity:.5;display:block;margin-left:auto;margin-right:auto;}
+.empty-state p{font-size:14px;font-weight:600;}
+
+/* ── RING ANIMATION ── */
+@keyframes ringFill{
+  from{ stroke-dashoffset: var(--ring-from); }
+  to{   stroke-dashoffset: var(--ring-to);   }
+}
+.ring-progress{
+  animation: ringFill .9s cubic-bezier(.4,0,.2,1) forwards;
+  transform-origin: center;
+}
 </style>
 </head>
 <body>
@@ -335,7 +442,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 
 <!-- SHELL -->
 <div id="shell" style="display:none;">
-
   <!-- HEADER -->
   <div id="hdr">
     <div class="hdr-ava" id="hdr-ava-btn">
@@ -433,12 +539,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
       <span>Книги</span>
     </button>
   </nav>
+</div>
 
-</div><!-- /shell -->
-
-<!-- MODALS -->
-
-<!-- Task Modal -->
+<!-- ══════ MODALS ══════ -->
 <div class="mo" id="m-task">
   <div class="mo-box">
     <div class="mo-handle"></div>
@@ -461,7 +564,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
   </div>
 </div>
 
-<!-- Habit Modal -->
 <div class="mo" id="m-hab">
   <div class="mo-box">
     <div class="mo-handle"></div>
@@ -473,7 +575,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
   </div>
 </div>
 
-<!-- Goal Modal -->
 <div class="mo" id="m-goal">
   <div class="mo-box">
     <div class="mo-handle"></div>
@@ -486,7 +587,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
   </div>
 </div>
 
-<!-- Book Modal -->
 <div class="mo" id="m-book">
   <div class="mo-box">
     <div class="mo-handle"></div>
@@ -499,7 +599,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
   </div>
 </div>
 
-<!-- Vitamin Modal -->
 <div class="mo" id="m-vit">
   <div class="mo-box">
     <div class="mo-handle"></div>
@@ -511,7 +610,6 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
   </div>
 </div>
 
-<!-- Avatar Modal -->
 <div class="mo" id="m-ava">
   <div class="mo-box">
     <div class="mo-handle"></div>
@@ -539,27 +637,45 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 <script>
 (function(){'use strict';
 
-/* ═══════════════════════════════════════
-   CONSTANTS & STATE
-═══════════════════════════════════════ */
+/* ═══════════════════════ CONSTANTS ═══════════════════════ */
 var KEY = 'lq_v9';
 var XP_PER_LVL = 200;
 var S;
 var curP = 'plan';
-var planSel = '';
-var planCenterIdx = 0; // index into flat day array
+var planCenterIdx = 0;
 
-var DAY_NAMES = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
-var MONTH_NAMES = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+var DAY_NAMES   = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+var MONTH_SHORT = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
 
-/* ═══════════════════════════════════════
-   HELPERS
-═══════════════════════════════════════ */
+var QUOTES = [
+  'Небольшой прогресс каждый день ведёт к большим результатам.',
+  'Дисциплина — это мост между целями и достижениями.',
+  'Начни там, где ты есть. Используй то, что имеешь.',
+  'Каждый день — это новый шанс стать лучше.',
+  'Успех — это сумма небольших усилий, повторяемых день за днём.',
+  'Твои привычки формируют твоё будущее.',
+  'Сделай сегодня то, что твоё завтрашнее «я» поблагодарит.',
+  'Прогресс, а не совершенство — вот цель.',
+  'Маленькие шаги ежедневно создают большие перемены.',
+  'Верь в процесс, результат придёт сам.'
+];
+
+var carouselAnimating = false;
+
+/* ═══════════════════════ HELPERS ═══════════════════════ */
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
-function today(){var d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
-function pad(n){return n<10?'0'+n:String(n);}
-function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
+function today(){
+  var d=new Date();
+  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+}
+function pad(n){return n<10?'0'+n:String(n);}
+function esc(s){
+  return String(s||'')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;');
+}
 function dateFromStr(s){
   var p=s.split('-');
   return new Date(+p[0],+p[1]-1,+p[2]);
@@ -574,7 +690,7 @@ function addDays(s,n){
 }
 function fmtDate(s){
   var d=dateFromStr(s);
-  return d.getDate()+' '+MONTH_NAMES[d.getMonth()];
+  return d.getDate()+' '+MONTH_SHORT[d.getMonth()];
 }
 function wkKey(s){
   var d=dateFromStr(s);
@@ -583,24 +699,23 @@ function wkKey(s){
   var mon=new Date(d.getFullYear(),d.getMonth(),diff);
   return strFromDate(mon);
 }
+function idxToDate(idx){return addDays(today(),idx);}
 
-/* ═══════════════════════════════════════
-   STORAGE
-═══════════════════════════════════════ */
+/* quote of the day — deterministic by date */
+function todayQuote(){
+  var d=new Date();
+  var seed=d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();
+  return QUOTES[seed % QUOTES.length];
+}
+
+/* ═══════════════════════ STORAGE ═══════════════════════ */
 function defS(){
-  return {
-    name:'',ava:'🦊',xp:0,
-    weeks:{},
-    habits:[],goals:[],books:[],vitamins:[],
-    vitDone:{},
-    premium:false
-  };
+  return {name:'',ava:'🦊',xp:0,weeks:{},habits:[],goals:[],books:[],vitamins:[],vitDone:{},premium:false};
 }
 function loadS(){
   try{
     var raw=localStorage.getItem(KEY);
     if(raw) return JSON.parse(raw);
-    // migrate old keys
     var oldKeys=['lq5','lq_v4','lq_v5','lq_v6','lq_v7','lq_v8'];
     for(var i=0;i<oldKeys.length;i++){
       var o=localStorage.getItem(oldKeys[i]);
@@ -611,208 +726,310 @@ function loadS(){
 }
 function sv(){localStorage.setItem(KEY,JSON.stringify(S));}
 
-/* ═══════════════════════════════════════
-   XP / LEVEL
-═══════════════════════════════════════ */
+/* ═══════════════════════ XP / LEVEL ═══════════════════════ */
 function lvl(){return Math.floor(S.xp/XP_PER_LVL)+1;}
 function xpInLvl(){return S.xp%XP_PER_LVL;}
 function xpPct(){return Math.round(xpInLvl()/XP_PER_LVL*100);}
 function addXP(n){S.xp+=n;sv();}
 
-/* ═══════════════════════════════════════
-   WEEK / TASK HELPERS
-═══════════════════════════════════════ */
-function ensW(wk){
-  if(!S.weeks[wk]) S.weeks[wk]={tasks:[]};
-  return S.weeks[wk];
+/* ═══════════════════════ TASKS ═══════════════════════ */
+function ensW(wk){if(!S.weeks[wk])S.weeks[wk]={tasks:[]};return S.weeks[wk];}
+function tasksForDate(ds){
+  var wk=wkKey(ds);
+  return (S.weeks[wk]?S.weeks[wk].tasks:[]).filter(function(t){return t.date===ds;});
 }
-function tasksForDate(dateStr){
-  var wk=wkKey(dateStr);
-  return (S.weeks[wk]?S.weeks[wk].tasks:[]).filter(function(t){return t.date===dateStr;});
+function taskPct(ds){
+  var t=tasksForDate(ds);
+  return t.length===0?0:Math.round(t.filter(function(x){return x.done;}).length/t.length*100);
 }
-function allTasks(){
-  var arr=[];
-  Object.values(S.weeks).forEach(function(w){arr=arr.concat(w.tasks||[]);});
-  return arr;
-}
-function taskDoneCount(dateStr){
-  return tasksForDate(dateStr).filter(function(t){return t.done;}).length;
-}
-function taskTotalCount(dateStr){
-  return tasksForDate(dateStr).length;
-}
-function taskPct(dateStr){
-  var tot=taskTotalCount(dateStr);
-  return tot===0?0:Math.round(taskDoneCount(dateStr)/tot*100);
+function taskTotalCount(ds){return tasksForDate(ds).length;}
+
+function timeDiff(s,e){
+  try{
+    var sp=s.split(':'),ep=e.split(':');
+    return parseInt(ep[0])*60+parseInt(ep[1])-(parseInt(sp[0])*60+parseInt(sp[1]));
+  }catch(x){return null;}
 }
 
-/* ═══════════════════════════════════════
-   RING SVG
-═══════════════════════════════════════ */
-function ringsvg(pct,size,stroke,color){
-  var r=(size-stroke)/2;
-  var circ=2*Math.PI*r;
-  var dash=circ*(pct/100);
-  var cx=size/2,cy=size/2;
-  return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 '+size+' '+size+'">'
-    +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="'+stroke+'"/>'
-    +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+color+'" stroke-width="'+stroke
-    +'" stroke-dasharray="'+dash+' '+(circ-dash)+'" stroke-dashoffset="'+(-circ/4)+'" stroke-linecap="round"/>'
+/* ═══════════════════════ RING SVG ═══════════════════════ */
+/*
+  Gradient stroke trick:
+  Use a <linearGradient> referenced by stroke="url(#id)".
+  For past days: purple gradient #9B7FE8 → #BB62FF
+  For selected:  teal gradient  #3DDC84 → #00C2FF
+  For future:    flat grey      #C8C0E0
+*/
+function buildRingSVG(opts){
+  /*
+    opts = {
+      size:     number   (total SVG size px)
+      stroke:   number   (ring stroke width)
+      pct:      number   (0-100)
+      type:     'past'|'sel'|'future'
+      uid:      string   (unique id for gradient)
+      animate:  bool
+    }
+  */
+  var sz    = opts.size;
+  var sw    = opts.stroke;
+  var pct   = opts.pct;
+  var type  = opts.type;
+  var gid   = opts.uid;
+  var anim  = opts.animate !== false;
+
+  var r     = (sz - sw) / 2;
+  var cx    = sz / 2;
+  var cy    = sz / 2;
+  var circ  = 2 * Math.PI * r;
+  var dash  = circ * (pct / 100);
+  var gap   = circ - dash;
+  // start from top: rotate -90deg → offset = -circ/4
+  var offFull = -(circ / 4);    // fully drawn = start offset
+  var offEmpty = offFull - circ; // empty = one full circle back (for animation)
+
+  var strokeAttr;
+  var defsHtml = '';
+
+  if(type === 'future'){
+    strokeAttr = '#C8C0E0';
+  } else {
+    var gradId = 'g-'+gid;
+    var c1 = type==='past' ? '#BB62FF' : '#3DDC84';
+    var c2 = type==='past' ? '#9B7FE8' : '#00C2FF';
+    defsHtml = '<defs>'
+      +'<linearGradient id="'+gradId+'" x1="0%" y1="0%" x2="100%" y2="100%">'
+      +'<stop offset="0%" stop-color="'+c1+'"/>'
+      +'<stop offset="100%" stop-color="'+c2+'"/>'
+      +'</linearGradient>'
+      +'</defs>';
+    strokeAttr = 'url(#'+gradId+')';
+  }
+
+  // animation style
+  var animStyle = '';
+  if(anim && pct > 0 && type !== 'future'){
+    animStyle = ' style="'
+      +'--ring-from:'+(-offEmpty)+';'   // strokeDashoffset start (full = 0%)
+      +'--ring-to:'+(-offFull+gap)+';'  // strokeDashoffset end
+      +'stroke-dashoffset:'+(-offFull+gap)+';'
+      +'animation:ringFill .9s cubic-bezier(.4,0,.2,1) forwards;"';
+  }
+
+  return '<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 '+sz+' '+sz+'" xmlns="http://www.w3.org/2000/svg">'
+    +defsHtml
+    // track
+    +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="#E8E2F4" stroke-width="'+sw+'"/>'
+    // progress arc
+    +(pct > 0
+      ? '<circle class="ring-progress" cx="'+cx+'" cy="'+cy+'" r="'+r
+        +'" fill="none" stroke="'+strokeAttr+'" stroke-width="'+sw
+        +'" stroke-dasharray="'+dash+' '+gap
+        +'" stroke-dashoffset="'+offFull
+        +'" stroke-linecap="round"'+animStyle+'/>'
+      : '')
     +'</svg>';
 }
 
-/* ═══════════════════════════════════════
-   PLANNER CAROUSEL
-═══════════════════════════════════════ */
-// planCenterIdx is index in a "virtual" continuous day list
-// day 0 = today. Negative = past, positive = future
-// We store offset from today
-
-var carouselAnimating = false;
-
+/* ═══════════════════════ CAROUSEL ═══════════════════════ */
 function buildCarousel(){
   var wrap = document.querySelector('.ring-carousel');
   if(!wrap) return;
-  renderCarouselItems(wrap, false);
+  renderCarouselItems(wrap);
   attachCarouselEvents(wrap);
 }
 
-function idxToDate(idx){
-  return addDays(today(), idx);
+function dayType(offset){
+  // offset relative to planCenterIdx (center is 0 offset)
+  // planCenterIdx itself: compare to today
+  var absIdx = planCenterIdx + offset; // from today
+  if(absIdx < 0)  return 'past';
+  if(absIdx === 0) return 'sel';
+  return 'future';
+  // actually we want: center = 'sel', left = context, right = context
+  // but center offset=0 means selected day
 }
 
-function renderCarouselItems(wrap, animate){
-  var positions = ['pos-hidden-left','pos-left','pos-center','pos-right','pos-hidden-right'];
-  var offsets = [-2,-1,0,1,2];
-  var html='';
-  offsets.forEach(function(off, i){
-    var dateStr = idxToDate(planCenterIdx + off);
-    var d = dateFromStr(dateStr);
+function dayTypeForAbsIdx(absIdx){
+  if(absIdx < 0)  return 'past';
+  if(absIdx === 0) return 'sel'; // today
+  return 'future';
+}
+
+/* We treat: center = always 'sel' style (teal), past relative to today */
+function ringTypeForOffset(off){
+  var absIdx = planCenterIdx + off;
+  if(absIdx < 0) return 'past';
+  if(absIdx === 0) return 'sel';
+  return 'future';
+}
+
+function renderCarouselItems(wrap){
+  var POSITIONS = ['pos-hidden-left','pos-left','pos-center','pos-right','pos-hidden-right'];
+  var OFFSETS   = [-2,-1,0,1,2];
+
+  var html = '';
+  OFFSETS.forEach(function(off, i){
+    var absIdx  = planCenterIdx + off;
+    var dateStr = idxToDate(absIdx);
+    var d       = dateFromStr(dateStr);
     var dayName = DAY_NAMES[d.getDay()];
-    var dayNum = d.getDate();
-    var pct = taskPct(dateStr);
-    var tot = taskTotalCount(dateStr);
-    var isCenter = off===0;
-    var sz = isCenter ? 88 : 60;
-    var sw = isCenter ? 7 : 5;
-    html += '<div class="ring-item '+positions[i]+'" data-offset="'+off+'">'
+    var dayNum  = d.getDate();
+    var monName = MONTH_SHORT[d.getMonth()];
+    var pct     = taskPct(dateStr);
+    var tot     = taskTotalCount(dateStr);
+    var isCenter= off === 0;
+    var rtype   = ringTypeForOffset(off);
+
+    /* sizes */
+    var sz  = isCenter ? 160 : 108;
+    var sw  = isCenter ? 9   : 6;
+    var ruid = 'r'+absIdx+'_'+Date.now();
+
+    var pctLabel = '';
+    if(rtype === 'future'){
+      pctLabel = tot > 0 ? pct+'%' : '0%';
+    } else {
+      pctLabel = pct+'%';
+    }
+    var pctClass = rtype; // past | sel | future
+
+    html += '<div class="ring-item '+POSITIONS[i]+'" data-offset="'+off+'" data-abs="'+absIdx+'">'
       +'<div class="ring-svg-wrap">'
-      +ringsvg(pct, sz, sw, '#fff')
-      +'<div class="ring-center-text">'
-      +'<div class="ring-pct">'+(pct>0?pct+'%':tot>0?pct+'%':'')+'</div>'
-      +(tot>0?'<div class="ring-cnt">'+tot+'</div>':'')
+      +buildRingSVG({size:sz,stroke:sw,pct:pct,type:rtype,uid:ruid,animate:isCenter})
+      +'<div class="ring-inner">'
+      +'<div class="ring-day-name">'+esc(dayName)+'</div>'
+      +'<div class="ring-day-num">'+dayNum+'</div>'
+      +'<div class="ring-month-name">'+esc(monName)+'</div>'
       +'</div>'
       +'</div>'
-      +'<div class="ring-label">'
-      +'<div class="r-day-name">'+dayName+'</div>'
-      +'<div class="r-day-num">'+dayNum+'</div>'
-      +'</div>'
-    +'</div>';
+      +'<div class="ring-pct-label '+pctClass+'">'+pctLabel+'</div>'
+      +'</div>';
   });
+
   wrap.innerHTML = html;
 }
 
 function attachCarouselEvents(wrap){
-  // Click on left/right
+  // click on side rings
   wrap.addEventListener('click', function(e){
     var item = e.target.closest('.ring-item');
     if(!item || carouselAnimating) return;
-    var off = parseInt(item.dataset.offset);
+    var off = parseInt(item.dataset.offset||'0');
     if(off === 0) return;
-    shiftCarousel(off > 0 ? 1 : -1, wrap);
+    shiftCarousel(off > 0 ? 1 : -1);
   });
 
-  // Swipe
+  // touch swipe
   var sx=0, sy=0;
   wrap.addEventListener('touchstart', function(e){
-    sx = e.touches[0].clientX;
-    sy = e.touches[0].clientY;
-  }, {passive:true});
+    sx=e.touches[0].clientX; sy=e.touches[0].clientY;
+  },{passive:true});
   wrap.addEventListener('touchend', function(e){
     if(carouselAnimating) return;
-    var dx = e.changedTouches[0].clientX - sx;
-    var dy = e.changedTouches[0].clientY - sy;
-    if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 30){
-      shiftCarousel(dx < 0 ? 1 : -1, wrap);
-    }
-  }, {passive:true});
+    var dx=e.changedTouches[0].clientX-sx;
+    var dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>28) shiftCarousel(dx<0?1:-1);
+  },{passive:true});
 
-  // Mouse drag
+  // mouse drag
   var mx=0, dragging=false;
-  wrap.addEventListener('mousedown', function(e){mx=e.clientX;dragging=true;});
-  wrap.addEventListener('mouseup', function(e){
-    if(!dragging || carouselAnimating) return;
+  wrap.addEventListener('mousedown',function(e){mx=e.clientX;dragging=true;});
+  wrap.addEventListener('mouseup',function(e){
+    if(!dragging||carouselAnimating){dragging=false;return;}
     dragging=false;
     var dx=e.clientX-mx;
-    if(Math.abs(dx)>30) shiftCarousel(dx<0?1:-1,wrap);
+    if(Math.abs(dx)>28) shiftCarousel(dx<0?1:-1);
   });
-  wrap.addEventListener('mouseleave', function(){dragging=false;});
+  wrap.addEventListener('mouseleave',function(){dragging=false;});
 }
 
-function shiftCarousel(dir, wrap){
+function shiftCarousel(dir){
+  if(carouselAnimating) return;
   carouselAnimating = true;
   planCenterIdx += dir;
-  var dateStr = idxToDate(planCenterIdx);
-  planSel = dateStr;
 
-  // Animate out
+  var wrap = document.querySelector('.ring-carousel');
+  if(!wrap){carouselAnimating=false;return;}
+
+  var POSITIONS = ['pos-hidden-left','pos-left','pos-center','pos-right','pos-hidden-right'];
+
+  // Animate existing items to new positions
   var items = wrap.querySelectorAll('.ring-item');
-  var positions = ['pos-hidden-left','pos-left','pos-center','pos-right','pos-hidden-right'];
-  // shift positions
   items.forEach(function(item){
-    var curOff = parseInt(item.dataset.offset);
+    var curOff = parseInt(item.dataset.offset||'0');
     var newOff = curOff - dir;
-    var posIdx = newOff + 2; // -2..2 => 0..4
+    var posIdx = newOff + 2; // -2..2 → 0..4
+
     item.dataset.offset = newOff;
-    // remove all pos classes
-    positions.forEach(function(p){item.classList.remove(p);});
+    POSITIONS.forEach(function(p){item.classList.remove(p);});
+
     if(posIdx >= 0 && posIdx < 5){
-      item.classList.add(positions[posIdx]);
-      // Update ring size for center
-      updateRingItem(item, newOff===0, idxToDate(planCenterIdx + newOff));
+      item.classList.add(POSITIONS[posIdx]);
+      if(newOff === 0){
+        // Update this item to become center (bigger, teal, animate)
+        refreshRingItem(item, 0);
+      } else {
+        // Update size class without animation
+        refreshRingItem(item, newOff);
+      }
     } else {
-      item.style.display='none';
+      item.style.opacity = '0';
+      item.style.pointerEvents = 'none';
     }
   });
 
   setTimeout(function(){
     carouselAnimating = false;
-    // Re-render to get fresh data
-    renderCarouselItems(wrap, false);
+    // Full re-render to ensure fresh gradients & hidden items
+    renderCarouselItems(wrap);
     attachCarouselEvents(wrap);
-    // Update schedule
     renderSchedule();
-  }, 360);
+  }, 460);
 }
 
-function updateRingItem(item, isCenter, dateStr){
-  var sz = isCenter ? 88 : 60;
-  var sw = isCenter ? 7 : 5;
-  var pct = taskPct(dateStr);
-  var tot = taskTotalCount(dateStr);
-  var svgWrap = item.querySelector('.ring-svg-wrap');
-  if(svgWrap){
-    var d2 = dateFromStr(dateStr);
-    svgWrap.innerHTML = ringsvg(pct, sz, sw, '#fff')
-      +'<div class="ring-center-text">'
-      +'<div class="ring-pct">'+(tot>0?pct+'%':'')+'</div>'
-      +(tot>0?'<div class="ring-cnt">'+tot+'</div>':'')
-      +'</div>';
-  }
+function refreshRingItem(item, off){
+  var absIdx  = planCenterIdx + off;
+  var dateStr = idxToDate(absIdx);
+  var d       = dateFromStr(dateStr);
+  var dayName = DAY_NAMES[d.getDay()];
+  var dayNum  = d.getDate();
+  var monName = MONTH_SHORT[d.getMonth()];
+  var pct     = taskPct(dateStr);
+  var tot     = taskTotalCount(dateStr);
+  var isCenter= off === 0;
+  var rtype   = ringTypeForOffset(off);
+  var sz      = isCenter ? 160 : 108;
+  var sw      = isCenter ? 9   : 6;
+  var ruid    = 'r'+absIdx+'_r'+Date.now();
+
+  var pctLabel = pct+'%';
+  var pctClass = rtype;
+
+  item.innerHTML =
+    '<div class="ring-svg-wrap">'
+    +buildRingSVG({size:sz,stroke:sw,pct:pct,type:rtype,uid:ruid,animate:isCenter})
+    +'<div class="ring-inner">'
+    +'<div class="ring-day-name">'+esc(dayName)+'</div>'
+    +'<div class="ring-day-num">'+dayNum+'</div>'
+    +'<div class="ring-month-name">'+esc(monName)+'</div>'
+    +'</div>'
+    +'</div>'
+    +'<div class="ring-pct-label '+pctClass+'">'+pctLabel+'</div>';
 }
 
-/* ═══════════════════════════════════════
-   PLANNER RENDER
-═══════════════════════════════════════ */
+/* ═══════════════════════ PLANNER ═══════════════════════ */
 function rPlan(){
   var el = document.getElementById('p-plan');
   if(!el) return;
 
-  planSel = planSel || today();
-
   el.innerHTML =
     '<div class="ring-carousel-wrap">'
     +'<div class="ring-carousel"></div>'
+    +'</div>'
+    +'<div class="plan-quote">'
+    +'<span class="plan-quote-mark">❝</span>'
+    +'<div class="plan-quote-text">'+esc(todayQuote())+'</div>'
+    +'<span class="plan-quote-mark" style="transform:rotate(180deg);display:inline-block;">❝</span>'
     +'</div>'
     +'<div class="plan-body" id="plan-body"></div>';
 
@@ -823,11 +1040,11 @@ function rPlan(){
 function renderSchedule(){
   var body = document.getElementById('plan-body');
   if(!body) return;
+
   var dateStr = idxToDate(planCenterIdx);
-  planSel = dateStr;
   var tasks = tasksForDate(dateStr).slice().sort(function(a,b){
-    var ta = a.timeStart||a.time||'';
-    var tb = b.timeStart||b.time||'';
+    var ta=a.timeStart||a.time||'';
+    var tb=b.timeStart||b.time||'';
     return ta.localeCompare(tb);
   });
 
@@ -847,40 +1064,35 @@ function renderSchedule(){
   if(tasks.length === 0){
     html += '<div class="tl-empty">'
       +'<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'
-      +'<p>Нет задач на этот день</p>'
-      +'</div>';
+      +'<p>Нет задач на этот день</p></div>';
   } else {
-    tasks.forEach(function(t, i){
+    tasks.forEach(function(t,i){
       var pri = t.priority||'md';
-      var priClass = 'pri-'+pri;
-      var ts = t.timeStart||t.time||'';
-      var te = t.timeEnd||'';
+      var ts  = t.timeStart||t.time||'';
+      var te  = t.timeEnd||'';
       var timeDisplay = '';
       if(ts && te){
-        // calculate minutes
-        var mins = timeDiff(ts, te);
-        if(mins !== null && mins > 0){
-          timeDisplay = mins + ' мин';
-        } else {
-          timeDisplay = ts + ' — ' + te;
-        }
+        var mins = timeDiff(ts,te);
+        timeDisplay = (mins!==null && mins>0) ? mins+' мин' : ts+' — '+te;
       } else if(ts){
         timeDisplay = ts;
       }
       var timeLabel = ts;
-      if(ts && te) timeLabel = ts+'–'+te.slice(0,5);
+      if(ts && te) timeLabel = ts+'–'+te;
+      var isLast = i===tasks.length-1;
 
-      var isLast = i === tasks.length-1;
       html += '<div class="tl-item">'
         +'<div class="tl-time">'+esc(timeLabel)+'</div>'
         +'<div class="tl-dot-col">'
-        +'<div class="tl-dot '+priClass+'"></div>'
-        +(!isLast ? '<div class="tl-line"></div>' : '')
+        +'<div class="tl-dot pri-'+pri+'"></div>'
+        +(!isLast?'<div class="tl-line"></div>':'')
         +'</div>'
-        +'<div class="tl-card '+priClass+'">'
+        +'<div class="tl-card pri-'+pri+'">'
         +'<div class="tl-card-body">'
         +'<div class="tl-task-name'+(t.done?' done-text':'')+'">'+esc(t.text)+'</div>'
-        +(timeDisplay ? '<div class="tl-task-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'+esc(timeDisplay)+'</div>' : '')
+        +(timeDisplay?'<div class="tl-task-time">'
+          +'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
+          +esc(timeDisplay)+'</div>':'')
         +'</div>'
         +'<div class="tl-check'+(t.done?' done':'')+'" data-action="tog" data-tid="'+t.id+'" data-date="'+dateStr+'">'
         +'<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>'
@@ -894,31 +1106,19 @@ function renderSchedule(){
   body.innerHTML = html;
 }
 
-function timeDiff(start, end){
-  try{
-    var sp=start.split(':'), ep=end.split(':');
-    var sm=parseInt(sp[0])*60+parseInt(sp[1]);
-    var em=parseInt(ep[0])*60+parseInt(ep[1]);
-    return em-sm;
-  }catch(e){return null;}
-}
-
-/* ═══════════════════════════════════════
-   DASHBOARD
-═══════════════════════════════════════ */
+/* ═══════════════════════ DASHBOARD ═══════════════════════ */
 function rDash(){
   var el=document.getElementById('p-dash');
   if(!el) return;
   var tod=today();
   var tasks=tasksForDate(tod);
   var done=tasks.filter(function(t){return t.done;}).length;
-  var habs=S.habits.length;
   var habDone=S.habits.filter(function(h){return (h.doneDs||[]).indexOf(tod)>=0;}).length;
 
   el.innerHTML='<div class="dash-wrap">'
     +'<div class="dash-xp-card">'
     +'<div class="dash-xp-top">'
-    +'<div class="dash-ava" id="dash-ava">'+(S.ava&&S.ava.startsWith('data:')?'<img src="'+S.ava+'">':('<span style="font-size:28px;">'+esc(S.ava||'🦊')+'</span>'))+'</div>'
+    +'<div class="dash-ava">'+(S.ava&&S.ava.startsWith('data:')?'<img src="'+S.ava+'">':'<span style="font-size:28px;">'+esc(S.ava||'🦊')+'</span>')+'</div>'
     +'<div><div class="dash-name">'+esc(S.name||'Игрок')+'</div><div class="dash-lvl">Уровень '+lvl()+'</div></div>'
     +'</div>'
     +'<div class="dash-xp-bar"><div class="dash-xp-fill" style="width:'+xpPct()+'%"></div></div>'
@@ -932,13 +1132,14 @@ function rDash(){
     +'</div>';
 }
 
-/* ═══════════════════════════════════════
-   HABITS
-═══════════════════════════════════════ */
+/* ═══════════════════════ HABITS ═══════════════════════ */
 function rHab(){
   var el=document.getElementById('hab-list');
   if(!el) return;
-  if(!S.habits.length){el.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><p>Нет привычек. Добавь первую!</p></div>';return;}
+  if(!S.habits.length){
+    el.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><p>Нет привычек. Добавь первую!</p></div>';
+    return;
+  }
   var tod=today();
   el.innerHTML=S.habits.map(function(h){
     var done=(h.doneDs||[]).indexOf(tod)>=0;
@@ -959,13 +1160,14 @@ function rHab(){
   }).join('');
 }
 
-/* ═══════════════════════════════════════
-   GOALS
-═══════════════════════════════════════ */
+/* ═══════════════════════ GOALS ═══════════════════════ */
 function rGoals(){
   var el=document.getElementById('goals-list');
   if(!el) return;
-  if(!S.goals.length){el.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><p>Нет целей. Поставь первую!</p></div>';return;}
+  if(!S.goals.length){
+    el.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><p>Нет целей. Поставь первую!</p></div>';
+    return;
+  }
   el.innerHTML=S.goals.map(function(g){
     var pct=g.pct||0;
     return '<div class="goal-card">'
@@ -979,13 +1181,14 @@ function rGoals(){
   }).join('');
 }
 
-/* ═══════════════════════════════════════
-   BOOKS
-═══════════════════════════════════════ */
+/* ═══════════════════════ BOOKS ═══════════════════════ */
 function rBooks(){
   var el=document.getElementById('books-list');
   if(!el) return;
-  if(!S.books.length){el.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><p>Нет книг. Добавь первую!</p></div>';return;}
+  if(!S.books.length){
+    el.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><p>Нет книг. Добавь первую!</p></div>';
+    return;
+  }
   el.innerHTML=S.books.map(function(b){
     var pct=b.total>0?Math.round((b.read||0)/b.total*100):0;
     return '<div class="book-card">'
@@ -995,18 +1198,18 @@ function rBooks(){
       +'<div class="book-author">'+esc(b.author||'')+'</div>'
       +'<div class="book-prog-bar"><div class="book-prog-fill" style="width:'+pct+'%"></div></div>'
       +'<div class="book-pages">'+(b.read||0)+' / '+b.total+' стр. ('+pct+'%)</div>'
-      +'</div>'
-      +'</div>';
+      +'</div></div>';
   }).join('');
 }
 
-/* ═══════════════════════════════════════
-   VITAMINS
-═══════════════════════════════════════ */
+/* ═══════════════════════ VITAMINS ═══════════════════════ */
 function rVit(){
   var el=document.getElementById('vit-list');
   if(!el) return;
-  if(!S.vitamins.length){el.innerHTML='<div class="empty-state"><p>Нет витаминов. Добавь первый!</p></div>';return;}
+  if(!S.vitamins.length){
+    el.innerHTML='<div class="empty-state"><p>Нет витаминов. Добавь первый!</p></div>';
+    return;
+  }
   var tod=today();
   el.innerHTML=S.vitamins.map(function(v){
     var done=(S.vitDone[tod]||[]).indexOf(v.id)>=0;
@@ -1020,39 +1223,32 @@ function rVit(){
   }).join('');
 }
 
-/* ═══════════════════════════════════════
-   RENDER ALL
-═══════════════════════════════════════ */
-function rAll(){
-  updateHdr();
-  rDash();
-  if(curP==='plan') rPlan();
-  rHab();
-  rGoals();
-  rBooks();
-  rVit();
-}
-
+/* ═══════════════════════ HEADER ═══════════════════════ */
 function updateHdr(){
   var nameEl=document.getElementById('hdr-name');
   var lvlEl=document.getElementById('hdr-lvl');
   var xpEl=document.getElementById('hdr-xp-fill');
   var avaEl=document.getElementById('hdr-ava-btn');
   if(nameEl) nameEl.textContent=S.name||'Игрок';
-  if(lvlEl) lvlEl.textContent='Уровень '+lvl();
-  if(xpEl) xpEl.style.width=xpPct()+'%';
+  if(lvlEl)  lvlEl.textContent='Уровень '+lvl();
+  if(xpEl)   xpEl.style.width=xpPct()+'%';
   if(avaEl){
-    if(S.ava&&S.ava.startsWith('data:')){
-      avaEl.innerHTML='<img src="'+S.ava+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
-    } else {
-      avaEl.innerHTML='<span style="font-size:20px;">'+esc(S.ava||'🦊')+'</span>';
-    }
+    avaEl.innerHTML=S.ava&&S.ava.startsWith('data:')
+      ?'<img src="'+S.ava+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">'
+      :'<span style="font-size:20px;">'+esc(S.ava||'🦊')+'</span>';
   }
 }
 
-/* ═══════════════════════════════════════
-   NAVIGATION
-═══════════════════════════════════════ */
+function rAll(){
+  updateHdr();
+  rDash();
+  rHab();
+  rGoals();
+  rBooks();
+  rVit();
+}
+
+/* ═══════════════════════ NAVIGATION ═══════════════════════ */
 function goPage(p){
   curP=p;
   document.querySelectorAll('.page').forEach(function(el){el.classList.remove('active');});
@@ -1062,16 +1258,14 @@ function goPage(p){
   var nb=document.querySelector('.nav-btn[data-page="'+p+'"]');
   if(nb) nb.classList.add('active');
   if(p==='plan') rPlan();
-  if(p==='dash') rDash();
-  if(p==='hab') rHab();
-  if(p==='goals') rGoals();
-  if(p==='books') rBooks();
-  if(p==='vit') rVit();
+  else if(p==='dash') rDash();
+  else if(p==='hab') rHab();
+  else if(p==='goals') rGoals();
+  else if(p==='books') rBooks();
+  else if(p==='vit') rVit();
 }
 
-/* ═══════════════════════════════════════
-   MODALS
-═══════════════════════════════════════ */
+/* ═══════════════════════ MODALS ═══════════════════════ */
 function openModal(id){
   if(id==='m-task'){
     var tt=document.getElementById('t-text');
@@ -1087,77 +1281,31 @@ function openModal(id){
     fillGoalSel('t-goal');
     vld('m-task');
   }
-  if(id==='m-hab'){
-    var ht=document.getElementById('h-text');
-    var hi=document.getElementById('h-icon');
-    var hg=document.getElementById('h-goal');
-    if(ht) ht.value='';
-    if(hi) hi.value='';
-    if(hg) hg.value='30';
-  }
-  if(id==='m-goal'){
-    var gt=document.getElementById('g-text');
-    var gi=document.getElementById('g-icon');
-    var gd=document.getElementById('g-deadline');
-    var gdesc=document.getElementById('g-desc');
-    if(gt) gt.value='';
-    if(gi) gi.value='';
-    if(gd) gd.value='';
-    if(gdesc) gdesc.value='';
-  }
-  if(id==='m-vit'){
-    var vn=document.getElementById('v-name');
-    var vd=document.getElementById('v-dose');
-    var vi=document.getElementById('v-icon');
-    if(vn) vn.value='';
-    if(vd) vd.value='';
-    if(vi) vi.value='';
-  }
-  if(id==='m-book'){
-    var bt=document.getElementById('b-title');
-    var ba=document.getElementById('b-author');
-    var btot=document.getElementById('b-total');
-    var br=document.getElementById('b-read');
-    if(bt) bt.value='';
-    if(ba) ba.value='';
-    if(btot) btot.value='';
-    if(br) br.value='0';
-  }
-  if(id==='m-ava'){
-    document.querySelectorAll('.ava-opt').forEach(function(o){
-      o.classList.toggle('sel', o.dataset.ava===S.ava);
-    });
-  }
+  if(id==='m-hab'){['h-text','h-icon'].forEach(function(i){var e=document.getElementById(i);if(e)e.value='';});var hg=document.getElementById('h-goal');if(hg)hg.value='30';}
+  if(id==='m-goal'){['g-text','g-icon','g-deadline','g-desc'].forEach(function(i){var e=document.getElementById(i);if(e)e.value='';});}
+  if(id==='m-vit'){['v-name','v-dose','v-icon'].forEach(function(i){var e=document.getElementById(i);if(e)e.value='';});}
+  if(id==='m-book'){var br=document.getElementById('b-read');if(br)br.value='0';['b-title','b-author','b-total'].forEach(function(i){var e=document.getElementById(i);if(e)e.value='';});}
+  if(id==='m-ava'){document.querySelectorAll('.ava-opt').forEach(function(o){o.classList.toggle('sel',o.dataset.ava===S.ava);});}
   var mo=document.getElementById(id);
   if(mo) mo.classList.add('open');
-}
-function closeModal(id){
-  var mo=document.getElementById(id);
-  if(mo) mo.classList.remove('open');
 }
 function closeAllModals(){
   document.querySelectorAll('.mo.open').forEach(function(m){m.classList.remove('open');});
 }
-
 function vld(mid){
   if(mid==='m-task'){
     var ok=!!(document.getElementById('t-text').value.trim());
     document.getElementById('sb-task').disabled=!ok;
   }
 }
-
 function fillGoalSel(elId){
   var sel=document.getElementById(elId);
   if(!sel) return;
   sel.innerHTML='<option value="">— без цели —</option>';
-  S.goals.forEach(function(g){
-    sel.innerHTML+='<option value="'+g.id+'">'+esc(g.name)+'</option>';
-  });
+  S.goals.forEach(function(g){sel.innerHTML+='<option value="'+g.id+'">'+esc(g.name)+'</option>';});
 }
 
-/* ═══════════════════════════════════════
-   SAVE ACTIONS
-═══════════════════════════════════════ */
+/* ═══════════════════════ SAVE ═══════════════════════ */
 function saveTask(){
   var txt=document.getElementById('t-text').value.trim();
   var date=document.getElementById('t-date').value||idxToDate(planCenterIdx);
@@ -1170,74 +1318,46 @@ function saveTask(){
   ensW(wk);
   S.weeks[wk].tasks.push({id:uid(),text:txt,date:date,timeStart:ts,timeEnd:te,time:ts,priority:pri,done:false,goalId:gid});
   sv();
-  closeModal('m-task');
+  closeAllModals();
   if(curP==='plan'){
     var wrap=document.querySelector('.ring-carousel');
-    if(wrap) renderCarouselItems(wrap,false);
+    if(wrap){renderCarouselItems(wrap);attachCarouselEvents(wrap);}
     renderSchedule();
   }
   if(curP==='dash') rDash();
 }
-
 function saveHabit(){
   var txt=document.getElementById('h-text').value.trim();
   if(!txt) return;
-  var icon=document.getElementById('h-icon').value||'⭐';
-  var goal=parseInt(document.getElementById('h-goal').value)||30;
-  S.habits.push({id:uid(),name:txt,icon:icon,goalDays:goal,streak:0,doneDs:[]});
-  sv();
-  closeModal('m-hab');
-  rHab();
+  S.habits.push({id:uid(),name:txt,icon:document.getElementById('h-icon').value||'⭐',goalDays:parseInt(document.getElementById('h-goal').value)||30,streak:0,doneDs:[]});
+  sv(); closeAllModals(); rHab();
 }
-
 function saveGoal(){
   var txt=document.getElementById('g-text').value.trim();
   if(!txt) return;
-  var icon=document.getElementById('g-icon').value||'🎯';
-  var deadline=document.getElementById('g-deadline').value||'';
-  var desc=document.getElementById('g-desc').value||'';
-  S.goals.push({id:uid(),name:txt,icon:icon,deadline:deadline,desc:desc,pct:0});
-  sv();
-  closeModal('m-goal');
-  rGoals();
+  S.goals.push({id:uid(),name:txt,icon:document.getElementById('g-icon').value||'🎯',deadline:document.getElementById('g-deadline').value||'',desc:document.getElementById('g-desc').value||'',pct:0});
+  sv(); closeAllModals(); rGoals();
 }
-
 function saveBook(){
   var title=document.getElementById('b-title').value.trim();
   if(!title) return;
-  var author=document.getElementById('b-author').value||'';
-  var total=parseInt(document.getElementById('b-total').value)||100;
-  var read=parseInt(document.getElementById('b-read').value)||0;
-  S.books.push({id:uid(),title:title,author:author,total:total,read:read,emoji:'📖'});
-  sv();
-  closeModal('m-book');
-  rBooks();
+  S.books.push({id:uid(),title:title,author:document.getElementById('b-author').value||'',total:parseInt(document.getElementById('b-total').value)||100,read:parseInt(document.getElementById('b-read').value)||0,emoji:'📖'});
+  sv(); closeAllModals(); rBooks();
 }
-
 function saveVit(){
   var name=document.getElementById('v-name').value.trim();
   if(!name) return;
-  var dose=document.getElementById('v-dose').value||'';
-  var icon=document.getElementById('v-icon').value||'💊';
-  S.vitamins.push({id:uid(),name:name,dose:dose,icon:icon});
-  sv();
-  closeModal('m-vit');
-  rVit();
+  S.vitamins.push({id:uid(),name:name,dose:document.getElementById('v-dose').value||'',icon:document.getElementById('v-icon').value||'💊'});
+  sv(); closeAllModals(); rVit();
 }
-
 function saveAva(){
   var sel=document.querySelector('.ava-opt.sel');
   if(sel) S.ava=sel.dataset.ava;
-  sv();
-  closeModal('m-ava');
-  updateHdr();
-  rDash();
+  sv(); closeAllModals(); updateHdr(); rDash();
 }
 
-/* ═══════════════════════════════════════
-   TOGGLE TASK
-═══════════════════════════════════════ */
-function toggleTask(tid, dateStr){
+/* ═══════════════════════ TOGGLES ═══════════════════════ */
+function toggleTask(tid,dateStr){
   var wk=wkKey(dateStr);
   if(!S.weeks[wk]) return;
   var tasks=S.weeks[wk].tasks;
@@ -1249,17 +1369,12 @@ function toggleTask(tid, dateStr){
     }
   }
   sv();
-  // Update carousel ring for current day
   var wrap=document.querySelector('.ring-carousel');
-  if(wrap) renderCarouselItems(wrap,false);
+  if(wrap){renderCarouselItems(wrap);attachCarouselEvents(wrap);}
   renderSchedule();
   updateHdr();
   if(curP==='dash') rDash();
 }
-
-/* ═══════════════════════════════════════
-   TOGGLE HABIT
-═══════════════════════════════════════ */
 function toggleHabit(hid){
   var tod=today();
   for(var i=0;i<S.habits.length;i++){
@@ -1272,48 +1387,33 @@ function toggleHabit(hid){
       break;
     }
   }
-  sv();
-  rHab();
-  rDash();
+  sv(); rHab(); rDash();
 }
-
-/* ═══════════════════════════════════════
-   TOGGLE VITAMIN
-═══════════════════════════════════════ */
 function toggleVit(vid){
   var tod=today();
   if(!S.vitDone[tod]) S.vitDone[tod]=[];
   var idx=S.vitDone[tod].indexOf(vid);
   if(idx>=0) S.vitDone[tod].splice(idx,1);
   else{S.vitDone[tod].push(vid);addXP(5);}
-  sv();
-  rVit();
+  sv(); rVit();
 }
 
-/* ═══════════════════════════════════════
-   EVENT DELEGATION
-═══════════════════════════════════════ */
-document.addEventListener('click', function(e){
-  // Nav
+/* ═══════════════════════ EVENT DELEGATION ═══════════════════════ */
+document.addEventListener('click',function(e){
   var nb=e.target.closest('.nav-btn[data-page]');
   if(nb){goPage(nb.dataset.page);return;}
 
-  // Open modal via data-action
   var om=e.target.closest('[data-action="open-modal"]');
   if(om){openModal(om.dataset.modal);return;}
 
-  // Open task modal
   var otm=e.target.closest('[data-action="open-task-modal"]');
   if(otm){openModal('m-task');return;}
 
-  // Close modal on backdrop
   if(e.target.classList.contains('mo')){closeAllModals();return;}
 
-  // Avatar buttons
   var avaBtn=e.target.closest('#hdr-ava-btn');
   if(avaBtn){openModal('m-ava');return;}
 
-  // Avatar option select
   var avaOpt=e.target.closest('.ava-opt');
   if(avaOpt){
     document.querySelectorAll('.ava-opt').forEach(function(o){o.classList.remove('sel');});
@@ -1321,7 +1421,6 @@ document.addEventListener('click', function(e){
     return;
   }
 
-  // Save buttons
   if(e.target.id==='sb-task'){saveTask();return;}
   if(e.target.id==='sb-hab'){saveHabit();return;}
   if(e.target.id==='sb-goal'){saveGoal();return;}
@@ -1329,32 +1428,23 @@ document.addEventListener('click', function(e){
   if(e.target.id==='sb-vit'){saveVit();return;}
   if(e.target.id==='sb-ava'){saveAva();return;}
 
-  // Toggle task
   var tog=e.target.closest('[data-action="tog"]');
-  if(tog){toggleTask(tog.dataset.tid, tog.dataset.date);return;}
+  if(tog){toggleTask(tog.dataset.tid,tog.dataset.date);return;}
 
-  // Toggle habit
   var htog=e.target.closest('[data-action="hab-tog"]');
   if(htog){toggleHabit(htog.dataset.hid);return;}
 
-  // Toggle vitamin
   var vtog=e.target.closest('[data-action="vit-tog"]');
   if(vtog){toggleVit(vtog.dataset.vid);return;}
 
-  // Premium
   if(e.target.id==='hdr-premium-btn'){alert('Premium — скоро!');return;}
 });
 
-/* ═══════════════════════════════════════
-   INPUT LISTENERS
-═══════════════════════════════════════ */
-document.addEventListener('input', function(e){
+document.addEventListener('input',function(e){
   if(e.target.id==='t-text') vld('m-task');
 });
 
-/* ═══════════════════════════════════════
-   AVATAR FILE UPLOAD
-═══════════════════════════════════════ */
+/* ═══════════════════════ AVATAR FILE ═══════════════════════ */
 var avaFile=document.getElementById('ava-file');
 if(avaFile){
   avaFile.addEventListener('change',function(){
@@ -1369,58 +1459,45 @@ if(avaFile){
   });
 }
 
-/* ═══════════════════════════════════════
-   LANDING
-═══════════════════════════════════════ */
-document.getElementById('ln-go').addEventListener('click', function(){
+/* ═══════════════════════ LANDING ═══════════════════════ */
+document.getElementById('ln-go').addEventListener('click',function(){
   var name=document.getElementById('ln-name').value.trim();
   if(!name) return;
-  S.name=name;
-  sv();
-  startApp();
+  S.name=name; sv(); startApp();
 });
-document.getElementById('ln-name').addEventListener('keydown', function(e){
+document.getElementById('ln-name').addEventListener('keydown',function(e){
   if(e.key==='Enter') document.getElementById('ln-go').click();
 });
 
-/* ═══════════════════════════════════════
-   TELEGRAM BACK BUTTON
-═══════════════════════════════════════ */
+/* ═══════════════════════ TELEGRAM ═══════════════════════ */
 var tg=window.Telegram&&window.Telegram.WebApp;
 if(tg){
-  tg.ready();
-  tg.expand();
+  tg.ready(); tg.expand();
   if(tg.BackButton){
     tg.BackButton.onClick(function(){
       if(document.querySelector('.mo.open')){closeAllModals();return;}
-      if(curP!=='dash'){goPage('dash');}
-      else{tg.close();}
+      if(curP!=='dash') goPage('dash');
+      else tg.close();
     });
   }
 }
 
-/* ═══════════════════════════════════════
-   INIT
-═══════════════════════════════════════ */
+/* ═══════════════════════ INIT ═══════════════════════ */
 function startApp(){
   document.getElementById('landing').style.display='none';
   document.getElementById('shell').style.display='flex';
   planCenterIdx=0;
-  planSel=today();
   goPage('plan');
   rAll();
 }
-
 function init(){
   S=loadS();
-  if(S.name){
-    startApp();
-  } else {
+  if(S.name) startApp();
+  else{
     document.getElementById('landing').style.display='flex';
     document.getElementById('shell').style.display='none';
   }
 }
-
 init();
 
 })();
