@@ -23,9 +23,6 @@
   --pri-hi:#FF5A5A;
   --pri-md:#FFB830;
   --pri-lo:#4CD78A;
-  --ring-past:url(#grad-past);
-  --ring-sel:url(#grad-sel);
-  --ring-future:#C8C0E0;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
@@ -33,28 +30,114 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 /* ── SHELL ── */
 #shell{display:flex;flex-direction:column;height:100vh;overflow:hidden;}
 
-/* ── HEADER ── */
+/* ══════════════════════════════════════
+   HEADER — белый, лёгкая тень
+══════════════════════════════════════ */
 #hdr{
-  background:var(--grad-hdr);
-  padding:12px 16px 10px;
-  display:flex;align-items:center;gap:10px;
+  background:#fff;
+  padding:10px 16px 10px;
+  display:flex;
+  align-items:center;
+  gap:12px;
   flex-shrink:0;
-  position:relative;z-index:10;
+  position:relative;
+  z-index:10;
+  box-shadow:0 2px 12px rgba(0,0,0,.07);
 }
-.hdr-ava{width:40px;height:40px;border-radius:50%;border:2px solid rgba(255,255,255,.6);overflow:hidden;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
+
+/* Аватарка */
+.hdr-ava{
+  width:44px;height:44px;
+  border-radius:50%;
+  border:2px solid #E8E2F4;
+  overflow:hidden;
+  background:#F4F0FF;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  flex-shrink:0;
+}
 .hdr-ava img{width:100%;height:100%;object-fit:cover;}
-.hdr-ava svg{width:22px;height:22px;fill:rgba(255,255,255,.85);}
-.hdr-info{flex:1;min-width:0;}
-.hdr-name{font-size:15px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.hdr-lvl{font-size:11px;color:rgba(255,255,255,.75);margin-top:1px;}
-.hdr-xp-bar{height:4px;background:rgba(255,255,255,.25);border-radius:4px;margin-top:4px;overflow:hidden;}
-.hdr-xp-fill{height:100%;background:#fff;border-radius:4px;transition:width .4s;}
-.hdr-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
-.hdr-premium{background:rgba(255,255,255,.22);border:1px solid rgba(255,255,255,.4);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;cursor:pointer;}
+.hdr-ava svg{width:24px;height:24px;fill:#B0A8CC;}
+
+/* Блок имя + уровень + XP */
+.hdr-info{
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.hdr-name{
+  font-size:15px;
+  font-weight:800;
+  color:var(--text);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  line-height:1.2;
+}
+.hdr-lvl{
+  font-size:11px;
+  color:var(--sub);
+  font-weight:600;
+  line-height:1;
+}
+
+/* XP строка: прогресс-бар + текст */
+.hdr-xp-row{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-top:2px;
+}
+.hdr-xp-bar{
+  flex:1;
+  height:5px;
+  background:#EDE8FF;
+  border-radius:5px;
+  overflow:hidden;
+}
+.hdr-xp-fill{
+  height:100%;
+  background:linear-gradient(90deg,#3aaf5c,#27c96a);
+  border-radius:5px;
+  transition:width .6s ease;
+}
+.hdr-xp-text{
+  font-size:10px;
+  font-weight:700;
+  color:var(--sub);
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+/* Premium кнопка */
+.hdr-premium{
+  background:linear-gradient(135deg,#FF9500,#FFBC00);
+  border:none;
+  color:#fff;
+  font-size:12px;
+  font-weight:800;
+  padding:8px 14px;
+  border-radius:20px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  flex-shrink:0;
+  box-shadow:0 2px 10px rgba(255,149,0,.35);
+  font-family:inherit;
+}
+.hdr-premium svg{
+  width:13px;height:13px;
+  fill:#fff;
+}
 
 /* ── NAV ── */
 #nav{
-  height:var(--nav-h);background:#fff;border-top:1px solid rgba(155,109,255,.1);
+  height:var(--nav-h);
+  background:#fff;
+  border-top:1px solid rgba(155,109,255,.1);
   display:flex;align-items:center;justify-content:space-around;
   flex-shrink:0;z-index:20;
   box-shadow:0 -2px 12px rgba(155,109,255,.08);
@@ -103,9 +186,7 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 /* ── RING ITEMS ── */
 .ring-item{
   flex-shrink:0;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+  display:flex;flex-direction:column;align-items:center;
   cursor:pointer;
   position:absolute;
   top:50%;
@@ -115,95 +196,26 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
     opacity .45s cubic-bezier(.4,0,.2,1);
   will-change:transform,left,opacity;
 }
+.ring-item.pos-center{left:50%;transform:translate(-50%,-50%) scale(1);opacity:1;z-index:3;}
+.ring-item.pos-left{left:calc(50% - 120px);transform:translate(-50%,-50%) scale(0.66);opacity:0.75;z-index:2;}
+.ring-item.pos-right{left:calc(50% + 120px);transform:translate(-50%,-50%) scale(0.66);opacity:0.75;z-index:2;}
+.ring-item.pos-hidden-left{left:calc(50% - 220px);transform:translate(-50%,-50%) scale(0.4);opacity:0;z-index:1;pointer-events:none;}
+.ring-item.pos-hidden-right{left:calc(50% + 220px);transform:translate(-50%,-50%) scale(0.4);opacity:0;z-index:1;pointer-events:none;}
 
-/* Position classes */
-.ring-item.pos-center{
-  left:50%;
-  transform:translate(-50%,-50%) scale(1);
-  opacity:1;
-  z-index:3;
-}
-.ring-item.pos-left{
-  left:calc(50% - 120px);
-  transform:translate(-50%,-50%) scale(0.66);
-  opacity:0.75;
-  z-index:2;
-}
-.ring-item.pos-right{
-  left:calc(50% + 120px);
-  transform:translate(-50%,-50%) scale(0.66);
-  opacity:0.75;
-  z-index:2;
-}
-.ring-item.pos-hidden-left{
-  left:calc(50% - 220px);
-  transform:translate(-50%,-50%) scale(0.4);
-  opacity:0;
-  z-index:1;
-  pointer-events:none;
-}
-.ring-item.pos-hidden-right{
-  left:calc(50% + 220px);
-  transform:translate(-50%,-50%) scale(0.4);
-  opacity:0;
-  z-index:1;
-  pointer-events:none;
-}
-
-/* ── RING SVG WRAPPER ── */
-.ring-svg-wrap{
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-/* ── RING INNER CARD ── */
+.ring-svg-wrap{position:relative;display:flex;align-items:center;justify-content:center;}
 .ring-inner{
-  position:absolute;
-  top:50%;left:50%;
+  position:absolute;top:50%;left:50%;
   transform:translate(-50%,-50%);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:0;
-  pointer-events:none;
-  width:85%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  pointer-events:none;width:80%;
 }
-.ring-day-name{
-  font-size:11px;
-  font-weight:700;
-  color:#9B8FC4;
-  letter-spacing:.5px;
-  text-transform:uppercase;
-  margin-bottom:2px;
-}
-.ring-day-num{
-  font-size:38px;
-  font-weight:900;
-  color:#1A1035;
-  line-height:1;
-  margin-bottom:1px;
-}
-.ring-month-name{
-  font-size:11px;
-  font-weight:600;
-  color:#9B8FC4;
-  margin-top:1px;
-}
-
-/* ── RING PROGRESS LABEL ── */
-.ring-pct-label{
-  margin-top:6px;
-  font-size:13px;
-  font-weight:800;
-  text-align:center;
-  min-height:18px;
-}
-.ring-pct-label.past{ color:#9B7FE8; }
-.ring-pct-label.sel{  color:#3DDC84; }
-.ring-pct-label.future{ color:#B0A8CC; }
+.ring-day-name{font-size:11px;font-weight:700;color:#9B8FC4;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px;}
+.ring-day-num{font-size:38px;font-weight:900;color:#1A1035;line-height:1;margin-bottom:1px;}
+.ring-month-name{font-size:11px;font-weight:600;color:#9B8FC4;margin-top:1px;}
+.ring-pct-label{margin-top:6px;font-size:13px;font-weight:800;text-align:center;min-height:18px;}
+.ring-pct-label.past{color:#9B7FE8;}
+.ring-pct-label.sel{color:#3DDC84;}
+.ring-pct-label.future{color:#B0A8CC;}
 
 /* ── QUOTE BLOCK ── */
 .plan-quote{
@@ -216,68 +228,31 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
   text-align:center;
   box-shadow:0 2px 12px rgba(155,109,255,.1);
 }
-.plan-quote-mark{
-  font-size:22px;
-  color:#3DDC84;
-  line-height:1;
-  display:block;
-  margin-bottom:4px;
-}
-.plan-quote-text{
-  font-size:13px;
-  font-weight:600;
-  color:#3D3658;
-  line-height:1.55;
-}
+.plan-quote-mark{font-size:22px;color:#3DDC84;line-height:1;display:inline-block;margin-bottom:4px;}
+.plan-quote-text{font-size:13px;font-weight:600;color:#3D3658;line-height:1.55;}
 
 /* ── SCHEDULE CARD ── */
 .plan-body{padding:0 16px 16px;}
-.sched-card{
-  background:rgba(255,255,255,.75);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-  border-radius:20px;
-  box-shadow:0 4px 20px rgba(155,109,255,.12);
-  overflow:hidden;
-}
-.sched-hdr{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 16px 10px;
-}
+.sched-card{background:rgba(255,255,255,.75);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-radius:20px;box-shadow:0 4px 20px rgba(155,109,255,.12);overflow:hidden;}
+.sched-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;}
 .sched-hdr-left{display:flex;align-items:center;gap:8px;}
 .sched-hdr-left svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 .sched-title{font-size:15px;font-weight:800;color:var(--text);}
 .sched-date{font-size:13px;color:var(--sub);font-weight:600;}
-.add-task-btn{
-  width:36px;height:36px;border-radius:50%;
-  background:var(--grad-hdr);border:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 2px 10px rgba(155,109,255,.4);
-  flex-shrink:0;
-}
+.add-task-btn{width:36px;height:36px;border-radius:50%;background:var(--grad-hdr);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(155,109,255,.4);flex-shrink:0;}
 .add-task-btn svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;}
 
 /* ── TIMELINE ── */
 .timeline{padding:0 16px 16px;}
 .tl-item{display:flex;gap:10px;margin-bottom:14px;align-items:flex-start;}
-.tl-time{
-  font-size:11px;font-weight:700;color:var(--sub);
-  width:44px;flex-shrink:0;padding-top:12px;text-align:right;line-height:1.3;
-}
+.tl-time{font-size:11px;font-weight:700;color:var(--sub);width:44px;flex-shrink:0;padding-top:12px;text-align:right;line-height:1.3;}
 .tl-dot-col{display:flex;flex-direction:column;align-items:center;padding-top:14px;flex-shrink:0;}
 .tl-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0;}
 .tl-dot.pri-hi{background:var(--pri-hi);}
 .tl-dot.pri-md{background:var(--pri-md);}
 .tl-dot.pri-lo{background:var(--pri-lo);}
 .tl-line{width:2px;flex:1;min-height:24px;background:rgba(155,109,255,.12);margin-top:4px;border-radius:2px;}
-.tl-card{
-  flex:1;
-  border-radius:14px;
-  padding:10px 12px;
-  display:flex;align-items:center;gap:10px;
-  min-width:0;
-  box-shadow:0 2px 8px rgba(0,0,0,.06);
-}
+.tl-card{flex:1;border-radius:14px;padding:10px 12px;display:flex;align-items:center;gap:10px;min-width:0;box-shadow:0 2px 8px rgba(0,0,0,.06);}
 .tl-card.pri-md{background:linear-gradient(135deg,rgba(255,184,48,.1),rgba(255,184,48,.04));border:1.5px solid rgba(255,184,48,.25);}
 .tl-card.pri-hi{background:linear-gradient(135deg,rgba(255,90,90,.1),rgba(255,90,90,.04));border:1.5px solid rgba(255,90,90,.25);}
 .tl-card.pri-lo{background:linear-gradient(135deg,rgba(76,215,138,.1),rgba(76,215,138,.04));border:1.5px solid rgba(76,215,138,.25);}
@@ -286,13 +261,7 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 .tl-task-name.done-text{text-decoration:line-through;color:var(--sub);}
 .tl-task-time{font-size:11px;color:var(--sub);margin-top:3px;display:flex;align-items:center;gap:3px;font-weight:600;}
 .tl-task-time svg{width:11px;height:11px;stroke:var(--sub);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;}
-.tl-check{
-  width:32px;height:32px;border-radius:10px;
-  border:2px solid rgba(155,109,255,.3);
-  background:transparent;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;transition:all .25s;
-}
+.tl-check{width:32px;height:32px;border-radius:10px;border:2px solid rgba(155,109,255,.3);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .25s;}
 .tl-check.done{background:var(--grad-hdr);border-color:transparent;box-shadow:0 2px 8px rgba(155,109,255,.35);}
 .tl-check svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;display:none;}
 .tl-check.done svg{display:block;}
@@ -413,17 +382,13 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 
 /* ── EMPTY STATE ── */
 .empty-state{text-align:center;padding:40px 20px;color:var(--sub);}
-.empty-state svg{width:48px;height:48px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:12px;opacity:.5;display:block;margin-left:auto;margin-right:auto;}
+.empty-state svg{width:48px;height:48px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;margin-bottom:12px;opacity:.5;display:block;margin-left:auto;margin-right:auto;}
 .empty-state p{font-size:14px;font-weight:600;}
 
 /* ── RING ANIMATION ── */
 @keyframes ringFill{
-  from{ stroke-dashoffset: var(--ring-from); }
-  to{   stroke-dashoffset: var(--ring-to);   }
-}
-.ring-progress{
-  animation: ringFill .9s cubic-bezier(.4,0,.2,1) forwards;
-  transform-origin: center;
+  from{stroke-dashoffset:var(--ring-from);}
+  to{stroke-dashoffset:var(--ring-to);}
 }
 </style>
 </head>
@@ -442,6 +407,7 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 
 <!-- SHELL -->
 <div id="shell" style="display:none;">
+
   <!-- HEADER -->
   <div id="hdr">
     <div class="hdr-ava" id="hdr-ava-btn">
@@ -449,68 +415,57 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
     </div>
     <div class="hdr-info">
       <div class="hdr-name" id="hdr-name">—</div>
-      <div class="hdr-lvl" id="hdr-lvl">Уровень 1</div>
-      <div class="hdr-xp-bar"><div class="hdr-xp-fill" id="hdr-xp-fill" style="width:0%"></div></div>
+      <div class="hdr-lvl" id="hdr-lvl">Ур. 1 • Новичок</div>
+      <div class="hdr-xp-row">
+        <div class="hdr-xp-bar">
+          <div class="hdr-xp-fill" id="hdr-xp-fill" style="width:0%"></div>
+        </div>
+        <div class="hdr-xp-text" id="hdr-xp-text">0/200 XP</div>
+      </div>
     </div>
-    <div class="hdr-right">
-      <button class="hdr-premium" id="hdr-premium-btn">⭐ Premium</button>
-    </div>
+    <button class="hdr-premium" id="hdr-premium-btn">
+      <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Premium
+    </button>
   </div>
 
   <!-- PAGES -->
   <div id="pages">
-
-    <!-- DASHBOARD -->
     <div class="page" id="p-dash"></div>
-
-    <!-- PLANNER -->
     <div class="page" id="p-plan"></div>
-
-    <!-- HABITS -->
     <div class="page" id="p-hab">
-      <div class="hab-head">
-        <h2>Привычки</h2>
+      <div class="hab-head"><h2>Привычки</h2>
         <button class="sec-add" data-action="open-modal" data-modal="m-hab">
           <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </button>
       </div>
       <div class="hab-list" id="hab-list"></div>
     </div>
-
-    <!-- GOALS -->
     <div class="page" id="p-goals">
-      <div class="goals-head">
-        <h2>Цели</h2>
+      <div class="goals-head"><h2>Цели</h2>
         <button class="sec-add" data-action="open-modal" data-modal="m-goal">
           <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </button>
       </div>
       <div class="goals-list" id="goals-list"></div>
     </div>
-
-    <!-- VITAMINS -->
     <div class="page" id="p-vit">
-      <div class="vit-head">
-        <h2>Витамины</h2>
+      <div class="vit-head"><h2>Витамины</h2>
         <button class="sec-add" data-action="open-modal" data-modal="m-vit">
           <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </button>
       </div>
       <div class="vit-list" id="vit-list"></div>
     </div>
-
-    <!-- BOOKS -->
     <div class="page" id="p-books">
-      <div class="books-head">
-        <h2>Книги</h2>
+      <div class="books-head"><h2>Книги</h2>
         <button class="sec-add" data-action="open-modal" data-modal="m-book">
           <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         </button>
       </div>
       <div class="books-list" id="books-list"></div>
     </div>
-
-  </div><!-- /pages -->
+  </div>
 
   <!-- NAV -->
   <nav id="nav">
@@ -541,7 +496,7 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
   </nav>
 </div>
 
-<!-- ══════ MODALS ══════ -->
+<!-- MODALS -->
 <div class="mo" id="m-task">
   <div class="mo-box">
     <div class="mo-handle"></div>
@@ -563,7 +518,6 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
     <button class="save-btn" id="sb-task">Сохранить</button>
   </div>
 </div>
-
 <div class="mo" id="m-hab">
   <div class="mo-box">
     <div class="mo-handle"></div>
@@ -574,7 +528,6 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
     <button class="save-btn" id="sb-hab">Сохранить</button>
   </div>
 </div>
-
 <div class="mo" id="m-goal">
   <div class="mo-box">
     <div class="mo-handle"></div>
@@ -586,7 +539,6 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
     <button class="save-btn" id="sb-goal">Сохранить</button>
   </div>
 </div>
-
 <div class="mo" id="m-book">
   <div class="mo-box">
     <div class="mo-handle"></div>
@@ -598,7 +550,6 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
     <button class="save-btn" id="sb-book">Сохранить</button>
   </div>
 </div>
-
 <div class="mo" id="m-vit">
   <div class="mo-box">
     <div class="mo-handle"></div>
@@ -609,7 +560,6 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
     <button class="save-btn" id="sb-vit">Сохранить</button>
   </div>
 </div>
-
 <div class="mo" id="m-ava">
   <div class="mo-box">
     <div class="mo-handle"></div>
@@ -637,16 +587,16 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 <script>
 (function(){'use strict';
 
-/* ═══════════════════════ CONSTANTS ═══════════════════════ */
+/* ══════════════ CONSTANTS ══════════════ */
 var KEY = 'lq_v9';
 var XP_PER_LVL = 200;
 var S;
 var curP = 'plan';
 var planCenterIdx = 0;
+var carouselAnimating = false;
 
 var DAY_NAMES   = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
 var MONTH_SHORT = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
-
 var QUOTES = [
   'Небольшой прогресс каждый день ведёт к большим результатам.',
   'Дисциплина — это мост между целями и достижениями.',
@@ -657,581 +607,378 @@ var QUOTES = [
   'Сделай сегодня то, что твоё завтрашнее «я» поблагодарит.',
   'Прогресс, а не совершенство — вот цель.',
   'Маленькие шаги ежедневно создают большие перемены.',
-  'Верь в процесс, результат придёт сам.'
+  'Верь в процесс — результат придёт сам.'
 ];
 
-var carouselAnimating = false;
+/* ══════════════ RANKS ══════════════ */
+function getRank(l){
+  if(l<=2)  return 'Новичок';
+  if(l<=5)  return 'Искатель';
+  if(l<=10) return 'Герой';
+  if(l<=20) return 'Мастер';
+  return 'Легенда';
+}
 
-/* ═══════════════════════ HELPERS ═══════════════════════ */
+/* ══════════════ HELPERS ══════════════ */
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
-
-function today(){
-  var d=new Date();
-  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
-}
+function today(){var d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
 function pad(n){return n<10?'0'+n:String(n);}
-function esc(s){
-  return String(s||'')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;');
-}
-function dateFromStr(s){
-  var p=s.split('-');
-  return new Date(+p[0],+p[1]-1,+p[2]);
-}
-function strFromDate(d){
-  return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
-}
-function addDays(s,n){
-  var d=dateFromStr(s);
-  d.setDate(d.getDate()+n);
-  return strFromDate(d);
-}
-function fmtDate(s){
-  var d=dateFromStr(s);
-  return d.getDate()+' '+MONTH_SHORT[d.getMonth()];
-}
-function wkKey(s){
-  var d=dateFromStr(s);
-  var day=d.getDay();
-  var diff=d.getDate()-(day===0?6:day-1);
-  var mon=new Date(d.getFullYear(),d.getMonth(),diff);
-  return strFromDate(mon);
-}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function dateFromStr(s){var p=s.split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
+function strFromDate(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function addDays(s,n){var d=dateFromStr(s);d.setDate(d.getDate()+n);return strFromDate(d);}
+function fmtDate(s){var d=dateFromStr(s);return d.getDate()+' '+MONTH_SHORT[d.getMonth()];}
+function wkKey(s){var d=dateFromStr(s);var day=d.getDay();var diff=d.getDate()-(day===0?6:day-1);var mon=new Date(d.getFullYear(),d.getMonth(),diff);return strFromDate(mon);}
 function idxToDate(idx){return addDays(today(),idx);}
+function todayQuote(){var d=new Date();var seed=d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();return QUOTES[seed%QUOTES.length];}
+function timeDiff(s,e){try{var sp=s.split(':'),ep=e.split(':');return parseInt(ep[0])*60+parseInt(ep[1])-(parseInt(sp[0])*60+parseInt(sp[1]));}catch(x){return null;}}
 
-/* quote of the day — deterministic by date */
-function todayQuote(){
-  var d=new Date();
-  var seed=d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();
-  return QUOTES[seed % QUOTES.length];
-}
-
-/* ═══════════════════════ STORAGE ═══════════════════════ */
-function defS(){
-  return {name:'',ava:'🦊',xp:0,weeks:{},habits:[],goals:[],books:[],vitamins:[],vitDone:{},premium:false};
-}
+/* ══════════════ STORAGE ══════════════ */
+function defS(){return{name:'',ava:'🦊',xp:0,weeks:{},habits:[],goals:[],books:[],vitamins:[],vitDone:{},premium:false};}
 function loadS(){
   try{
     var raw=localStorage.getItem(KEY);
     if(raw) return JSON.parse(raw);
     var oldKeys=['lq5','lq_v4','lq_v5','lq_v6','lq_v7','lq_v8'];
-    for(var i=0;i<oldKeys.length;i++){
-      var o=localStorage.getItem(oldKeys[i]);
-      if(o){var d=JSON.parse(o);localStorage.removeItem(oldKeys[i]);return Object.assign(defS(),d);}
-    }
+    for(var i=0;i<oldKeys.length;i++){var o=localStorage.getItem(oldKeys[i]);if(o){var d=JSON.parse(o);localStorage.removeItem(oldKeys[i]);return Object.assign(defS(),d);}}
   }catch(e){}
   return defS();
 }
 function sv(){localStorage.setItem(KEY,JSON.stringify(S));}
 
-/* ═══════════════════════ XP / LEVEL ═══════════════════════ */
+/* ══════════════ XP / LEVEL ══════════════ */
 function lvl(){return Math.floor(S.xp/XP_PER_LVL)+1;}
 function xpInLvl(){return S.xp%XP_PER_LVL;}
 function xpPct(){return Math.round(xpInLvl()/XP_PER_LVL*100);}
 function addXP(n){S.xp+=n;sv();}
 
-/* ═══════════════════════ TASKS ═══════════════════════ */
+/* ══════════════ TASKS ══════════════ */
 function ensW(wk){if(!S.weeks[wk])S.weeks[wk]={tasks:[]};return S.weeks[wk];}
-function tasksForDate(ds){
-  var wk=wkKey(ds);
-  return (S.weeks[wk]?S.weeks[wk].tasks:[]).filter(function(t){return t.date===ds;});
-}
-function taskPct(ds){
-  var t=tasksForDate(ds);
-  return t.length===0?0:Math.round(t.filter(function(x){return x.done;}).length/t.length*100);
-}
+function tasksForDate(ds){var wk=wkKey(ds);return(S.weeks[wk]?S.weeks[wk].tasks:[]).filter(function(t){return t.date===ds;});}
+function taskPct(ds){var t=tasksForDate(ds);return t.length===0?0:Math.round(t.filter(function(x){return x.done;}).length/t.length*100);}
 function taskTotalCount(ds){return tasksForDate(ds).length;}
 
-function timeDiff(s,e){
-  try{
-    var sp=s.split(':'),ep=e.split(':');
-    return parseInt(ep[0])*60+parseInt(ep[1])-(parseInt(sp[0])*60+parseInt(sp[1]));
-  }catch(x){return null;}
-}
-
-/* ═══════════════════════ RING SVG ═══════════════════════ */
-/*
-  Gradient stroke trick:
-  Use a <linearGradient> referenced by stroke="url(#id)".
-  For past days: purple gradient #9B7FE8 → #BB62FF
-  For selected:  teal gradient  #3DDC84 → #00C2FF
-  For future:    flat grey      #C8C0E0
-*/
+/* ══════════════ RING SVG ══════════════ */
 function buildRingSVG(opts){
-  /*
-    opts = {
-      size:     number   (total SVG size px)
-      stroke:   number   (ring stroke width)
-      pct:      number   (0-100)
-      type:     'past'|'sel'|'future'
-      uid:      string   (unique id for gradient)
-      animate:  bool
-    }
-  */
-  var sz    = opts.size;
-  var sw    = opts.stroke;
-  var pct   = opts.pct;
-  var type  = opts.type;
-  var gid   = opts.uid;
-  var anim  = opts.animate !== false;
+  var sz=opts.size, sw=opts.stroke, pct=opts.pct, type=opts.type, gid=opts.uid;
+  var r=(sz-sw)/2, cx=sz/2, cy=sz/2;
+  var circ=2*Math.PI*r;
+  var dash=circ*(pct/100), gap=circ-dash;
+  var offStart=-(circ/4);
 
-  var r     = (sz - sw) / 2;
-  var cx    = sz / 2;
-  var cy    = sz / 2;
-  var circ  = 2 * Math.PI * r;
-  var dash  = circ * (pct / 100);
-  var gap   = circ - dash;
-  // start from top: rotate -90deg → offset = -circ/4
-  var offFull = -(circ / 4);    // fully drawn = start offset
-  var offEmpty = offFull - circ; // empty = one full circle back (for animation)
-
-  var strokeAttr;
-  var defsHtml = '';
-
-  if(type === 'future'){
-    strokeAttr = '#C8C0E0';
+  var strokeAttr, defsHtml='';
+  if(type==='future'){
+    strokeAttr='#C8C0E0';
   } else {
-    var gradId = 'g-'+gid;
-    var c1 = type==='past' ? '#BB62FF' : '#3DDC84';
-    var c2 = type==='past' ? '#9B7FE8' : '#00C2FF';
-    defsHtml = '<defs>'
-      +'<linearGradient id="'+gradId+'" x1="0%" y1="0%" x2="100%" y2="100%">'
+    var gradId='g-'+gid;
+    var c1=type==='past'?'#BB62FF':'#3DDC84';
+    var c2=type==='past'?'#9B7FE8':'#00C2FF';
+    defsHtml='<defs><linearGradient id="'+gradId+'" x1="0%" y1="0%" x2="100%" y2="100%">'
       +'<stop offset="0%" stop-color="'+c1+'"/>'
       +'<stop offset="100%" stop-color="'+c2+'"/>'
-      +'</linearGradient>'
-      +'</defs>';
-    strokeAttr = 'url(#'+gradId+')';
+      +'</linearGradient></defs>';
+    strokeAttr='url(#'+gradId+')';
   }
 
-  // animation style
-  var animStyle = '';
-  if(anim && pct > 0 && type !== 'future'){
-    animStyle = ' style="'
-      +'--ring-from:'+(-offEmpty)+';'   // strokeDashoffset start (full = 0%)
-      +'--ring-to:'+(-offFull+gap)+';'  // strokeDashoffset end
-      +'stroke-dashoffset:'+(-offFull+gap)+';'
-      +'animation:ringFill .9s cubic-bezier(.4,0,.2,1) forwards;"';
+  var progressArc='';
+  if(pct>0){
+    var isCenter=opts.animate!==false;
+    var animStyle='';
+    if(isCenter && type!=='future'){
+      var fromOffset=offStart-circ;
+      var toOffset=offStart+gap;
+      animStyle=' style="stroke-dashoffset:'+toOffset+';'
+        +'--ring-from:'+(Math.abs(fromOffset))+';'
+        +'--ring-to:'+(Math.abs(toOffset))+';'
+        +'animation:ringFill .9s ease forwards;"';
+    }
+    progressArc='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none"'
+      +' stroke="'+strokeAttr+'" stroke-width="'+sw+'"'
+      +' stroke-dasharray="'+dash+' '+gap+'"'
+      +' stroke-dashoffset="'+offStart+'"'
+      +' stroke-linecap="round"'+animStyle+'/>';
   }
 
   return '<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 '+sz+' '+sz+'" xmlns="http://www.w3.org/2000/svg">'
     +defsHtml
-    // track
     +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="#E8E2F4" stroke-width="'+sw+'"/>'
-    // progress arc
-    +(pct > 0
-      ? '<circle class="ring-progress" cx="'+cx+'" cy="'+cy+'" r="'+r
-        +'" fill="none" stroke="'+strokeAttr+'" stroke-width="'+sw
-        +'" stroke-dasharray="'+dash+' '+gap
-        +'" stroke-dashoffset="'+offFull
-        +'" stroke-linecap="round"'+animStyle+'/>'
-      : '')
+    +progressArc
     +'</svg>';
 }
 
-/* ═══════════════════════ CAROUSEL ═══════════════════════ */
+/* ══════════════ CAROUSEL ══════════════ */
 function buildCarousel(){
-  var wrap = document.querySelector('.ring-carousel');
+  var wrap=document.querySelector('.ring-carousel');
   if(!wrap) return;
   renderCarouselItems(wrap);
   attachCarouselEvents(wrap);
 }
 
-function dayType(offset){
-  // offset relative to planCenterIdx (center is 0 offset)
-  // planCenterIdx itself: compare to today
-  var absIdx = planCenterIdx + offset; // from today
-  if(absIdx < 0)  return 'past';
-  if(absIdx === 0) return 'sel';
-  return 'future';
-  // actually we want: center = 'sel', left = context, right = context
-  // but center offset=0 means selected day
-}
-
-function dayTypeForAbsIdx(absIdx){
-  if(absIdx < 0)  return 'past';
-  if(absIdx === 0) return 'sel'; // today
-  return 'future';
-}
-
-/* We treat: center = always 'sel' style (teal), past relative to today */
 function ringTypeForOffset(off){
-  var absIdx = planCenterIdx + off;
-  if(absIdx < 0) return 'past';
-  if(absIdx === 0) return 'sel';
+  var abs=planCenterIdx+off;
+  if(abs<0) return 'past';
+  if(abs===0) return 'sel';
   return 'future';
 }
 
 function renderCarouselItems(wrap){
-  var POSITIONS = ['pos-hidden-left','pos-left','pos-center','pos-right','pos-hidden-right'];
-  var OFFSETS   = [-2,-1,0,1,2];
+  var POS=['pos-hidden-left','pos-left','pos-center','pos-right','pos-hidden-right'];
+  var OFFS=[-2,-1,0,1,2];
+  var html='';
+  OFFS.forEach(function(off,i){
+    var abs=planCenterIdx+off;
+    var ds=idxToDate(abs);
+    var d=dateFromStr(ds);
+    var pct=taskPct(ds);
+    var tot=taskTotalCount(ds);
+    var isCenter=off===0;
+    var rtype=ringTypeForOffset(off);
+    var sz=isCenter?160:108, sw=isCenter?9:6;
+    var ruid='r'+abs+'_'+Date.now();
+    var pctClass=rtype;
 
-  var html = '';
-  OFFSETS.forEach(function(off, i){
-    var absIdx  = planCenterIdx + off;
-    var dateStr = idxToDate(absIdx);
-    var d       = dateFromStr(dateStr);
-    var dayName = DAY_NAMES[d.getDay()];
-    var dayNum  = d.getDate();
-    var monName = MONTH_SHORT[d.getMonth()];
-    var pct     = taskPct(dateStr);
-    var tot     = taskTotalCount(dateStr);
-    var isCenter= off === 0;
-    var rtype   = ringTypeForOffset(off);
-
-    /* sizes */
-    var sz  = isCenter ? 160 : 108;
-    var sw  = isCenter ? 9   : 6;
-    var ruid = 'r'+absIdx+'_'+Date.now();
-
-    var pctLabel = '';
-    if(rtype === 'future'){
-      pctLabel = tot > 0 ? pct+'%' : '0%';
-    } else {
-      pctLabel = pct+'%';
-    }
-    var pctClass = rtype; // past | sel | future
-
-    html += '<div class="ring-item '+POSITIONS[i]+'" data-offset="'+off+'" data-abs="'+absIdx+'">'
+    html+='<div class="ring-item '+POS[i]+'" data-offset="'+off+'" data-abs="'+abs+'">'
       +'<div class="ring-svg-wrap">'
       +buildRingSVG({size:sz,stroke:sw,pct:pct,type:rtype,uid:ruid,animate:isCenter})
       +'<div class="ring-inner">'
-      +'<div class="ring-day-name">'+esc(dayName)+'</div>'
-      +'<div class="ring-day-num">'+dayNum+'</div>'
-      +'<div class="ring-month-name">'+esc(monName)+'</div>'
+      +'<div class="ring-day-name">'+esc(DAY_NAMES[d.getDay()])+'</div>'
+      +'<div class="ring-day-num">'+d.getDate()+'</div>'
+      +'<div class="ring-month-name">'+esc(MONTH_SHORT[d.getMonth()])+'</div>'
       +'</div>'
       +'</div>'
-      +'<div class="ring-pct-label '+pctClass+'">'+pctLabel+'</div>'
+      +'<div class="ring-pct-label '+pctClass+'">'+pct+'%</div>'
       +'</div>';
   });
-
-  wrap.innerHTML = html;
+  wrap.innerHTML=html;
 }
 
 function attachCarouselEvents(wrap){
-  // click on side rings
-  wrap.addEventListener('click', function(e){
-    var item = e.target.closest('.ring-item');
-    if(!item || carouselAnimating) return;
-    var off = parseInt(item.dataset.offset||'0');
-    if(off === 0) return;
-    shiftCarousel(off > 0 ? 1 : -1);
+  wrap.addEventListener('click',function(e){
+    var item=e.target.closest('.ring-item');
+    if(!item||carouselAnimating) return;
+    var off=parseInt(item.dataset.offset||'0');
+    if(off===0) return;
+    shiftCarousel(off>0?1:-1);
   });
-
-  // touch swipe
-  var sx=0, sy=0;
-  wrap.addEventListener('touchstart', function(e){
-    sx=e.touches[0].clientX; sy=e.touches[0].clientY;
-  },{passive:true});
-  wrap.addEventListener('touchend', function(e){
+  var sx=0,sy=0;
+  wrap.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+  wrap.addEventListener('touchend',function(e){
     if(carouselAnimating) return;
-    var dx=e.changedTouches[0].clientX-sx;
-    var dy=e.changedTouches[0].clientY-sy;
+    var dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
     if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>28) shiftCarousel(dx<0?1:-1);
   },{passive:true});
-
-  // mouse drag
-  var mx=0, dragging=false;
+  var mx=0,dragging=false;
   wrap.addEventListener('mousedown',function(e){mx=e.clientX;dragging=true;});
   wrap.addEventListener('mouseup',function(e){
     if(!dragging||carouselAnimating){dragging=false;return;}
     dragging=false;
-    var dx=e.clientX-mx;
-    if(Math.abs(dx)>28) shiftCarousel(dx<0?1:-1);
+    if(Math.abs(e.clientX-mx)>28) shiftCarousel(e.clientX-mx<0?1:-1);
   });
   wrap.addEventListener('mouseleave',function(){dragging=false;});
 }
 
 function shiftCarousel(dir){
   if(carouselAnimating) return;
-  carouselAnimating = true;
-  planCenterIdx += dir;
-
-  var wrap = document.querySelector('.ring-carousel');
+  carouselAnimating=true;
+  planCenterIdx+=dir;
+  var wrap=document.querySelector('.ring-carousel');
   if(!wrap){carouselAnimating=false;return;}
-
-  var POSITIONS = ['pos-hidden-left','pos-left','pos-center','pos-right','pos-hidden-right'];
-
-  // Animate existing items to new positions
-  var items = wrap.querySelectorAll('.ring-item');
-  items.forEach(function(item){
-    var curOff = parseInt(item.dataset.offset||'0');
-    var newOff = curOff - dir;
-    var posIdx = newOff + 2; // -2..2 → 0..4
-
-    item.dataset.offset = newOff;
-    POSITIONS.forEach(function(p){item.classList.remove(p);});
-
-    if(posIdx >= 0 && posIdx < 5){
-      item.classList.add(POSITIONS[posIdx]);
-      if(newOff === 0){
-        // Update this item to become center (bigger, teal, animate)
-        refreshRingItem(item, 0);
-      } else {
-        // Update size class without animation
-        refreshRingItem(item, newOff);
-      }
+  var POS=['pos-hidden-left','pos-left','pos-center','pos-right','pos-hidden-right'];
+  wrap.querySelectorAll('.ring-item').forEach(function(item){
+    var newOff=parseInt(item.dataset.offset||'0')-dir;
+    var posIdx=newOff+2;
+    item.dataset.offset=newOff;
+    POS.forEach(function(p){item.classList.remove(p);});
+    if(posIdx>=0&&posIdx<5){
+      item.classList.add(POS[posIdx]);
+      refreshRingItem(item,newOff);
     } else {
-      item.style.opacity = '0';
-      item.style.pointerEvents = 'none';
+      item.style.opacity='0';item.style.pointerEvents='none';
     }
   });
-
   setTimeout(function(){
-    carouselAnimating = false;
-    // Full re-render to ensure fresh gradients & hidden items
+    carouselAnimating=false;
     renderCarouselItems(wrap);
     attachCarouselEvents(wrap);
     renderSchedule();
-  }, 460);
+  },460);
 }
 
-function refreshRingItem(item, off){
-  var absIdx  = planCenterIdx + off;
-  var dateStr = idxToDate(absIdx);
-  var d       = dateFromStr(dateStr);
-  var dayName = DAY_NAMES[d.getDay()];
-  var dayNum  = d.getDate();
-  var monName = MONTH_SHORT[d.getMonth()];
-  var pct     = taskPct(dateStr);
-  var tot     = taskTotalCount(dateStr);
-  var isCenter= off === 0;
-  var rtype   = ringTypeForOffset(off);
-  var sz      = isCenter ? 160 : 108;
-  var sw      = isCenter ? 9   : 6;
-  var ruid    = 'r'+absIdx+'_r'+Date.now();
-
-  var pctLabel = pct+'%';
-  var pctClass = rtype;
-
-  item.innerHTML =
-    '<div class="ring-svg-wrap">'
+function refreshRingItem(item,off){
+  var abs=planCenterIdx+off;
+  var ds=idxToDate(abs);
+  var d=dateFromStr(ds);
+  var pct=taskPct(ds);
+  var isCenter=off===0;
+  var rtype=ringTypeForOffset(off);
+  var sz=isCenter?160:108,sw=isCenter?9:6;
+  var ruid='r'+abs+'_r'+Date.now();
+  item.innerHTML='<div class="ring-svg-wrap">'
     +buildRingSVG({size:sz,stroke:sw,pct:pct,type:rtype,uid:ruid,animate:isCenter})
     +'<div class="ring-inner">'
-    +'<div class="ring-day-name">'+esc(dayName)+'</div>'
-    +'<div class="ring-day-num">'+dayNum+'</div>'
-    +'<div class="ring-month-name">'+esc(monName)+'</div>'
-    +'</div>'
-    +'</div>'
-    +'<div class="ring-pct-label '+pctClass+'">'+pctLabel+'</div>';
+    +'<div class="ring-day-name">'+esc(DAY_NAMES[d.getDay()])+'</div>'
+    +'<div class="ring-day-num">'+d.getDate()+'</div>'
+    +'<div class="ring-month-name">'+esc(MONTH_SHORT[d.getMonth()])+'</div>'
+    +'</div></div>'
+    +'<div class="ring-pct-label '+rtype+'">'+pct+'%</div>';
 }
 
-/* ═══════════════════════ PLANNER ═══════════════════════ */
+/* ══════════════ PLANNER ══════════════ */
 function rPlan(){
-  var el = document.getElementById('p-plan');
+  var el=document.getElementById('p-plan');
   if(!el) return;
-
-  el.innerHTML =
-    '<div class="ring-carousel-wrap">'
-    +'<div class="ring-carousel"></div>'
-    +'</div>'
+  el.innerHTML=
+    '<div class="ring-carousel-wrap"><div class="ring-carousel"></div></div>'
     +'<div class="plan-quote">'
     +'<span class="plan-quote-mark">❝</span>'
     +'<div class="plan-quote-text">'+esc(todayQuote())+'</div>'
-    +'<span class="plan-quote-mark" style="transform:rotate(180deg);display:inline-block;">❝</span>'
+    +'<span class="plan-quote-mark" style="transform:rotate(180deg);">❝</span>'
     +'</div>'
     +'<div class="plan-body" id="plan-body"></div>';
-
   buildCarousel();
   renderSchedule();
 }
 
 function renderSchedule(){
-  var body = document.getElementById('plan-body');
+  var body=document.getElementById('plan-body');
   if(!body) return;
-
-  var dateStr = idxToDate(planCenterIdx);
-  var tasks = tasksForDate(dateStr).slice().sort(function(a,b){
-    var ta=a.timeStart||a.time||'';
-    var tb=b.timeStart||b.time||'';
-    return ta.localeCompare(tb);
+  var ds=idxToDate(planCenterIdx);
+  var tasks=tasksForDate(ds).slice().sort(function(a,b){
+    return (a.timeStart||a.time||'').localeCompare(b.timeStart||b.time||'');
   });
-
-  var html = '<div class="sched-card">'
-    +'<div class="sched-hdr">'
+  var html='<div class="sched-card"><div class="sched-hdr">'
     +'<div class="sched-hdr-left">'
     +'<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'
     +'<span class="sched-title">Расписание</span>'
-    +'<span class="sched-date"> · '+fmtDate(dateStr)+'</span>'
+    +'<span class="sched-date"> · '+fmtDate(ds)+'</span>'
     +'</div>'
     +'<button class="add-task-btn" data-action="open-task-modal">'
     +'<svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>'
-    +'</button>'
-    +'</div>'
-    +'<div class="timeline">';
+    +'</button></div><div class="timeline">';
 
-  if(tasks.length === 0){
-    html += '<div class="tl-empty">'
-      +'<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'
-      +'<p>Нет задач на этот день</p></div>';
+  if(!tasks.length){
+    html+='<div class="tl-empty"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><p>Нет задач на этот день</p></div>';
   } else {
     tasks.forEach(function(t,i){
-      var pri = t.priority||'md';
-      var ts  = t.timeStart||t.time||'';
-      var te  = t.timeEnd||'';
-      var timeDisplay = '';
-      if(ts && te){
-        var mins = timeDiff(ts,te);
-        timeDisplay = (mins!==null && mins>0) ? mins+' мин' : ts+' — '+te;
-      } else if(ts){
-        timeDisplay = ts;
-      }
-      var timeLabel = ts;
-      if(ts && te) timeLabel = ts+'–'+te;
-      var isLast = i===tasks.length-1;
-
-      html += '<div class="tl-item">'
+      var pri=t.priority||'md';
+      var ts=t.timeStart||t.time||'', te=t.timeEnd||'';
+      var timeDisplay='';
+      if(ts&&te){var m=timeDiff(ts,te);timeDisplay=(m!==null&&m>0)?m+' мин':ts+' — '+te;}
+      else if(ts) timeDisplay=ts;
+      var timeLabel=ts;
+      if(ts&&te) timeLabel=ts+'–'+te;
+      var isLast=i===tasks.length-1;
+      html+='<div class="tl-item">'
         +'<div class="tl-time">'+esc(timeLabel)+'</div>'
-        +'<div class="tl-dot-col">'
-        +'<div class="tl-dot pri-'+pri+'"></div>'
-        +(!isLast?'<div class="tl-line"></div>':'')
-        +'</div>'
+        +'<div class="tl-dot-col"><div class="tl-dot pri-'+pri+'"></div>'+(isLast?'':'<div class="tl-line"></div>')+'</div>'
         +'<div class="tl-card pri-'+pri+'">'
         +'<div class="tl-card-body">'
         +'<div class="tl-task-name'+(t.done?' done-text':'')+'">'+esc(t.text)+'</div>'
-        +(timeDisplay?'<div class="tl-task-time">'
-          +'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
-          +esc(timeDisplay)+'</div>':'')
+        +(timeDisplay?'<div class="tl-task-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'+esc(timeDisplay)+'</div>':'')
         +'</div>'
-        +'<div class="tl-check'+(t.done?' done':'')+'" data-action="tog" data-tid="'+t.id+'" data-date="'+dateStr+'">'
+        +'<div class="tl-check'+(t.done?' done':'')+'" data-action="tog" data-tid="'+t.id+'" data-date="'+ds+'">'
         +'<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>'
-        +'</div>'
-        +'</div>'
-        +'</div>';
+        +'</div></div></div>';
     });
   }
-
-  html += '</div></div>';
-  body.innerHTML = html;
+  html+='</div></div>';
+  body.innerHTML=html;
 }
 
-/* ═══════════════════════ DASHBOARD ═══════════════════════ */
+/* ══════════════ DASHBOARD ══════════════ */
 function rDash(){
   var el=document.getElementById('p-dash');
   if(!el) return;
   var tod=today();
-  var tasks=tasksForDate(tod);
-  var done=tasks.filter(function(t){return t.done;}).length;
-  var habDone=S.habits.filter(function(h){return (h.doneDs||[]).indexOf(tod)>=0;}).length;
-
+  var done=tasksForDate(tod).filter(function(t){return t.done;}).length;
+  var habDone=S.habits.filter(function(h){return(h.doneDs||[]).indexOf(tod)>=0;}).length;
   el.innerHTML='<div class="dash-wrap">'
     +'<div class="dash-xp-card">'
     +'<div class="dash-xp-top">'
     +'<div class="dash-ava">'+(S.ava&&S.ava.startsWith('data:')?'<img src="'+S.ava+'">':'<span style="font-size:28px;">'+esc(S.ava||'🦊')+'</span>')+'</div>'
-    +'<div><div class="dash-name">'+esc(S.name||'Игрок')+'</div><div class="dash-lvl">Уровень '+lvl()+'</div></div>'
+    +'<div><div class="dash-name">'+esc(S.name||'Игрок')+'</div><div class="dash-lvl">Уровень '+lvl()+' • '+getRank(lvl())+'</div></div>'
     +'</div>'
     +'<div class="dash-xp-bar"><div class="dash-xp-fill" style="width:'+xpPct()+'%"></div></div>'
     +'<div class="dash-xp-label">'+xpInLvl()+' / '+XP_PER_LVL+' XP</div>'
     +'</div>'
     +'<div class="stats-row">'
-    +'<div class="stat-tile"><div class="stat-val">'+done+'</div><div class="stat-lbl">Задач сегодня</div></div>'
+    +'<div class="stat-tile"><div class="stat-val">'+done+'</div><div class="stat-lbl">Задач</div></div>'
     +'<div class="stat-tile"><div class="stat-val">'+habDone+'</div><div class="stat-lbl">Привычек</div></div>'
     +'<div class="stat-tile"><div class="stat-val">'+lvl()+'</div><div class="stat-lbl">Уровень</div></div>'
-    +'</div>'
-    +'</div>';
+    +'</div></div>';
 }
 
-/* ═══════════════════════ HABITS ═══════════════════════ */
+/* ══════════════ HABITS ══════════════ */
 function rHab(){
-  var el=document.getElementById('hab-list');
-  if(!el) return;
-  if(!S.habits.length){
-    el.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><p>Нет привычек. Добавь первую!</p></div>';
-    return;
-  }
+  var el=document.getElementById('hab-list');if(!el)return;
+  if(!S.habits.length){el.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><p>Нет привычек. Добавь первую!</p></div>';return;}
   var tod=today();
   el.innerHTML=S.habits.map(function(h){
     var done=(h.doneDs||[]).indexOf(tod)>=0;
-    var streak=h.streak||0;
-    var goal=h.goalDays||30;
+    var streak=h.streak||0,goal=h.goalDays||30;
     var pct=Math.min(100,Math.round(streak/goal*100));
-    return '<div class="hab-card">'
-      +'<div class="hab-card-top">'
+    return '<div class="hab-card"><div class="hab-card-top">'
       +'<div class="hab-icon">'+esc(h.icon||'⭐')+'</div>'
       +'<div class="hab-info"><div class="hab-name">'+esc(h.name)+'</div><div class="hab-streak">🔥 '+streak+' дней подряд</div></div>'
-      +'<div class="hab-check'+(done?' done':'')+'" data-action="hab-tog" data-hid="'+h.id+'">'
-      +'<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>'
-      +'</div>'
-      +'</div>'
-      +'<div class="hab-prog-bar"><div class="hab-prog-fill" style="width:'+pct+'%"></div></div>'
-      +'<div class="hab-prog-label">'+streak+' / '+goal+' дней</div>'
-      +'</div>';
+      +'<div class="hab-check'+(done?' done':'')+'" data-action="hab-tog" data-hid="'+h.id+'"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>'
+      +'</div><div class="hab-prog-bar"><div class="hab-prog-fill" style="width:'+pct+'%"></div></div>'
+      +'<div class="hab-prog-label">'+streak+' / '+goal+' дней</div></div>';
   }).join('');
 }
 
-/* ═══════════════════════ GOALS ═══════════════════════ */
+/* ══════════════ GOALS ══════════════ */
 function rGoals(){
-  var el=document.getElementById('goals-list');
-  if(!el) return;
-  if(!S.goals.length){
-    el.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><p>Нет целей. Поставь первую!</p></div>';
-    return;
-  }
+  var el=document.getElementById('goals-list');if(!el)return;
+  if(!S.goals.length){el.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><p>Нет целей. Поставь первую!</p></div>';return;}
   el.innerHTML=S.goals.map(function(g){
     var pct=g.pct||0;
-    return '<div class="goal-card">'
-      +'<div class="goal-card-top">'
+    return '<div class="goal-card"><div class="goal-card-top">'
       +'<div class="goal-icon">'+esc(g.icon||'🎯')+'</div>'
       +'<div class="goal-info"><div class="goal-name">'+esc(g.name)+'</div>'+(g.deadline?'<div class="goal-deadline">до '+fmtDate(g.deadline)+'</div>':'')+'</div>'
-      +'</div>'
-      +'<div class="goal-prog-bar"><div class="goal-prog-fill" style="width:'+pct+'%"></div></div>'
-      +'<div class="goal-prog-label"><span>'+pct+'%</span><span>осталось '+(100-pct)+'%</span></div>'
-      +'</div>';
+      +'</div><div class="goal-prog-bar"><div class="goal-prog-fill" style="width:'+pct+'%"></div></div>'
+      +'<div class="goal-prog-label"><span>'+pct+'%</span><span>осталось '+(100-pct)+'%</span></div></div>';
   }).join('');
 }
 
-/* ═══════════════════════ BOOKS ═══════════════════════ */
+/* ══════════════ BOOKS ══════════════ */
 function rBooks(){
-  var el=document.getElementById('books-list');
-  if(!el) return;
-  if(!S.books.length){
-    el.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><p>Нет книг. Добавь первую!</p></div>';
-    return;
-  }
+  var el=document.getElementById('books-list');if(!el)return;
+  if(!S.books.length){el.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg><p>Нет книг. Добавь первую!</p></div>';return;}
   el.innerHTML=S.books.map(function(b){
     var pct=b.total>0?Math.round((b.read||0)/b.total*100):0;
-    return '<div class="book-card">'
-      +'<div class="book-cover">'+(b.cover?'<img src="'+b.cover+'">':(b.emoji||'📖'))+'</div>'
-      +'<div class="book-info">'
-      +'<div class="book-title">'+esc(b.title)+'</div>'
-      +'<div class="book-author">'+esc(b.author||'')+'</div>'
+    return '<div class="book-card"><div class="book-cover">'+(b.cover?'<img src="'+b.cover+'">':(b.emoji||'📖'))+'</div>'
+      +'<div class="book-info"><div class="book-title">'+esc(b.title)+'</div><div class="book-author">'+esc(b.author||'')+'</div>'
       +'<div class="book-prog-bar"><div class="book-prog-fill" style="width:'+pct+'%"></div></div>'
-      +'<div class="book-pages">'+(b.read||0)+' / '+b.total+' стр. ('+pct+'%)</div>'
-      +'</div></div>';
+      +'<div class="book-pages">'+(b.read||0)+' / '+b.total+' стр. ('+pct+'%)</div></div></div>';
   }).join('');
 }
 
-/* ═══════════════════════ VITAMINS ═══════════════════════ */
+/* ══════════════ VITAMINS ══════════════ */
 function rVit(){
-  var el=document.getElementById('vit-list');
-  if(!el) return;
-  if(!S.vitamins.length){
-    el.innerHTML='<div class="empty-state"><p>Нет витаминов. Добавь первый!</p></div>';
-    return;
-  }
+  var el=document.getElementById('vit-list');if(!el)return;
+  if(!S.vitamins.length){el.innerHTML='<div class="empty-state"><p>Нет витаминов. Добавь первый!</p></div>';return;}
   var tod=today();
   el.innerHTML=S.vitamins.map(function(v){
     var done=(S.vitDone[tod]||[]).indexOf(v.id)>=0;
-    return '<div class="vit-card">'
-      +'<div class="vit-icon">'+esc(v.icon||'💊')+'</div>'
+    return '<div class="vit-card"><div class="vit-icon">'+esc(v.icon||'💊')+'</div>'
       +'<div class="vit-info"><div class="vit-name">'+esc(v.name)+'</div><div class="vit-dose">'+esc(v.dose||'')+'</div></div>'
-      +'<div class="vit-check'+(done?' done':'')+'" data-action="vit-tog" data-vid="'+v.id+'">'
-      +'<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>'
-      +'</div>'
+      +'<div class="vit-check'+(done?' done':'')+'" data-action="vit-tog" data-vid="'+v.id+'"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>'
       +'</div>';
   }).join('');
 }
 
-/* ═══════════════════════ HEADER ═══════════════════════ */
+/* ══════════════ HEADER UPDATE ══════════════ */
 function updateHdr(){
+  var l=lvl();
   var nameEl=document.getElementById('hdr-name');
   var lvlEl=document.getElementById('hdr-lvl');
-  var xpEl=document.getElementById('hdr-xp-fill');
+  var xpFill=document.getElementById('hdr-xp-fill');
+  var xpText=document.getElementById('hdr-xp-text');
   var avaEl=document.getElementById('hdr-ava-btn');
   if(nameEl) nameEl.textContent=S.name||'Игрок';
-  if(lvlEl)  lvlEl.textContent='Уровень '+lvl();
-  if(xpEl)   xpEl.style.width=xpPct()+'%';
+  if(lvlEl)  lvlEl.textContent='Ур. '+l+' • '+getRank(l);
+  if(xpFill) xpFill.style.width=xpPct()+'%';
+  if(xpText) xpText.textContent=xpInLvl()+'/'+XP_PER_LVL+' XP';
   if(avaEl){
     avaEl.innerHTML=S.ava&&S.ava.startsWith('data:')
       ?'<img src="'+S.ava+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">'
@@ -1239,24 +986,15 @@ function updateHdr(){
   }
 }
 
-function rAll(){
-  updateHdr();
-  rDash();
-  rHab();
-  rGoals();
-  rBooks();
-  rVit();
-}
+function rAll(){updateHdr();rDash();rHab();rGoals();rBooks();rVit();}
 
-/* ═══════════════════════ NAVIGATION ═══════════════════════ */
+/* ══════════════ NAVIGATION ══════════════ */
 function goPage(p){
   curP=p;
   document.querySelectorAll('.page').forEach(function(el){el.classList.remove('active');});
   document.querySelectorAll('.nav-btn').forEach(function(el){el.classList.remove('active');});
-  var pg=document.getElementById('p-'+p);
-  if(pg) pg.classList.add('active');
-  var nb=document.querySelector('.nav-btn[data-page="'+p+'"]');
-  if(nb) nb.classList.add('active');
+  var pg=document.getElementById('p-'+p);if(pg)pg.classList.add('active');
+  var nb=document.querySelector('.nav-btn[data-page="'+p+'"]');if(nb)nb.classList.add('active');
   if(p==='plan') rPlan();
   else if(p==='dash') rDash();
   else if(p==='hab') rHab();
@@ -1265,238 +1003,122 @@ function goPage(p){
   else if(p==='vit') rVit();
 }
 
-/* ═══════════════════════ MODALS ═══════════════════════ */
+/* ══════════════ MODALS ══════════════ */
 function openModal(id){
   if(id==='m-task'){
-    var tt=document.getElementById('t-text');
-    var td=document.getElementById('t-date');
-    var ts=document.getElementById('t-time-start');
-    var te=document.getElementById('t-time-end');
-    var tp=document.getElementById('t-pri');
-    if(tt) tt.value='';
-    if(td) td.value=idxToDate(planCenterIdx);
-    if(ts) ts.value='';
-    if(te) te.value='';
-    if(tp) tp.value='md';
-    fillGoalSel('t-goal');
-    vld('m-task');
+    ['t-text','t-time-start','t-time-end'].forEach(function(i){var e=document.getElementById(i);if(e)e.value='';});
+    var td=document.getElementById('t-date');if(td)td.value=idxToDate(planCenterIdx);
+    var tp=document.getElementById('t-pri');if(tp)tp.value='md';
+    fillGoalSel('t-goal');vld('m-task');
   }
   if(id==='m-hab'){['h-text','h-icon'].forEach(function(i){var e=document.getElementById(i);if(e)e.value='';});var hg=document.getElementById('h-goal');if(hg)hg.value='30';}
   if(id==='m-goal'){['g-text','g-icon','g-deadline','g-desc'].forEach(function(i){var e=document.getElementById(i);if(e)e.value='';});}
   if(id==='m-vit'){['v-name','v-dose','v-icon'].forEach(function(i){var e=document.getElementById(i);if(e)e.value='';});}
   if(id==='m-book'){var br=document.getElementById('b-read');if(br)br.value='0';['b-title','b-author','b-total'].forEach(function(i){var e=document.getElementById(i);if(e)e.value='';});}
   if(id==='m-ava'){document.querySelectorAll('.ava-opt').forEach(function(o){o.classList.toggle('sel',o.dataset.ava===S.ava);});}
-  var mo=document.getElementById(id);
-  if(mo) mo.classList.add('open');
+  var mo=document.getElementById(id);if(mo)mo.classList.add('open');
 }
-function closeAllModals(){
-  document.querySelectorAll('.mo.open').forEach(function(m){m.classList.remove('open');});
-}
+function closeAllModals(){document.querySelectorAll('.mo.open').forEach(function(m){m.classList.remove('open');});}
 function vld(mid){
-  if(mid==='m-task'){
-    var ok=!!(document.getElementById('t-text').value.trim());
-    document.getElementById('sb-task').disabled=!ok;
-  }
+  if(mid==='m-task'){var ok=!!(document.getElementById('t-text').value.trim());document.getElementById('sb-task').disabled=!ok;}
 }
 function fillGoalSel(elId){
-  var sel=document.getElementById(elId);
-  if(!sel) return;
+  var sel=document.getElementById(elId);if(!sel)return;
   sel.innerHTML='<option value="">— без цели —</option>';
   S.goals.forEach(function(g){sel.innerHTML+='<option value="'+g.id+'">'+esc(g.name)+'</option>';});
 }
 
-/* ═══════════════════════ SAVE ═══════════════════════ */
+/* ══════════════ SAVE ══════════════ */
 function saveTask(){
-  var txt=document.getElementById('t-text').value.trim();
+  var txt=document.getElementById('t-text').value.trim();if(!txt)return;
   var date=document.getElementById('t-date').value||idxToDate(planCenterIdx);
   var ts=document.getElementById('t-time-start').value||'';
   var te=document.getElementById('t-time-end').value||'';
   var pri=document.getElementById('t-pri').value||'md';
   var gid=document.getElementById('t-goal').value||'';
-  if(!txt) return;
-  var wk=wkKey(date);
-  ensW(wk);
+  var wk=wkKey(date);ensW(wk);
   S.weeks[wk].tasks.push({id:uid(),text:txt,date:date,timeStart:ts,timeEnd:te,time:ts,priority:pri,done:false,goalId:gid});
-  sv();
-  closeAllModals();
-  if(curP==='plan'){
-    var wrap=document.querySelector('.ring-carousel');
-    if(wrap){renderCarouselItems(wrap);attachCarouselEvents(wrap);}
-    renderSchedule();
-  }
+  sv();closeAllModals();
+  if(curP==='plan'){var w=document.querySelector('.ring-carousel');if(w){renderCarouselItems(w);attachCarouselEvents(w);}renderSchedule();}
   if(curP==='dash') rDash();
 }
-function saveHabit(){
-  var txt=document.getElementById('h-text').value.trim();
-  if(!txt) return;
-  S.habits.push({id:uid(),name:txt,icon:document.getElementById('h-icon').value||'⭐',goalDays:parseInt(document.getElementById('h-goal').value)||30,streak:0,doneDs:[]});
-  sv(); closeAllModals(); rHab();
-}
-function saveGoal(){
-  var txt=document.getElementById('g-text').value.trim();
-  if(!txt) return;
-  S.goals.push({id:uid(),name:txt,icon:document.getElementById('g-icon').value||'🎯',deadline:document.getElementById('g-deadline').value||'',desc:document.getElementById('g-desc').value||'',pct:0});
-  sv(); closeAllModals(); rGoals();
-}
-function saveBook(){
-  var title=document.getElementById('b-title').value.trim();
-  if(!title) return;
-  S.books.push({id:uid(),title:title,author:document.getElementById('b-author').value||'',total:parseInt(document.getElementById('b-total').value)||100,read:parseInt(document.getElementById('b-read').value)||0,emoji:'📖'});
-  sv(); closeAllModals(); rBooks();
-}
-function saveVit(){
-  var name=document.getElementById('v-name').value.trim();
-  if(!name) return;
-  S.vitamins.push({id:uid(),name:name,dose:document.getElementById('v-dose').value||'',icon:document.getElementById('v-icon').value||'💊'});
-  sv(); closeAllModals(); rVit();
-}
-function saveAva(){
-  var sel=document.querySelector('.ava-opt.sel');
-  if(sel) S.ava=sel.dataset.ava;
-  sv(); closeAllModals(); updateHdr(); rDash();
-}
+function saveHabit(){var txt=document.getElementById('h-text').value.trim();if(!txt)return;S.habits.push({id:uid(),name:txt,icon:document.getElementById('h-icon').value||'⭐',goalDays:parseInt(document.getElementById('h-goal').value)||30,streak:0,doneDs:[]});sv();closeAllModals();rHab();}
+function saveGoal(){var txt=document.getElementById('g-text').value.trim();if(!txt)return;S.goals.push({id:uid(),name:txt,icon:document.getElementById('g-icon').value||'🎯',deadline:document.getElementById('g-deadline').value||'',desc:document.getElementById('g-desc').value||'',pct:0});sv();closeAllModals();rGoals();}
+function saveBook(){var title=document.getElementById('b-title').value.trim();if(!title)return;S.books.push({id:uid(),title:title,author:document.getElementById('b-author').value||'',total:parseInt(document.getElementById('b-total').value)||100,read:parseInt(document.getElementById('b-read').value)||0,emoji:'📖'});sv();closeAllModals();rBooks();}
+function saveVit(){var name=document.getElementById('v-name').value.trim();if(!name)return;S.vitamins.push({id:uid(),name:name,dose:document.getElementById('v-dose').value||'',icon:document.getElementById('v-icon').value||'💊'});sv();closeAllModals();rVit();}
+function saveAva(){var sel=document.querySelector('.ava-opt.sel');if(sel)S.ava=sel.dataset.ava;sv();closeAllModals();updateHdr();rDash();}
 
-/* ═══════════════════════ TOGGLES ═══════════════════════ */
-function toggleTask(tid,dateStr){
-  var wk=wkKey(dateStr);
-  if(!S.weeks[wk]) return;
+/* ══════════════ TOGGLES ══════════════ */
+function toggleTask(tid,ds){
+  var wk=wkKey(ds);if(!S.weeks[wk])return;
   var tasks=S.weeks[wk].tasks;
-  for(var i=0;i<tasks.length;i++){
-    if(tasks[i].id===tid){
-      tasks[i].done=!tasks[i].done;
-      if(tasks[i].done) addXP(10);
-      break;
-    }
-  }
+  for(var i=0;i<tasks.length;i++){if(tasks[i].id===tid){tasks[i].done=!tasks[i].done;if(tasks[i].done)addXP(10);break;}}
   sv();
-  var wrap=document.querySelector('.ring-carousel');
-  if(wrap){renderCarouselItems(wrap);attachCarouselEvents(wrap);}
-  renderSchedule();
-  updateHdr();
-  if(curP==='dash') rDash();
+  var w=document.querySelector('.ring-carousel');if(w){renderCarouselItems(w);attachCarouselEvents(w);}
+  renderSchedule();updateHdr();if(curP==='dash')rDash();
 }
 function toggleHabit(hid){
   var tod=today();
   for(var i=0;i<S.habits.length;i++){
-    var h=S.habits[i];
-    if(h.id===hid){
-      if(!h.doneDs) h.doneDs=[];
-      var idx=h.doneDs.indexOf(tod);
-      if(idx>=0){h.doneDs.splice(idx,1);h.streak=Math.max(0,(h.streak||1)-1);}
-      else{h.doneDs.push(tod);h.streak=(h.streak||0)+1;addXP(15);}
-      break;
-    }
+    var h=S.habits[i];if(h.id!==hid)continue;
+    if(!h.doneDs)h.doneDs=[];
+    var idx=h.doneDs.indexOf(tod);
+    if(idx>=0){h.doneDs.splice(idx,1);h.streak=Math.max(0,(h.streak||1)-1);}
+    else{h.doneDs.push(tod);h.streak=(h.streak||0)+1;addXP(15);}
+    break;
   }
-  sv(); rHab(); rDash();
+  sv();rHab();rDash();
 }
 function toggleVit(vid){
-  var tod=today();
-  if(!S.vitDone[tod]) S.vitDone[tod]=[];
+  var tod=today();if(!S.vitDone[tod])S.vitDone[tod]=[];
   var idx=S.vitDone[tod].indexOf(vid);
-  if(idx>=0) S.vitDone[tod].splice(idx,1);
-  else{S.vitDone[tod].push(vid);addXP(5);}
-  sv(); rVit();
+  if(idx>=0)S.vitDone[tod].splice(idx,1);else{S.vitDone[tod].push(vid);addXP(5);}
+  sv();rVit();
 }
 
-/* ═══════════════════════ EVENT DELEGATION ═══════════════════════ */
+/* ══════════════ EVENTS ══════════════ */
 document.addEventListener('click',function(e){
-  var nb=e.target.closest('.nav-btn[data-page]');
-  if(nb){goPage(nb.dataset.page);return;}
-
-  var om=e.target.closest('[data-action="open-modal"]');
-  if(om){openModal(om.dataset.modal);return;}
-
-  var otm=e.target.closest('[data-action="open-task-modal"]');
-  if(otm){openModal('m-task');return;}
-
+  var nb=e.target.closest('.nav-btn[data-page]');if(nb){goPage(nb.dataset.page);return;}
+  var om=e.target.closest('[data-action="open-modal"]');if(om){openModal(om.dataset.modal);return;}
+  var otm=e.target.closest('[data-action="open-task-modal"]');if(otm){openModal('m-task');return;}
   if(e.target.classList.contains('mo')){closeAllModals();return;}
-
-  var avaBtn=e.target.closest('#hdr-ava-btn');
-  if(avaBtn){openModal('m-ava');return;}
-
-  var avaOpt=e.target.closest('.ava-opt');
-  if(avaOpt){
-    document.querySelectorAll('.ava-opt').forEach(function(o){o.classList.remove('sel');});
-    avaOpt.classList.add('sel');
-    return;
-  }
-
+  var avaBtn=e.target.closest('#hdr-ava-btn');if(avaBtn){openModal('m-ava');return;}
+  var avaOpt=e.target.closest('.ava-opt');if(avaOpt){document.querySelectorAll('.ava-opt').forEach(function(o){o.classList.remove('sel');});avaOpt.classList.add('sel');return;}
   if(e.target.id==='sb-task'){saveTask();return;}
   if(e.target.id==='sb-hab'){saveHabit();return;}
   if(e.target.id==='sb-goal'){saveGoal();return;}
   if(e.target.id==='sb-book'){saveBook();return;}
   if(e.target.id==='sb-vit'){saveVit();return;}
   if(e.target.id==='sb-ava'){saveAva();return;}
-
-  var tog=e.target.closest('[data-action="tog"]');
-  if(tog){toggleTask(tog.dataset.tid,tog.dataset.date);return;}
-
-  var htog=e.target.closest('[data-action="hab-tog"]');
-  if(htog){toggleHabit(htog.dataset.hid);return;}
-
-  var vtog=e.target.closest('[data-action="vit-tog"]');
-  if(vtog){toggleVit(vtog.dataset.vid);return;}
-
+  var tog=e.target.closest('[data-action="tog"]');if(tog){toggleTask(tog.dataset.tid,tog.dataset.date);return;}
+  var htog=e.target.closest('[data-action="hab-tog"]');if(htog){toggleHabit(htog.dataset.hid);return;}
+  var vtog=e.target.closest('[data-action="vit-tog"]');if(vtog){toggleVit(vtog.dataset.vid);return;}
   if(e.target.id==='hdr-premium-btn'){alert('Premium — скоро!');return;}
 });
+document.addEventListener('input',function(e){if(e.target.id==='t-text')vld('m-task');});
 
-document.addEventListener('input',function(e){
-  if(e.target.id==='t-text') vld('m-task');
-});
-
-/* ═══════════════════════ AVATAR FILE ═══════════════════════ */
+/* ══════════════ AVATAR FILE ══════════════ */
 var avaFile=document.getElementById('ava-file');
-if(avaFile){
-  avaFile.addEventListener('change',function(){
-    var f=this.files[0];
-    if(!f) return;
-    var r=new FileReader();
-    r.onload=function(ev){
-      S.ava=ev.target.result;
-      document.querySelectorAll('.ava-opt').forEach(function(o){o.classList.remove('sel');});
-    };
-    r.readAsDataURL(f);
-  });
-}
+if(avaFile){avaFile.addEventListener('change',function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(ev){S.ava=ev.target.result;document.querySelectorAll('.ava-opt').forEach(function(o){o.classList.remove('sel');});};r.readAsDataURL(f);});}
 
-/* ═══════════════════════ LANDING ═══════════════════════ */
-document.getElementById('ln-go').addEventListener('click',function(){
-  var name=document.getElementById('ln-name').value.trim();
-  if(!name) return;
-  S.name=name; sv(); startApp();
-});
-document.getElementById('ln-name').addEventListener('keydown',function(e){
-  if(e.key==='Enter') document.getElementById('ln-go').click();
-});
+/* ══════════════ LANDING ══════════════ */
+document.getElementById('ln-go').addEventListener('click',function(){var name=document.getElementById('ln-name').value.trim();if(!name)return;S.name=name;sv();startApp();});
+document.getElementById('ln-name').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('ln-go').click();});
 
-/* ═══════════════════════ TELEGRAM ═══════════════════════ */
+/* ══════════════ TELEGRAM ══════════════ */
 var tg=window.Telegram&&window.Telegram.WebApp;
-if(tg){
-  tg.ready(); tg.expand();
-  if(tg.BackButton){
-    tg.BackButton.onClick(function(){
-      if(document.querySelector('.mo.open')){closeAllModals();return;}
-      if(curP!=='dash') goPage('dash');
-      else tg.close();
-    });
-  }
-}
+if(tg){tg.ready();tg.expand();if(tg.BackButton){tg.BackButton.onClick(function(){if(document.querySelector('.mo.open')){closeAllModals();return;}if(curP!=='dash')goPage('dash');else tg.close();});}}
 
-/* ═══════════════════════ INIT ═══════════════════════ */
+/* ══════════════ INIT ══════════════ */
 function startApp(){
   document.getElementById('landing').style.display='none';
   document.getElementById('shell').style.display='flex';
-  planCenterIdx=0;
-  goPage('plan');
-  rAll();
+  planCenterIdx=0;goPage('plan');rAll();
 }
 function init(){
   S=loadS();
-  if(S.name) startApp();
-  else{
-    document.getElementById('landing').style.display='flex';
-    document.getElementById('shell').style.display='none';
-  }
+  if(S.name)startApp();
+  else{document.getElementById('landing').style.display='flex';document.getElementById('shell').style.display='none';}
 }
 init();
 
