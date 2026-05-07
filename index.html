@@ -692,18 +692,26 @@ function buildRingSVG(opts){
         +'--ring-to:'+(Math.abs(toOffset))+';'
         +'animation:ringFill .9s ease forwards;"';
     }
-    progressArc='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none"'
-      +' stroke="'+strokeAttr+'" stroke-width="'+sw+'"'
-      +' stroke-dasharray="'+dash+' '+gap+'"'
-      +' stroke-dashoffset="'+offStart+'"'
-      +' stroke-linecap="round"'+animStyle+'/>';
+   progressArc='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none"'
+  +' stroke="'+strokeAttr+'" stroke-width="'+sw+'"'
+  +' stroke-dasharray="'+dash+' '+gap+'"'
+  +' stroke-dashoffset="'+offStart+'"'
+  +' stroke-linecap="round"'
+  +' filter="url(#shadow-'+gid+')"'
+  +animStyle+'/>';
+
   }
 
   return '<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 '+sz+' '+sz+'" xmlns="http://www.w3.org/2000/svg">'
-    +defsHtml
-    +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="##fcfaff" stroke-width="'+sw+'"/>'
-    +progressArc
-    +'</svg>';
+  +defsHtml
+  +'<defs>'
+  +'<filter id="shadow-'+gid+'" x="-20%" y="-20%" width="140%" height="140%">'
+  +'<feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#9B7FE8" flood-opacity="0.35"/>'
+  +'</filter>'
+  +'</defs>'
+  +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="#E8E2F4" stroke-width="'+sw+'"/>'
+  +progressArc
+  +'</svg>';
 }
 
 /* ══════════════ CAROUSEL ══════════════ */
@@ -733,7 +741,7 @@ function renderCarouselItems(wrap){
     var tot=taskTotalCount(ds);
     var isCenter=off===0;
     var rtype=ringTypeForOffset(off);
-    var sz=isCenter?160:108, sw=isCenter?9:6;
+    var sz=isCenter?160:108, sw=isCenter?15:9;
     var ruid='r'+abs+'_'+Date.now();
     var pctClass=rtype;
 
@@ -1109,7 +1117,7 @@ document.getElementById('ln-name').addEventListener('keydown',function(e){if(e.k
 
 /* ══════════════ TELEGRAM ══════════════ */
 var tg=window.Telegram&&window.Telegram.WebApp;
-if(tg){tg.ready();tg.expand();tg.setHeaderColor('#BB62FF');if(tg.BackButton){tg.BackButton.onClick(function(){if(document.querySelector('.mo.open')){closeAllModals();return;}if(curP!=='dash')goPage('dash');else tg.close();});}}
+if(tg){tg.ready();tg.expand();if(tg.BackButton){tg.BackButton.onClick(function(){if(document.querySelector('.mo.open')){closeAllModals();return;}if(curP!=='dash')goPage('dash');else tg.close();});}}
 
 /* ══════════════ INIT ══════════════ */
 function startApp(){
