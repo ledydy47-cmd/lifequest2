@@ -29,7 +29,7 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 
 #shell{display:flex;flex-direction:column;height:100vh;overflow:hidden;}
 
-/* ── HEADER — градиент ── */
+/* ── HEADER ── */
 #hdr{
   background:var(--grad-hdr);
   padding:10px 16px 10px;
@@ -78,7 +78,7 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 
 /* ── PAGES ── */
 #pages{flex:1;overflow:hidden;position:relative;}
-.page{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;display:none;padding-bottom:16px;}
+.page{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;display:none;padding-bottom:80px;}
 .page.active{display:block;}
 .page::-webkit-scrollbar{display:none;}
 
@@ -87,7 +87,28 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
   padding:0;
   background:linear-gradient(180deg,#F8FAFC 0%,#F1F5F9 50%,#EFF6FF 100%);
   min-height:100%;
+  position:relative;
 }
+
+/* ── FAB кнопка + (правый нижний угол) ── */
+.fab-add-task{
+  position:fixed;
+  right:20px;
+  bottom:calc(var(--nav-h) + 16px);
+  width:52px;height:52px;
+  border-radius:50%;
+  background:var(--grad-hdr);
+  border:none;
+  cursor:pointer;
+  display:none;
+  align-items:center;justify-content:center;
+  box-shadow:0 4px 18px rgba(155,109,255,.45);
+  z-index:50;
+  transition:transform .2s, box-shadow .2s;
+}
+.fab-add-task.visible{display:flex;}
+.fab-add-task:active{transform:scale(.93);}
+.fab-add-task svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;}
 
 .ring-carousel-wrap{padding:24px 0 8px;overflow:hidden;position:relative;}
 .ring-carousel{display:flex;align-items:center;justify-content:center;width:100%;position:relative;height:220px;touch-action:pan-y;user-select:none;-webkit-user-select:none;}
@@ -127,8 +148,6 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 .sched-hdr-left svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 .sched-title{font-size:15px;font-weight:800;color:var(--text);}
 .sched-date{font-size:13px;color:var(--sub);font-weight:600;}
-.add-task-btn{width:36px;height:36px;border-radius:50%;background:var(--grad-hdr);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(155,109,255,.4);flex-shrink:0;}
-.add-task-btn svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;}
 
 /* ── TIMELINE ── */
 .timeline{padding:0 16px 16px;}
@@ -149,10 +168,18 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 .tl-task-name.done-text{text-decoration:line-through;color:var(--sub);}
 .tl-task-time{font-size:11px;color:var(--sub);margin-top:3px;display:flex;align-items:center;gap:3px;font-weight:600;}
 .tl-task-time svg{width:11px;height:11px;stroke:var(--sub);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;}
+
+/* Блок кнопок задачи: галочка + удаление */
+.tl-actions{display:flex;align-items:center;gap:6px;flex-shrink:0;}
 .tl-check{width:32px;height:32px;border-radius:10px;border:2px solid rgba(155,109,255,.3);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .25s;}
 .tl-check.done{background:var(--grad-hdr);border-color:transparent;box-shadow:0 2px 8px rgba(155,109,255,.35);}
 .tl-check svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;display:none;}
 .tl-check.done svg{display:block;}
+/* Кнопка удаления задачи */
+.tl-delete{width:28px;height:28px;border-radius:8px;border:none;background:rgba(255,90,90,.1);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s;}
+.tl-delete:active{background:rgba(255,90,90,.25);}
+.tl-delete svg{width:13px;height:13px;stroke:#FF5A5A;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+
 .tl-empty{text-align:center;padding:32px 16px;color:var(--sub);}
 .tl-empty svg{width:40px;height:40px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;margin-bottom:8px;opacity:.4;display:block;margin-left:auto;margin-right:auto;}
 .tl-empty p{font-size:14px;font-weight:600;}
@@ -257,13 +284,11 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
   color:var(--text);
   transition:border .2s;
   font-family:inherit;
-  /* ── исправление выхода за экран ── */
   box-sizing:border-box;
   max-width:100%;
   min-width:0;
 }
 .f input:focus,.f select:focus,.f textarea:focus{border-color:var(--accent);}
-/* ── исправление dates-row ── */
 .dates-row{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -278,7 +303,25 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 /* ── LANDING ── */
 #landing{position:fixed;inset:0;background:var(--grad-hdr);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:200;padding:32px;}
 .land-logo{font-size:52px;margin-bottom:12px;}
-.land-title{font-size:28px;font-weight:800;color:#fff;margin-bottom:8px;}
+
+/* ── ПРАВКА 1: название «ЛайфКвестум» белым на лендинге ── */
+.land-title{
+  font-size:28px;
+  font-weight:800;
+  color:#fff;
+  margin-bottom:8px;
+  letter-spacing:-.3px;
+}
+/* Подзаголовок «мини‑приложение» тоже белый, чуть прозрачнее */
+.land-subtitle{
+  font-size:13px;
+  font-weight:600;
+  color:rgba(255,255,255,.7);
+  margin-bottom:4px;
+  letter-spacing:.5px;
+  text-transform:uppercase;
+}
+
 .land-sub{font-size:15px;color:rgba(255,255,255,.75);text-align:center;margin-bottom:32px;}
 .land-form{width:100%;max-width:340px;display:flex;flex-direction:column;gap:12px;}
 .land-input{padding:14px 16px;border-radius:14px;border:none;font-size:15px;background:rgba(255,255,255,.18);color:#fff;outline:none;font-family:inherit;}
@@ -301,7 +344,9 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
 
 <div id="landing">
   <div class="land-logo">🏆</div>
-  <div class="land-title">ЛайфКвест</div>
+  <!-- ПРАВКА 1: название + подпись «мини‑приложение» -->
+  <div class="land-subtitle">мини‑приложение</div>
+  <div class="land-title">ЛайфКвестум</div>
   <div class="land-sub">Прокачай свою жизнь каждый день</div>
   <div class="land-form">
     <input class="land-input" id="ln-name" placeholder="Ваше имя" maxlength="24">
@@ -367,6 +412,11 @@ body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--
   </nav>
 </div>
 
+<!-- ПРАВКА 3: FAB кнопка «+» — правый нижний угол, видна только на планере -->
+<button class="fab-add-task" id="fab-task" data-action="open-task-modal">
+  <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+</button>
+
 <!-- MODALS -->
 <div class="mo" id="m-task">
   <div class="mo-box">
@@ -422,12 +472,10 @@ var QUOTES=[
   'Верь в процесс — результат придёт сам.'
 ];
 
-/* ── ФИКСИРОВАННЫЕ размеры колец ── */
-/* исправление №3: размеры вынесены в константы, не меняются при refreshRingItem */
-var RING_CENTER_SIZE = 160;
-var RING_CENTER_SW   = 15;
-var RING_SIDE_SIZE   = 108;
-var RING_SIDE_SW     = 9;
+var RING_CENTER_SIZE=160;
+var RING_CENTER_SW=15;
+var RING_SIDE_SIZE=108;
+var RING_SIDE_SW=9;
 
 function getRank(l){if(l<=2)return'Новичок';if(l<=5)return'Искатель';if(l<=10)return'Герой';if(l<=20)return'Мастер';return'Легенда';}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
@@ -457,21 +505,20 @@ function sv(){localStorage.setItem(KEY,JSON.stringify(S));}
 function lvl(){return Math.floor(S.xp/XP_PER_LVL)+1;}
 function xpInLvl(){return S.xp%XP_PER_LVL;}
 function xpPct(){return Math.round(xpInLvl()/XP_PER_LVL*100);}
-function addXP(n){S.xp+=n;sv();}
+
+/* ПРАВКА 2: addXP принимает отрицательные числа (вычитание XP) */
+function addXP(n){S.xp=Math.max(0,S.xp+n);sv();}
 
 function ensW(wk){if(!S.weeks[wk])S.weeks[wk]={tasks:[]};return S.weeks[wk];}
 function tasksForDate(ds){var wk=wkKey(ds);return(S.weeks[wk]?S.weeks[wk].tasks:[]).filter(function(t){return t.date===ds;});}
 function taskPct(ds){var t=tasksForDate(ds);return t.length===0?0:Math.round(t.filter(function(x){return x.done;}).length/t.length*100);}
-function taskTotalCount(ds){return tasksForDate(ds).length;}
 
-/* ══ RING SVG — анимация убрана (исправление №2) ══ */
 function buildRingSVG(opts){
   var sz=opts.size,sw=opts.stroke,pct=opts.pct,type=opts.type,gid=opts.uid;
   var r=(sz-sw)/2,cx=sz/2,cy=sz/2;
   var circ=2*Math.PI*r;
   var dash=circ*(pct/100),gap=circ-dash;
   var offStart=-(circ/4);
-
   var strokeAttr,defsHtml='';
   if(type==='future'){
     strokeAttr='#C8C0E0';
@@ -490,10 +537,8 @@ function buildRingSVG(opts){
       +'</defs>';
     strokeAttr='url(#'+gradId+')';
   }
-
   var progressArc='';
   if(pct>0){
-    /* исправление №2: анимация полностью убрана, просто статичная дуга */
     var filterAttr=type!=='future'?' filter="url(#shadow-'+gid+')"':'';
     progressArc='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none"'
       +' stroke="'+strokeAttr+'" stroke-width="'+sw+'"'
@@ -502,7 +547,6 @@ function buildRingSVG(opts){
       +' stroke-linecap="round"'
       +filterAttr+'/>';
   }
-
   return '<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 '+sz+' '+sz+'" xmlns="http://www.w3.org/2000/svg">'
     +defsHtml
     +'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="#E8E2F4" stroke-width="'+sw+'"/>'
@@ -536,11 +580,9 @@ function renderCarouselItems(wrap){
     var pct=taskPct(ds);
     var isCenter=off===0;
     var rtype=ringTypeForOffset(off);
-    /* исправление №3: всегда используем константы */
     var sz=isCenter?RING_CENTER_SIZE:RING_SIDE_SIZE;
     var sw=isCenter?RING_CENTER_SW:RING_SIDE_SW;
     var ruid='r'+abs+'_'+Date.now();
-
     html+='<div class="ring-item '+POS[i]+'" data-offset="'+off+'" data-abs="'+abs+'">'
       +'<div class="ring-svg-wrap">'
       +buildRingSVG({size:sz,stroke:sw,pct:pct,type:rtype,uid:ruid})
@@ -615,7 +657,6 @@ function refreshRingItem(item,off){
   var pct=taskPct(ds);
   var isCenter=off===0;
   var rtype=ringTypeForOffset(off);
-  /* исправление №3: всегда используем константы */
   var sz=isCenter?RING_CENTER_SIZE:RING_SIDE_SIZE;
   var sw=isCenter?RING_CENTER_SW:RING_SIDE_SW;
   var ruid='r'+abs+'_r'+Date.now();
@@ -645,16 +686,24 @@ function rPlan(){
   renderSchedule();
 }
 
+/* ПРАВКА 3: FAB управляется через updateFab() */
+function updateFab(){
+  var fab=document.getElementById('fab-task');
+  if(!fab)return;
+  if(curP==='plan')fab.classList.add('visible');
+  else fab.classList.remove('visible');
+}
+
 function renderSchedule(){
   var body=document.getElementById('plan-body');if(!body)return;
   var ds=idxToDate(planCenterIdx);
   var tasks=tasksForDate(ds).slice().sort(function(a,b){return(a.timeStart||a.time||'').localeCompare(b.timeStart||b.time||'');});
+  /* шапка расписания — без кнопки + (она теперь FAB) */
   var html='<div class="sched-card"><div class="sched-hdr">'
     +'<div class="sched-hdr-left">'
     +'<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'
     +'<span class="sched-title">Расписание</span><span class="sched-date"> · '+fmtDate(ds)+'</span>'
     +'</div>'
-    +'<button class="add-task-btn" data-action="open-task-modal"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>'
     +'</div><div class="timeline">';
   if(!tasks.length){
     html+='<div class="tl-empty"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><p>Нет задач на этот день</p></div>';
@@ -675,9 +724,16 @@ function renderSchedule(){
         +'<div class="tl-task-name'+(t.done?' done-text':'')+'">'+esc(t.text)+'</div>'
         +(timeDisplay?'<div class="tl-task-time"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'+esc(timeDisplay)+'</div>':'')
         +'</div>'
+        /* ПРАВКА 2: обёртка .tl-actions содержит галочку И кнопку удаления */
+        +'<div class="tl-actions">'
         +'<div class="tl-check'+(t.done?' done':'')+'" data-action="tog" data-tid="'+t.id+'" data-date="'+ds+'">'
         +'<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>'
-        +'</div></div></div>';
+        +'</div>'
+        +'<button class="tl-delete" data-action="del-task" data-tid="'+t.id+'" data-date="'+ds+'" title="Удалить задачу">'
+        +'<svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>'
+        +'</button>'
+        +'</div>'
+        +'</div></div>';
     });
   }
   html+='</div></div>';
@@ -789,6 +845,8 @@ function goPage(p){
   else if(p==='goals')rGoals();
   else if(p==='books')rBooks();
   else if(p==='vit')rVit();
+  /* ПРАВКА 3: показываем/скрываем FAB */
+  updateFab();
 }
 
 function openModal(id){
@@ -832,14 +890,38 @@ function saveBook(){var title=document.getElementById('b-title').value.trim();if
 function saveVit(){var name=document.getElementById('v-name').value.trim();if(!name)return;S.vitamins.push({id:uid(),name:name,dose:document.getElementById('v-dose').value||'',icon:document.getElementById('v-icon').value||'💊'});sv();closeAllModals();rVit();}
 function saveAva(){var sel=document.querySelector('.ava-opt.sel');if(sel)S.ava=sel.dataset.ava;sv();closeAllModals();updateHdr();rDash();}
 
+/* ПРАВКА 2: toggleTask — снимает XP при отжатии, xp не уходит в минус */
 function toggleTask(tid,ds){
   var wk=wkKey(ds);if(!S.weeks[wk])return;
   var tasks=S.weeks[wk].tasks;
-  for(var i=0;i<tasks.length;i++){if(tasks[i].id===tid){tasks[i].done=!tasks[i].done;if(tasks[i].done)addXP(10);break;}}
+  for(var i=0;i<tasks.length;i++){
+    if(tasks[i].id===tid){
+      tasks[i].done=!tasks[i].done;
+      addXP(tasks[i].done?10:-10);  /* +10 при выполнении, -10 при снятии */
+      break;
+    }
+  }
   sv();
   var w=document.querySelector('.ring-carousel');if(w){renderCarouselItems(w);attachCarouselEvents(w);}
   renderSchedule();updateHdr();if(curP==='dash')rDash();
 }
+
+/* ПРАВКА 2: deleteTask — удаляет задачу и снимает XP если она была выполнена */
+function deleteTask(tid,ds){
+  var wk=wkKey(ds);if(!S.weeks[wk])return;
+  var tasks=S.weeks[wk].tasks;
+  for(var i=0;i<tasks.length;i++){
+    if(tasks[i].id===tid){
+      if(tasks[i].done)addXP(-10); /* снимаем XP только если была отмечена */
+      tasks.splice(i,1);
+      break;
+    }
+  }
+  sv();
+  var w=document.querySelector('.ring-carousel');if(w){renderCarouselItems(w);attachCarouselEvents(w);}
+  renderSchedule();updateHdr();if(curP==='dash')rDash();
+}
+
 function toggleHabit(hid){
   var tod=today();
   for(var i=0;i<S.habits.length;i++){
@@ -862,6 +944,7 @@ function toggleVit(vid){
 document.addEventListener('click',function(e){
   var nb=e.target.closest('.nav-btn[data-page]');if(nb){goPage(nb.dataset.page);return;}
   var om=e.target.closest('[data-action="open-modal"]');if(om){openModal(om.dataset.modal);return;}
+  /* ПРАВКА 3: FAB и любая кнопка с data-action="open-task-modal" */
   var otm=e.target.closest('[data-action="open-task-modal"]');if(otm){openModal('m-task');return;}
   if(e.target.classList.contains('mo')){closeAllModals();return;}
   var ab=e.target.closest('#hdr-ava-btn');if(ab){openModal('m-ava');return;}
@@ -873,6 +956,8 @@ document.addEventListener('click',function(e){
   if(e.target.id==='sb-vit'){saveVit();return;}
   if(e.target.id==='sb-ava'){saveAva();return;}
   var tog=e.target.closest('[data-action="tog"]');if(tog){toggleTask(tog.dataset.tid,tog.dataset.date);return;}
+  /* ПРАВКА 2: обработка нажатия на кнопку удаления */
+  var del=e.target.closest('[data-action="del-task"]');if(del){deleteTask(del.dataset.tid,del.dataset.date);return;}
   var htog=e.target.closest('[data-action="hab-tog"]');if(htog){toggleHabit(htog.dataset.hid);return;}
   var vtog=e.target.closest('[data-action="vit-tog"]');if(vtog){toggleVit(vtog.dataset.vid);return;}
   if(e.target.id==='hdr-premium-btn'){alert('Premium — скоро!');return;}
